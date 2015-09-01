@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="chronos">
+  <head>
+    <meta charset="utf-8"/>
+    <title>chronos</title>
+    <!-- inject:vendor:css -->
+    <link rel="stylesheet" href="/skeleton/css/skeleton.css">
+    <!-- endinject -->
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- endinject -->
+  </head>
+  <body ng-app='chronos'>
+    <div class="nav-left boxed" id="nav-left">
+      This is Left Menu
+    </div>
+    <div class="nav-top boxed" id="nav-top">
+      <div ng-include="'/templates/nav-top.html'"></div>
+    </div>
+    <div class="main-view boxed" ng-contoller='mainViewCtrl' id="main-view">
+      <ng-view></ng-view>
+    </div>
+    <div class="curation-hover" id="curation-hover">
+      <div class="curation-screen">
+        This is a Curation Screen
+      </div>
+    </div>
+    <!-- inject:vendor:js -->
+    <script src="/angular/angular.js"></script>
+    <script src="/angular-route/angular-route.js"></script>
+    <script src="/jquery/dist/jquery.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="/js/transit.js"></script>
+    <script src="/app.js"></script>
+    <script src="/chronos-templates.js"></script>
+    <!-- endinject -->
+  </body>
+</html>
