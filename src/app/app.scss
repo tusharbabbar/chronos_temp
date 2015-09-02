@@ -21,46 +21,73 @@ body {
 }
 
 .full-width-controller {
-  margin : 5px;
+  margin : 0px;
   width: 100%;
-  max-width: 95%
+  max-width: 99%;
+  overflow: auto;
+  height: 100%
 }
 
 .nav-top {
   background-color: #FFFFFF;
-  height: $top-browser;
+  height: 100px;
   padding: 25px;
+  padding-left: 0px;
   border: 0px;
+  border-bottom: solid 1px $border-color;
   position: fixed;
-  width: 100%;
+  width:100%;
   left: 0px;
   top: 0px;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
-  transition: left 1s, width 2s;
+  transition: left 0.5s, width 0.5s;
   box-shadow: 2px 1px 2px 2px $border-color;
+  z-index: -1000;
 }
+
+.nav-top-left {
+  background-color: #FFFFFF;
+  height: 100px;
+  padding: 25px;
+  padding-left: 0px;
+  padding-right: 0px;
+  border: 0px;
+  border-bottom: solid 1px $border-color;
+  position: fixed;
+  width:100%;
+  left: 0px;
+  top: 0px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  transition: left 0.5s, width 0.5s;
+  z-index: 1001
+  // box-shadow: 2px 1px 2px 2px $border-color;
+}
+
 
 .nav-left {
   background-color: #0B5675;
   padding: 0px;
   height: 100%;
   width: 300px;
-  position: absolute;
+  position: fixed;
   left: -300px;
   top: 0px;
-  transition: left 1s;
+  transition: left 0.5s;
 }
 
 .main-view {
   position: relative;
   top: $top-browser;
-  left: 0px;
+  left: -8px;
+  height: 100%;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
-  transition: left 1s, width 2s;
+  transition: left 0.5s, width 0.5s;
 }
 
 .curation-hover {
@@ -70,8 +97,8 @@ body {
   width: 55%;
   height: 100%;
   // right: -55%;
-  right: 0px;
-  transition: right 1s;
+  right: -55%;
+  transition: right 0.5s;
 }
 
 .curation-screen {
@@ -87,13 +114,16 @@ body {
 .listing-table {
   background-color: transparent;
   border-collapse: collapse;
-  margin: 10px 10px 10px 10px;
   box-shadow: 1px 1px 1px $border-color;
-  width: 100%
+  max-width: 99%;
+  width: 100%;
+  float: right
 }
 
 .listing-row {
   background-color: #FFFFFF;
+  border: solid 1px $border-color;
+
 }
 
 .listing-cell {
@@ -118,6 +148,34 @@ body {
     border: 0px solid #000000;
     display: inline-block;
     margin-right: 5px;
-    width: 300px;
     background-color: #FFFFFF;
+}
+
+.filters {
+  background-color: #FFFFFF;
+  height: 100%;
+  box-shadow: 4px 3px 2px 1px $border-color;
+  margin-right: 20px;
+  position: fixed;
+  top: $top-browser;
+}
+
+td:first-child {
+  padding: 15px 12px;
+}
+
+th:first-child {
+  padding: 15px 12px;
+}
+
+td, th {
+  text-align: center;
+  border: 0px;
+}
+
+.row-filter {
+  text-align: center;
+  border-bottom: solid 1px #DCDCDC;
+  height: 40px;
+  padding-top:12px
 }

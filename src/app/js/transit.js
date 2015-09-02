@@ -10,12 +10,14 @@ window.showCuration = function(value){
 
 window.toggleLeftNav = function(){
   if ($('#nav-left').css('left') === '-300px'){
-    newWidth = $(window).width() - 300;
+    newWidth = $(window).width() - 308;
     $('#nav-left').css('left','0px')
-    $('#main-view').css('left', '300px')
+    $('#main-view').css('left', '292px')
     $('#nav-top').css('left', '300px')
+    $('#nav-top-left').css('left', '300px')
     $('#nav-top').css('width', newWidth)
-    $('#main-view').css('width', newWidth-7)
+    $('#nav-top-left').css('width', newWidth)
+    $('#main-view').css('width', newWidth)
     console.log('yes')
   }
   else if ($('#nav-left').css('left') === '0px') {
@@ -23,7 +25,9 @@ window.toggleLeftNav = function(){
     $('#nav-left').css('left','-300px')
     $('#main-view').css('width', newWidth)
     $('#nav-top').css('width', newWidth)
-    $('#main-view').css('left', '0px')
+    $('#nav-top-left').css('width', newWidth)
+    $('#main-view').css('left', '-8px')
     $('#nav-top').css('left', '0px')
+    $('#nav-top-left').css('left', '0px')
   }
 }
