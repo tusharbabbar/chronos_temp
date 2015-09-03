@@ -5,6 +5,7 @@
     <title>chronos</title>
     <!-- inject:vendor:css -->
     <link rel="stylesheet" href="/skeleton/css/skeleton.css">
+    <link rel="stylesheet" href="/ui-select/dist/select.css">
     <!-- endinject -->
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <!-- inject:css -->
@@ -13,7 +14,7 @@
   </head>
   <body ng-app='chronos'>
     <div class="nav-left boxed" id="nav-left">
-      This is Left Menu
+      <div ng-include src="'/templates/sideNav.html'"></div>
     </div>
     <div class="nav-top boxed" id="nav-top">
       <div ng-include="'/templates/nav-top.html'"></div>
@@ -21,7 +22,7 @@
     <div class="nav-top-left boxed" id="nav-top-left">
       <div ng-include="'/templates/nav-top.html'"></div>
     </div>
-    <div class="main-view boxed" ng-contoller='mainViewCtrl' id="main-view">
+    <div class="main-view boxed" id="main-view">
       <ng-view></ng-view>
     </div>
     <div class="curation-hover" id="curation-hover">
@@ -31,12 +32,19 @@
     </div>
     <!-- inject:vendor:js -->
     <script src="/angular/angular.js"></script>
+    <script src="/angular-resource/angular-resource.js"></script>
     <script src="/angular-route/angular-route.js"></script>
     <script src="/jquery/dist/jquery.js"></script>
+    <script src="/ui-select/dist/select.js"></script>
     <!-- endinject -->
     <!-- inject:js -->
-    <script src="/js/transit.js"></script>
     <script src="/app.js"></script>
+    <script src="/scripts/services/util.js"></script>
+    <script src="/scripts/services/api.js"></script>
+    <script src="/scripts/controllers/ticketListCont.js"></script>
+    <script src="/scripts/controllers/loginCtrl.js"></script>
+    <script src="/scripts/controllers/filterCtrl.js"></script>
+    <script src="/js/transit.js"></script>
     <script src="/chronos-templates.js"></script>
     <!-- endinject -->
   </body>
