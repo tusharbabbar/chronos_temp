@@ -1,11 +1,20 @@
-angular.module('chronos').controller('LoginCtrl', function($scope, LoginApi){
-  $scope.email = '',
-  $scope.password = '',
+angular.module('chronos').controller('LoginCtrl',[ '$scope', '$location', 'LoginApi', 'Util', function($scope, $location, LoginApi, Util){
+  $scope.email = ''
+  $scope.password = ''
 
   $scope.signin = function(){
     console.log('here')
     if ($scope.email && $scope.password) {
-      LoginApi.post($scope.email, $scope.password);
+      data = {
+        email: $scope.email,
+        password: $scope.password
+      }
+      LoginApi.save(data, function(data){
+        console.log(data)
+        Util.setLoggedInUserId(data.id);
+        Util.set_accesstoken(data.access_token);
+        $location.path('/')
+      });
     }
   }
-})
+}])
