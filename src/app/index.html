@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <title>chronos</title>
     <!-- inject:vendor:css -->
+    <link rel="stylesheet" href="/isteven-angular-multiselect/isteven-multi-select.css">
     <link rel="stylesheet" href="/skeleton/css/skeleton.css">
     <link rel="stylesheet" href="/ui-select/dist/select.css">
     <!-- endinject -->
@@ -17,10 +18,10 @@
       <div ng-include src="'/templates/sideNav.html'"></div>
     </div>
     <div class="nav-top boxed" id="nav-top">
-      <div ng-include="'/templates/nav-top.html'"></div>
+      <div ng-include="'/templates/nav-top.html'" ng-controller="navTopCtrl"></div>
     </div>
     <div class="nav-top-left boxed" id="nav-top-left">
-      <div ng-include="'/templates/nav-top.html'"></div>
+      <div ng-include="'/templates/nav-top.html'" ng-controller="navTopCtrl"></div>
     </div>
     <div class="main-view boxed" id="main-view">
       <ng-view></ng-view>
@@ -34,14 +35,22 @@
     <script src="/angular/angular.js"></script>
     <script src="/angular-resource/angular-resource.js"></script>
     <script src="/angular-route/angular-route.js"></script>
+    <script src="/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/angularUtils-pagination/dirPagination.js"></script>
+    <script src="/isteven-angular-multiselect/isteven-multi-select.js"></script>
     <script src="/jquery/dist/jquery.js"></script>
     <script src="/ui-select/dist/select.js"></script>
+    <script src="/underscore/underscore.js"></script>
     <!-- endinject -->
+
     <!-- inject:js -->
     <script src="/app.js"></script>
     <script src="/scripts/services/util.js"></script>
+    <script src="/scripts/services/ticketFilterService.js"></script>
+    <script src="/scripts/services/headingService.js"></script>
     <script src="/scripts/services/api.js"></script>
     <script src="/scripts/controllers/ticketListCont.js"></script>
+    <script src="/scripts/controllers/navTopCtrl.js"></script>
     <script src="/scripts/controllers/loginCtrl.js"></script>
     <script src="/scripts/controllers/filterCtrl.js"></script>
     <script src="/js/transit.js"></script>

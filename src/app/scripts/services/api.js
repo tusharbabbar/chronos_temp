@@ -33,6 +33,20 @@ angular.module('chronos').factory('LoginApi', [
       }
     });
   }
+]).factory('TicketsListCountApi', [
+  '$resource',
+  function($resource) {
+    return $resource(baseUrl + '/tickets/count', {
+    }, {
+      query: {
+        isArray: false,
+        method: 'GET'
+      },
+      update: {
+        method: 'PATCH'
+      }
+    });
+  }
 ]).factory('TicketCommentApi', [
   '$resource',
   function($resource) {

@@ -1,7 +1,37 @@
 <div id="ticket-filters">
-  <div class="row row-filter">My Issues</div>
-  <div class="row row-filter">Team Issues</div>
-  <div class="row row-filter">All Issues</div>
+  <div class="row row-filter" ng-click='preFilteredIssues("my_issues")'>
+    <span>
+      <div class="offset-by-two five columns">
+        My Issues
+      </div>
+      <div class="one column" >
+        <div class="button-number">{{counts.my_issues}}
+        </div>
+      </div>
+    </span>
+  </div>
+  <div class="row row-filter" ng-click='preFilteredIssues("my_team_issues")'>
+    <span>
+      <div class="offset-by-two five columns">
+        Team Issues
+      </div>
+      <div class="one column" >
+        <div class="button-number">{{counts.my_team_issues}}
+        </div>
+      </div>
+    </span>
+  </div>
+  <div class="row row-filter" ng-click='preFilteredIssues("all_issues")'>
+    <span>
+      <div class="offset-by-two five columns">
+        All Issues
+      </div>
+      <div class="one column" >
+        <div class="button-number">{{counts.all_issues}}
+        </div>
+      </div>
+    </span>
+  </div>
   <form style="margin-top:20px; paddin-left:10px">
     <div class="row">
       <div class="offset-by-one eight columns">
@@ -11,36 +41,76 @@
     <div class="row">
       <div class="offset-by-two eight columns">
         <small>Product</small>
-        <select class="u-full-width"></select>
+        <div
+        isteven-multi-select
+        input-model="products"
+        output-model="$parent.selected.products"
+        button-label="id"
+        item-label="id name"
+        tick-property="ticked"
+        >
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="offset-by-two eight columns">
         <small>Team</small>
-        <select class="u-full-width"></select>
+        <div
+        isteven-multi-select
+        input-model="teams"
+        output-model="$parent.selected.teams"
+        button-label="id"
+        item-label="id name"
+        tick-property="ticked"
+        >
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="offset-by-two eight columns">
         <small>Status</small>
-        <select class="u-full-width"></select>
+        <div
+        isteven-multi-select
+        input-model="statuses"
+        output-model="$parent.selected.statuses"
+        button-label="name"
+        item-label="id name"
+        tick-property="ticked"
+        >
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="offset-by-two eight columns">
         <small>Source</small>
-        <select class="u-full-width"></select>
+        <div
+        isteven-multi-select
+        input-model="sources"
+        output-model="$parent.selected.sources"
+        button-label="id"
+        item-label="id name"
+        tick-property="ticked"
+        >
+        </div>
       </div>
     </div>
-    <div class="row">
+    <!-- <div class="row"> -->
       <div class="offset-by-two eight columns">
         <small>Type</small>
-        <select class="u-full-width"></select>
+        <div
+        isteven-multi-select
+        input-model="types"
+        output-model="$parent.selected.types"
+        button-label="id"
+        item-label="id name"
+        tick-property="ticked"
+        >
+        </div>
       </div>
-    </div>
+    <!-- </div> -->
     <div class="row">
       <div class="offset-by-two eight columns">
-        <button ng-click="show()"></button>
+        <button class="button-primary" ng-click="apply_filters()"><small>Apply</small></button>
       </div>
     </div>
   </form>

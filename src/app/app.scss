@@ -11,7 +11,7 @@ src: url("/assets/BrandonText-Regular.otf") format("opentype");
 body {
   padding: 0px;
   background-color: #F7F7F7;
-  font: 20px/150% "BrandonText-Regular", sans-serif;
+  font: 1.5em "BrandonText-Regular", sans-serif;
 }
 
 .boxed {
@@ -69,7 +69,7 @@ body {
 
 
 .nav-left {
-  background-color: #0B5675;
+  background-color: #095675;
   padding-top: $top-browser;
   height: 100%;
   width: 300px;
@@ -118,14 +118,15 @@ body {
   box-shadow: 1px 1px 1px $border-color;
   max-width: 99%;
   width: 100%;
-  float: right
+  word-wrap: normal;
 }
 
 .listing-row {
   background-color: #FFFFFF;
   border: solid 1px $border-color;
-
 }
+
+.listing-table tr {line-height: 18px}
 
 .listing-cell {
   min-height: 50px;
@@ -161,22 +162,85 @@ body {
   top: $top-browser;
 }
 
-td:first-child {
+.listing-table td:first-child {
   padding: 15px 12px;
 }
 
-th:first-child {
+.listing-table th:first-child {
   padding: 15px 12px;
 }
 
-td, th {
+.listing-row td, th{
   text-align: center;
   border: 0px;
 }
 
 .row-filter {
-  text-align: center;
   border-bottom: solid 1px #DCDCDC;
   height: 40px;
   padding-top:12px
+}
+
+.row-filter :hover {
+  cursor: hand;
+  cursor: pointer;
+}
+
+.small-button {
+  @extend .boxed;
+  @extend .button;
+  width : 30px !important;
+  padding: 1px;
+  display: inline;
+  margin : 0px 7px 0px 7px;
+}
+
+.filter-select {
+  text-transform: uppercase;
+  font-family:  "BrandonText-Regular", sans-serif;
+}
+
+.multiSelect button {
+  @extend .row;
+  font-size: 12px;
+  background-image: linear-gradient(#fff, #ffffff);
+  word-wrap: normal;
+}
+
+.multiSelect > button:hover {
+    background-image: linear-gradient(#fff, #ffffff);
+}
+
+.multiSelect .buttonLabel {
+  display : inline-table;
+}
+.acol label {
+  text-transform: uppercase;
+  font-size: 12px
+}
+
+.listing-font {
+  color: #4DC5EA;
+  font-size: 1.5em;
+  padding-left:10px
+}
+
+.listing-table td {
+  font-size: 1em;
+}
+
+.button-number {
+  height : 24px !important;
+  max-width: 50px;
+  width: 35px !important;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 4px;
+  font-size: 13px;
+  background-color: #4DC5EA !important;
+  margin-bottom: auto;
+  border-color: #4DC5EA;
+  border-radius: 4px;
+  color: #FFFFFF;
+  text-align: center;
 }

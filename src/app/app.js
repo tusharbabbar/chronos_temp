@@ -3,7 +3,10 @@
 angular.module('chronos', [
   'ngRoute',
   'ngResource',
-  'ui.select'
+  'ui.select',
+  'angularUtils.directives.dirPagination',
+  'ngSanitize',
+  'isteven-multi-select'
 ]);
 
 angular.module('chronos')
@@ -34,6 +37,8 @@ angular.module('chronos')
       responseError: function (rejection) {
         if (rejection.status === 401) {
           console.log('Response Error 401', rejection);
+          $('#nav-top').css('display', 'none')
+          $('#nav-top-left').css('left', 'none')
           $location.path('/login').search('returnTo', $location.path());
         } else {
           console.log('Api Error');

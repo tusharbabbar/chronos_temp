@@ -1,6 +1,7 @@
-angular.module('chronos').controller('LoginCtrl',[ '$scope', '$location', 'LoginApi', 'Util', function($scope, $location, LoginApi, Util){
+angular.module('chronos').controller('LoginCtrl',[ '$scope', '$location', 'LoginApi', 'Util', 'headingService', function($scope, $location, LoginApi, Util, headingService){
   $scope.email = ''
   $scope.password = ''
+  headingService.pageHeading = "Login to Chronos"
 
   $scope.signin = function(){
     console.log('here')

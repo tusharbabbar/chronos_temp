@@ -6,138 +6,40 @@
     <div class="filters two columns">
       <div ng-include src="'/templates/filtersPane.html'" ng-controller='TicketListFilterCtrl'></div>
     </div>
-    <table class="offset-by-two ten columns listing-table">
-    <thead class="row listing-head-row">
-      <th class="one column">Source</th>
-      <th class="one column">ID</th>
-      <th class="three columns">Description</th>
-      <th class="one column">Product</th>
-      <th class="one column">Type</th>
-      <th class="two columns">State</th>
-      <th class="one column">SLA</th>
-      <th class="two columns">Assignee</th>
-    </thead>
-    <tbody>
-      <tr class="listing-row boxed row" ng-repeat="ticket in tickets">
-        <td class="one column" >{{ticket.Source}}</td>
-        <td class="one column">{{ticket.TicketID}}</td>
-        <td class="three columns">{{ticket.Description}}</td>
-        <td class="one column">{{ticket.Product}}</td>
-        <td class="one column">{{ticket.Type}}</td>
-        <td class="two columns">{{ticket.State}}</td>
-        <td class="one column">{{ticket.SLA}}</td>
-        <td class="two columns">{{ticket.Assignee}}</td>
-      </tr>
-      <!-- <tr class="listing-row boxed row">
-        <td class="one column" >tushar</td>
-        <td class="two columns">tushar</td>
-        <td class="three columns">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="two columns">tushar</td>
-      </tr>
-      <tr class="listing-row boxed row">
-        <td class="one column" >tushar</td>
-        <td class="two columns">tushar</td>
-        <td class="three columns">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="two columns">tushar</td>
-      </tr>
-      <tr class="listing-row boxed row">
-        <td class="one column" >tushar</td>
-        <td class="two columns">tushar</td>
-        <td class="three columns">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="two columns">tushar</td>
-      </tr>
-      <tr class="listing-row boxed row">
-        <td class="one column" >tushar</td>
-        <td class="two columns">tushar</td>
-        <td class="three columns">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="two columns">tushar</td>
-      </tr>
-      <tr class="listing-row boxed row">
-        <td class="one column" >tushar</td>
-        <td class="two columns">tushar</td>
-        <td class="three columns">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="two columns">tushar</td>
-      </tr>
-      <tr class="listing-row boxed row">
-        <td class="one column" >tushar</td>
-        <td class="two columns">tushar</td>
-        <td class="three columns">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="two columns">tushar</td>
-      </tr>
-      <tr class="listing-row boxed row">
-        <td class="one column" >tushar</td>
-        <td class="two columns">tushar</td>
-        <td class="three columns">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="two columns">tushar</td>
-      </tr>
-      <tr class="listing-row boxed row">
-        <td class="one column" >tushar</td>
-        <td class="two columns">tushar</td>
-        <td class="three columns">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="two columns">tushar</td>
-      </tr>
-      <tr class="listing-row boxed row">
-        <td class="one column" >tushar</td>
-        <td class="two columns">tushar</td>
-        <td class="three columns">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="two columns">tushar</td>
-      </tr>
-      <tr class="listing-row boxed row">
-        <td class="one column" >tushar</td>
-        <td class="two columns">tushar</td>
-        <td class="three columns">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="one column">tushar</td>
-        <td class="two columns">tushar</td>
-      </tr> -->
-    <!-- <tr class="listing-row boxed">
-      <td class="listing-cell">tushar</td>
-      <td>tushar</td>
-      <td>tushar</td>
-      <td>tushar</td>
-      <td>tushar</td>
-      <td>tushar</td>
-      <td>tushar</td>
-      <td>tushar</td>
-    </tr> -->
-  </tbody>
-  </table>
+    <div class="offset-by-two ten columns">
+      <table class="listing-table">
+      <thead class="row listing-head-row">
+        <th class="one column"><big>Source</big></th>
+        <th class="one column"><big>ID</big></th>
+        <th class="three columns"><big>Description</big></th>
+        <th class="one column"><big>Product</big></th>
+        <th class="one column"><big>Type</big></th>
+        <th class="two columns"><big>State</big></th>
+        <th class="one column"><big>SLA(Hrs)</big></th>
+        <th class="two columns"><big>Assignee</big></th>
+      </thead>
+      <tbody>
+        <tr class="listing-row boxed row" ng-repeat="ticket in tickets.list">
+          <td class="one column">
+            <i class="listing-font fa fa-envelope" style="font-size:1.3em" ng-if="ticket.source === 'email'"></i>
+            <i class="listing-font fa fa-chat" ng-if="ticket.source === 'chat'"></i>
+            <i class="listing-font fa fa-phone" ng-if="ticket.source === 'call'"></i>
+            <span ng-if="ticket.source != 'email' && ticket.source != 'chat' && ticket.source != 'call'">{{ticket.Source}}</span>
+          </td>
+          <td class="one column">#{{ticket.id}}</td>
+          <td class="three columns">{{ticket.description}}</td>
+          <td class="one column" style="text-transform:uppercase">{{ticket.product}}</td>
+          <td class="one column" style="text-transform:uppercase">{{ticket.type}}</td>
+          <td class="two columns">{{ticket.status}}</td>
+          <td class="one column">{{ticket.sla}}</td>
+          <td class="two columns">{{ticket.assignment_details.member.user.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="twelve columns" ng-if="tickets.pages > 0">
+        <button class="small-button" ng-repeat="page in tickets.pages" ng-click="pageChange(page + 1)">{{page}}</button>
+      </div>
+    </div>
+  </div>
 </div>
