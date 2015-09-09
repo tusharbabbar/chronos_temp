@@ -6,12 +6,13 @@
     <!-- inject:vendor:css -->
     <link rel="stylesheet" href="/isteven-angular-multiselect/isteven-multi-select.css">
     <link rel="stylesheet" href="/skeleton/css/skeleton.css">
-    <link rel="stylesheet" href="/ui-select/dist/select.css">
+    <link rel="stylesheet" href="/ng-tags-input/ng-tags-input.min.css">
     <!-- endinject -->
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <!-- inject:css -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- endinject -->
+    <link rel="stylesheet" href="/styles/curation.css">
   </head>
   <body ng-app='chronos'>
     <div class="nav-left boxed" id="nav-left">
@@ -28,7 +29,7 @@
     </div>
     <div class="curation-hover" id="curation-hover">
       <div class="curation-screen">
-        This is a Curation Screen
+        <div ng-include="'/templates/curation.html'"></div>
       </div>
     </div>
     <!-- inject:vendor:js -->
@@ -39,10 +40,9 @@
     <script src="/angularUtils-pagination/dirPagination.js"></script>
     <script src="/isteven-angular-multiselect/isteven-multi-select.js"></script>
     <script src="/jquery/dist/jquery.js"></script>
-    <script src="/ui-select/dist/select.js"></script>
     <script src="/underscore/underscore.js"></script>
+    <script src="/ng-tags-input/ng-tags-input.min.js"></script>
     <!-- endinject -->
-
     <!-- inject:js -->
     <script src="/app.js"></script>
     <script src="/scripts/services/util.js"></script>
@@ -50,10 +50,12 @@
     <script src="/scripts/services/headingService.js"></script>
     <script src="/scripts/services/api.js"></script>
     <script src="/scripts/controllers/ticketListCont.js"></script>
+    <script src="/scripts/controllers/ticketCtrl.js"></script>
     <script src="/scripts/controllers/navTopCtrl.js"></script>
     <script src="/scripts/controllers/loginCtrl.js"></script>
     <script src="/scripts/controllers/filterCtrl.js"></script>
     <script src="/js/transit.js"></script>
+    <script src="/curation.js"></script>
     <script src="/chronos-templates.js"></script>
     <!-- endinject -->
   </body>

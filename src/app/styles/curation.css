@@ -1,0 +1,155 @@
+#ticket-curration{
+    width: 100%;
+    overflow-y: auto;
+    height: 100%;
+    max-height: 700px;
+}
+
+#ticket-header{
+    margin: 10px 10px 10px 10px;
+    border-bottom: 1px solid #C0C0C0;
+    font-size: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+        box-sizing: border-box;
+}
+
+#due-time{
+    text-align: right;
+}
+
+#blue-color{
+    color:#33CCFF;
+}
+
+#ticket-info-heading{
+    font-size: 14px;
+}
+#ticket-body{
+    color:gray;
+}
+
+#ticket-body-left-top{
+    float: left;
+    width: 58%;
+    padding: 10px 10px 10px 10px;
+    webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+#ticket-info{
+    padding: 10px 10px 10px 10px;
+    overflow-y: auto;
+    max-height: 800px;
+}
+
+#profile-pic{
+    float: left;
+    border-radius:50% 50% 50% 50%;  
+    width:50px;
+    height:50px;
+}
+
+#doc-info{
+    float: left;
+    max-width: 500px;
+    padding-left:10px;
+}
+
+#time-info{
+    float: right;
+    max-width: 500px;
+    padding-right: 50px;
+    text-align: left;
+}
+
+#reference{
+    color:#33CCFF;
+}
+
+#attachment{
+    width:20px;
+    height:15px;
+}
+
+#time{
+    padding-left:10px;
+}
+
+#ticket-description{
+    clear: both;
+    padding-top: 30px;
+    min-height: 200px;
+}
+
+#ticket-body-left-bottom{
+    border-top: 1px solid #C0C0C0;
+    padding-top:30px;
+    padding-right: 10px;
+}
+
+#ticket-body-right{
+    float: right;
+    width: 42%;
+    border-left: 1px solid #C0C0C0;
+    padding: 10px 10px 10px 10px;
+    webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+#file-section{
+    min-height: 200px;
+    padding-top: 20px;
+}
+#file-type{
+    background-color:#33CCFF;
+    border-radius: 4% 4% 4% 4%;
+    color:white;
+    font-size: 10px;
+    text-align: center;
+    padding:3px;
+}
+#attached-files{
+    padding: 10px 0px 10px 10px;
+}
+
+#issue-detail{
+     padding-left:15px;
+     padding-right: 15px;
+     font-size: 12px;
+     margin: 0px;
+}
+#issue-heading{
+    font-size: 15px;
+    color:black;
+    padding-bottom: 15px;
+}
+.field{
+    font-size: 12px;
+}
+.issue-box{
+    font-size:10px;
+    height:30px;
+    width:95%;
+}
+#reply-textarea{
+    width: 100%;
+}
+.top-medium-pad{
+    padding-top: 10px;
+}
+.border-bottom{
+    border-bottom: 1px solid #C0C0C0;
+}
+#thumbnail{
+    max-width : 48px;
+    max-height: 48px;
+    border-radius: 20% 20% 20% 20%;
+    padding-right: 5px;
+}
+
+#ticket-footer{
+    border-top: 1px solid #C0C0C0;
+    padding: 10px 10px 10px 10px;
+}

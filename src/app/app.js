@@ -3,9 +3,8 @@
 angular.module('chronos', [
   'ngRoute',
   'ngResource',
-  'ui.select',
-  'angularUtils.directives.dirPagination',
   'ngSanitize',
+  'ngTagsInput',
   'isteven-multi-select'
 ]);
 
