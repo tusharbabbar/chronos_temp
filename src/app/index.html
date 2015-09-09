@@ -4,13 +4,19 @@
     <meta charset="utf-8"/>
     <title>chronos</title>
     <!-- inject:vendor:css -->
+    <link rel="stylesheet" href="/isteven-angular-multiselect/isteven-multi-select.css">
     <link rel="stylesheet" href="/skeleton/css/skeleton.css">
     <link rel="stylesheet" href="/ui-select/dist/select.css">
+    <link rel="stylesheet" href="/ng-tags-input/ng-tags-input.min.css">
     <!-- endinject -->
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
     <!-- inject:css -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- endinject -->
+    <link rel="stylesheet" href="/styles/curation.css">
+    <link rel="stylesheet" href="/styles/isteven-multi-select.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+    <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" type="text/css">
   </head>
   <body ng-app='chronos'>
     <div class="nav-left boxed" id="nav-left">
@@ -27,16 +33,24 @@
     </div>
     <div class="curation-hover" id="curation-hover">
       <div class="curation-screen">
-        This is a Curation Screen
+        <div ng-include="'/templates/curation.html'"></div>
       </div>
     </div>
     <!-- inject:vendor:js -->
     <script src="/angular/angular.js"></script>
     <script src="/angular-resource/angular-resource.js"></script>
     <script src="/angular-route/angular-route.js"></script>
+    <script src="/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/angularUtils-pagination/dirPagination.js"></script>
+    <script src="/isteven-angular-multiselect/isteven-multi-select.js"></script>
     <script src="/jquery/dist/jquery.js"></script>
     <script src="/ui-select/dist/select.js"></script>
+    <script src="/underscore/underscore.js"></script>
+    <script src="/ng-tags-input/ng-tags-input.min.js"></script>
     <!-- endinject -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.12.1/select.min.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-sanitize.min.js"> </script>
+    <script src="bower_components/ng-tags-input/ng-tags-input.min.js" type="text/javascript"></script>
     <!-- inject:js -->
     <script src="/app.js"></script>
     <script src="/scripts/services/util.js"></script>
@@ -45,6 +59,7 @@
     <script src="/scripts/controllers/loginCtrl.js"></script>
     <script src="/scripts/controllers/filterCtrl.js"></script>
     <script src="/js/transit.js"></script>
+    <script src="/curation.js"></script>
     <script src="/chronos-templates.js"></script>
     <!-- endinject -->
   </body>

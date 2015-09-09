@@ -3,7 +3,10 @@
 angular.module('chronos', [
   'ngRoute',
   'ngResource',
-  'ui.select'
+  'ui.select',
+  'ngSanitize',
+  'ngTagsInput',
+  'isteven-multi-select'
 ]);
 
 angular.module('chronos')

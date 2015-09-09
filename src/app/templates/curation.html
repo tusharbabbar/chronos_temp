@@ -1,0 +1,318 @@
+<div ng-controller="curationCtrl" id="ticket-curration">
+    <div id="ticket-header" class="row">
+        <div id="ticket-id" class="four columns">
+            Ticket ID: <span id="blue-color"> {{ticketId}}</span>
+        </div>
+        
+        <div class="four columns">
+            Customer: <span id="blue-color"> Allswell Clinic</span>
+        </div>
+       
+        <div id="due-time" class="four columns">
+            Due in 5 hrs
+        </div> 
+    </div>
+
+    <div id="ticket-body" class="row">
+        <div id="ticket-body-left-top">
+            <div id="ticket-info">
+                <div id="ticket-info-heading">
+                   <div id="profile-pic">
+                        <img src="/static/no-profile-image.jpg" id = "profile-pic"/>
+                   </div>
+                   <div id="doc-info">
+                        <div id="name" class="row">
+                           {{ticketCreator}}
+                        </div>
+                        <div id="reference" class="row">
+                            Allswell Clinic                       
+                        </div>
+                   </div>
+                   <div id="time-info">
+                        <img src="/static/attachment.png" id="attachment"/>
+                        <span id="time"> {{ticketCreatedOn}} </span>
+                   </div>
+                </div>
+                <div id="ticket-description">
+                     {{ticketDescription}} 
+                </div>
+                <div id="file-section">
+                    <div id="attached-files" class="row">
+                        <div id="file-type" class="two columns">
+                           JPEG
+                        </div>
+                       <div class="four columns">
+                           Screen Shot(160 KB)
+                       </div>
+                       <div class="one columns">
+                            &nbsp;
+                       </div>
+                       <div class="three columns">
+                            View
+                       </div>
+                       <div class="two columns">
+                            <img src="/static/downloads.png" id="attachment"/>
+                       </div>
+                    </div>
+                    <div id="attached-files" class="row">
+                        <div id="file-type" class="two columns">
+                           JPEG
+                        </div>
+                       <div class="four columns">
+                           Screen Shot(160 KB)
+                       </div>
+                       <div class="one columns">
+                            &nbsp;
+                       </div>
+                       <div class="three columns">
+                            View
+                       </div>
+                       <div class="two columns">
+                            <img src="/static/downloads.png" id="attachment"/>
+                       </div>
+                    </div>
+                </div>
+            </div>
+             <div id="ticket-body-left-bottom" class="row">
+                    <textarea id="reply-textarea" ng-model="comment" placeholder="Reply or Forward" row="6" ></textarea>
+            </div>
+        </div>
+         <div id="ticket-body-right">
+            <div id="issue-heading" class="row">
+                ISSUE DETAILS
+            </div>
+
+            <!-- Status -->
+            <div class="field top-medium-pad row">
+                <div class="five columns">
+                    Status
+                </div>
+                <div class="seven columns">
+                  <div
+                      isteven-multi-select
+                      input-model="statuses"
+                      output-model="status"
+                      button-label="name"
+                      item-label="name"
+                      tick-property="ticked"
+                      selection-mode="single"
+                      helper-elements=""
+                      >
+                  </div>
+                </div>
+            </div>
+            <!-- Product -->
+            <div class="field top-medium-pad row">
+                <div class="five columns">
+                    Product
+                </div>
+                <div class="seven columns">
+                  <div
+                      isteven-multi-select
+                      input-model="products"
+                      output-model="product"
+                      button-label="name"
+                      item-label="name"
+                      tick-property="ticked"
+                      selection-mode="single"
+                      helper-elements=""
+                      max-height = "200px">
+                  </div>
+                </div>
+            </div>
+
+            <!-- Source -->
+            <div class="field top-medium-pad row">
+                <div class="five columns">
+                    Source
+                </div>
+                <div class="seven columns">
+                  <div
+                      isteven-multi-select
+                      input-model="sources"
+                      output-model="source"
+                      button-label="name"
+                      item-label="name"
+                      tick-property="ticked"
+                      selection-mode="single"
+                      helper-elements=""
+                      max-height = "200px">
+                  </div>
+                </div>
+            </div>
+
+            <!-- Type -->
+           <div class="field top-medium-pad row">
+                <div class="five columns">
+                    Type
+                </div>
+                <div class="seven columns">
+                  <div
+                      isteven-multi-select
+                      input-model="types"
+                      output-model="type"
+                      button-label="name"
+                      item-label="name"
+                      tick-property="ticked"
+                      selection-mode="single"
+                      helper-elements=""
+                      max-height = "200px">
+                  </div>
+                </div>
+            </div>
+
+            <!-- Sentiment -->
+           <div class="field top-medium-pad row">
+                <div class="five columns">
+                  Sentiment
+                </div>
+                <div class="seven columns">
+                  <div
+                      isteven-multi-select
+                      input-model="sentiments"
+                      output-model="sentiment"
+                      button-label="name"
+                      item-label="name"
+                      tick-property="ticked"
+                      selection-mode="single"
+                      helper-elements=""
+                      max-height = "200px">
+                  </div>
+                </div>
+            </div>
+            
+            <!-- Owned by -->
+            <div class="field top-medium-pad row">
+                <div class="five columns">
+                  Owner Team
+                </div>
+                <div class="seven columns">
+                   <div
+                      isteven-multi-select
+                      input-model="ownerTeams"
+                      output-model="ownerTeam"
+                      button-label="name"
+                      on-item-click="getOwnerTeamMembers(data)"
+                      item-label="name"
+                      tick-property="ticked"
+                      selection-mode="single"
+                      helper-elements=""
+                      max-height = "200px">
+                  </div>
+                </div>
+            </div>
+
+            <!-- Owned member -->
+            <div class="field top-medium-pad row" ng-show="ownerTeam.length">
+                <div class="five columns">
+                  Owned By
+                </div>
+                <div class="seven columns">
+                  <div
+                    isteven-multi-select
+                    input-model="ownerTeamMembers"
+                    output-model="owner"
+                    button-label="name"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements=""
+                    max-height = "200px">
+                  </div>
+                </div>
+            </div>
+
+            <!-- Assigned to -->
+            <div class="field top-medium-pad row" ng-show="ownerTeam.length">
+                <div class="five columns">
+                  Assigned Team
+                </div>
+                <div class="seven columns">
+                  <div
+                    isteven-multi-select
+                    input-model="assignedTeams"
+                    output-model="assignedTeam"
+                    on-item-click="getAssignedTeamMembers(data)"
+                    button-label="name"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements=""
+                    max-height = "200px">
+                  </div>
+                </div>
+            </div>
+
+            <!-- Assigned member -->
+            <div class="field top-medium-pad row"  ng-show="assignedTeam.length">
+                <div class="five columns">
+                  Assigned Member
+                </div>
+                <div class="seven columns">
+                  <div
+                    isteven-multi-select
+                    input-model="assignedTeamMembers"
+                    output-model="assigned"
+                    button-label="name"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements=""
+                    max-height = "200px">
+                  </div>
+                </div>
+            </div>
+
+            <div class="field top-medium-pad row">
+                <div class="six columns">
+                    This is followup of Issue
+                </div>
+                <div class="one column">
+                     <span id="blue-color"> #</span>
+                </div>
+                <div class="five columns">
+                 <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="followUpOf"/>
+                </div>
+            </div>
+            <div class="field top-medium-pad row">
+                Add Tags
+            </div>
+            <div class="top-medium-pad row">
+                <tags-input ng-model='tags'  add-on-space="true"> </tags-input>
+            </div>
+            <div class="top-medium-pad border-bottom row"> </div>
+            <div class="top-medium-pad row">
+                Attachments
+            </div>
+            <div class="top-medium-pad row">
+                <img src="/static/clinic.jpeg" id="thumbnail"/>
+                <img src="/static/clinic.jpeg" id="thumbnail"/>
+                <img src="/static/clinic.jpeg" id="thumbnail"/>
+                <img src="/static/clinic.jpeg" id="thumbnail"/>
+            </div>
+            <div class="top-medium-pad border-bottom row"> </div>
+             <div class="top-medium-pad row">
+                Previous Issue Raised(AllsWell Clinic)
+            </div> 
+             <div class="top-medium-pad row">
+                <span id="blue-color"> #511287</span>
+                <span id="blue-color"> #511287</span>
+                <span id="blue-color"> #511287</span>
+            </div>
+        </div> 
+    </div>
+    <div id="ticket-footer" class="row">
+            <div class="seven columns">
+                &nbsp;
+            </div>
+            <div class="two columns"> 
+               <button class="button-primary" ng-click="save()">Save</button>
+            </div>
+            <div class="two columns"> 
+               <button ng-click="cancel()">Cancel</button>
+            </div>
+            <div class="one columns">
+                &nbsp;
+            </div>
+    </div>
+</div>
