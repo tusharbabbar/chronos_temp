@@ -1,0 +1,16 @@
+<div>
+  <div class="row" style="background-color:white; border: 1px solid #D7D7D7; border-radius:4px;">
+    <div class="row" style="padding:10px; margin:5px;">
+      <div class="two columns">Requester: {{ticket.requester_data.name}}
+      </div>
+      <div class="offset-by-one two columns">Email: {{ticket.requester_data.email}}
+      </div>
+      <div class="offset-by-one two columns">Phone: {{ticket.requester_data.phone}}
+      </div>
+      <div style="float:right;">{{created_on}}</div>
+    </div>
+    <div class="row"  style="padding:15px; margin:5px">
+      <div class="twelve columns" data-ng-bind-model="ticket.description">{{ticket.description}}</div>
+    </div>
+  </div>
+</div>

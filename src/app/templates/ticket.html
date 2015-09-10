@@ -1,0 +1,22 @@
+<div id="nav-top-ticket" class="nav-top-ticket row boxed">
+  <div ng-include="'/templates/nav-top-ticket.html'"></div>
+</div>
+<div id="nav-bottom-ticket" class="nav-bottom-ticket row boxed">
+  <div ng-include="'/templates/nav-bottom-ticket.html'"></div>
+</div>
+<div class="u-full-width ticket-main-view">
+  <div class="timeline-tile" style="float:left">
+    <div class="container container-timeline">
+      <div ng-include="'/templates/ticket-timeline.html'"></div>
+    </div>
+  </div>
+  <div class="ticket-details" style="float:right">
+    <div class="container" style="width:90%">
+      <div ng-include="'/templates/ticket-details.html'"></div>
+      This is ticket details
+    </div>
+  </div>
+</div>
+<div class="commenter-timeline">
+  <text-angular ta-toolbar="[['p', 'pre', 'quote'],['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],['justifyLeft', 'justifyCenter', 'justifyRight']]" ng-model="comment"></text-angular>
+</div>

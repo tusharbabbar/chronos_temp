@@ -5,7 +5,8 @@ angular.module('chronos', [
   'ngResource',
   'ngSanitize',
   'ngTagsInput',
-  'isteven-multi-select'
+  'isteven-multi-select',
+  'textAngular'
 ]);
 
 angular.module('chronos')
@@ -16,6 +17,9 @@ angular.module('chronos')
   }).when('/login', {
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'
+  }).when('/ticket/:id', {
+    templateUrl: 'templates/ticket.html',
+    controller: 'TicketCtrl'
   });
 }]).factory('authHttpResponseInterceptor', [
   '$q',

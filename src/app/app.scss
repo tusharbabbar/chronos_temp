@@ -1,17 +1,23 @@
 @import "styles/_base";
 
-$top-browser :100px;
+$top-browser :80px;
 $border-color : #DCDCDC;
+$font-color : #4DC5EA;
+
+// @font-face {
+// font-family: BrandonText-Regular;
+// src: url("/assets/BrandonText-Regular.otf") format("opentype");
+// }
 
 @font-face {
-font-family: BrandonText-Regular;
-src: url("/assets/BrandonText-Regular.otf") format("opentype");
+font-family: 'Open Sans';
+src: url("/assets/OpenSans-Regular.ttf");
 }
 
 body {
   padding: 0px;
   background-color: #F7F7F7;
-  font: 1.5em "BrandonText-Regular", sans-serif;
+  font: 1.5em "Open Sans";
 }
 
 .boxed {
@@ -30,8 +36,8 @@ body {
 
 .nav-top {
   background-color: #FFFFFF;
-  height: 100px;
-  padding: 25px;
+  height: $top-browser;
+  padding: 20px;
   padding-left: 0px;
   border: 0px;
   border-bottom: solid 1px $border-color;
@@ -47,10 +53,46 @@ body {
   z-index: -1000;
 }
 
+.nav-top-ticket {
+  background-color: #FFFFFF;
+  height: $top-browser;
+  padding: 20px;
+  padding-left: 0px;
+  border: 0px;
+  border-bottom: solid 1px $border-color;
+  position: fixed;
+  width:100%;
+  top: $top-browser;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  transition: left 0.5s, width 0.5s;
+  box-shadow: 2px 0px 5px 1px $border-color;
+  z-index: 1002;
+}
+
+.nav-bottom-ticket {
+  background-color: #FFFFFF;
+  height: $top-browser - 10px;
+  padding: 20px;
+  padding-left: 0px;
+  border: 0px;
+  border-bottom: solid 1px $border-color;
+  position: fixed;
+  width:100%;
+  bottom: 0px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  transition: left 0.5s, width 0.5s;
+  box-shadow: 2px 1px 2px 2px $border-color;
+  z-index: 1002;
+}
+
 .nav-top-left {
   background-color: #FFFFFF;
-  height: 100px;
-  padding: 25px;
+  height: $top-browser;
+  padding: 20px;
   padding-left: 0px;
   padding-right: 0px;
   border: 0px;
@@ -77,7 +119,8 @@ body {
   left: -300px;
   top: 0px;
   transition: left 0.5s;
-  color: #FFFFFF
+  color: #FFFFFF;
+  z-index: 1005;
 }
 
 .main-view {
@@ -140,17 +183,38 @@ body {
     background-color: #FFFFFF;
     color: #A9A9A9;
     cursor: hand;
+    cursor: pointer;
 }
 
 .burger-menu:hover {
 }
 
+.back-arrow {
+    border: 0px solid #000000;
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 20px;
+    width: 15px;
+    background-color: #FFFFFF;
+    color: #A9A9A9;
+    cursor: hand;
+    cursor: pointer;
+}
 
 .page-heading {
     border: 0px solid #000000;
     display: inline-block;
     margin-right: 5px;
     background-color: #FFFFFF;
+    text-transform:capitalize;
+}
+
+.listing-row .column {
+  margin-left: 10px;
+}
+
+.listing-row .columns {
+  margin-left: 10px;
 }
 
 .filters {
@@ -243,4 +307,68 @@ body {
   border-radius: 4px;
   color: #FFFFFF;
   text-align: center;
+}
+
+.multiSelect button {
+  max-height: 100px;
+  overflow-y: auto;
+  min-width: 100%
+}
+
+.ticket-main-view {
+  position: relative;
+  top: $top-browser;
+}
+
+.timeline-tile {
+  border-right: 1px solid $border-color;
+  width: 74%;
+  height: 100%;
+  min-height: 600px;
+  margin-bottom: $top-browser;
+}
+
+.ticket-details {
+  width: 25%;
+  margin-bottom: $top-browser;
+}
+
+.container-timeline {
+  width:95%;
+  max-width: 1200px !important
+}
+
+.commenter-timeline {
+  border-right: 1px solid $border-color;
+  width: 73.31%;
+  height: 100%;
+  max-height: 200px;
+  min-height: 200px;
+  position: fixed;
+  background-color: #FFFFFF;
+  border: 1px solid $border-color;
+  position: fixed;
+  padding: 20px;
+  bottom: $top-browser - 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  transition: left 0.5s, width 0.5s;
+  // box-shadow: 2px 1px 2px 2px $border-color;
+  z-index: 1002;
+}
+
+.ta-toolbar {
+  border: 1px solid #D7D7D7;
+  padding: 5px;
+  height: 40px
+}
+
+.ta-editor {
+  border: 1px solid #D7D7D7;
+  border-top: 0px;
+  height: 100%;
+  min-height: 100px !important;
+  max-height: 100px;
+  line-height: 5px;
 }

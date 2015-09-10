@@ -19,16 +19,17 @@
     "src"
   ],
   "dependencies": {
+    "Ionicons": "ionicons#~2.0.1",
     "angular": "~1.4.0",
     "angular-resource": "~1.4.5",
     "angular-route": "~1.4.0",
     "angular-sanitize": "~1.4.5",
-    "angularUtils-pagination": "angular-utils-pagination#~0.8.4",
     "isteven-angular-multiselect": "~4.0.0",
     "jquery": "~2.1.4",
+    "ng-tags-input": "~2.3.0",
     "skeleton": "~2.0.4",
-    "underscore": "~1.8.3",
-    "ng-tags-input": "~2.3.0"
+    "textAngular": "~1.4.3",
+    "underscore": "~1.8.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.14"
