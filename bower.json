@@ -26,10 +26,11 @@
     "angular-sanitize": "~1.4.5",
     "isteven-angular-multiselect": "~4.0.0",
     "jquery": "~2.1.4",
-    "ng-tags-input": "~2.3.0",
     "skeleton": "~2.0.4",
     "textAngular": "~1.4.3",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "ment.io": "~0.9.23",
+    "ng-tags-input": "~2.3.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.14"

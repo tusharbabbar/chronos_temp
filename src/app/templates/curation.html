@@ -1,18 +1,17 @@
 <div ng-controller="curationCtrl" id="ticket-curration">
     <div id="ticket-header" class="row">
         <div id="ticket-id" class="four columns">
-            Ticket ID: <span id="blue-color"> {{ticketId}}</span>
+            Ticket ID: <span class="blue-color"> {{ticketId}}</span>
         </div>
         
-        <div class="four columns">
+       <!--  <div class="four columns">
             Customer: <span id="blue-color"> Allswell Clinic</span>
         </div>
        
         <div id="due-time" class="four columns">
             Due in 5 hrs
-        </div> 
+        </div>  -->
     </div>
-
     <div id="ticket-body" class="row">
         <div id="ticket-body-left-top">
             <div id="ticket-info">
@@ -21,60 +20,47 @@
                         <img src="/static/no-profile-image.jpg" id = "profile-pic"/>
                    </div>
                    <div id="doc-info">
-                        <div id="name" class="row">
                            {{ticketCreator}}
-                        </div>
-                        <div id="reference" class="row">
-                            Allswell Clinic                       
-                        </div>
                    </div>
                    <div id="time-info">
-                        <img src="/static/attachment.png" id="attachment"/>
                         <span id="time"> {{ticketCreatedOn}} </span>
                    </div>
+                   <div style="clear:both;"></div>
                 </div>
                 <div id="ticket-description">
-                     {{ticketDescription}} 
+                     {{ticketDescription}}
                 </div>
-                <div id="file-section">
-                    <div id="attached-files" class="row">
-                        <div id="file-type" class="two columns">
+               <!--  <div id="file-section">
+                    <div class="attached-files row">
+                        <div class="file-type two columns">
                            JPEG
                         </div>
-                       <div class="four columns">
+                       <div class="five columns">
                            Screen Shot(160 KB)
                        </div>
-                       <div class="one columns">
-                            &nbsp;
-                       </div>
-                       <div class="three columns">
+                       <div class="two columns">
                             View
                        </div>
-                       <div class="two columns">
+                       <div class="three columns">
                             <img src="/static/downloads.png" id="attachment"/>
                        </div>
                     </div>
-                    <div id="attached-files" class="row">
-                        <div id="file-type" class="two columns">
-                           JPEG
-                        </div>
-                       <div class="four columns">
-                           Screen Shot(160 KB)
-                       </div>
-                       <div class="one columns">
-                            &nbsp;
-                       </div>
-                       <div class="three columns">
-                            View
-                       </div>
-                       <div class="two columns">
-                            <img src="/static/downloads.png" id="attachment"/>
-                       </div>
-                    </div>
-                </div>
+                </div> -->
             </div>
              <div id="ticket-body-left-bottom" class="row">
-                    <textarea id="reply-textarea" ng-model="comment" placeholder="Reply or Forward" row="6" ></textarea>
+                <script type="text/ng-template" id="/people-mentions.tpl">
+                      <ul class="list-group user-search">
+                        <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
+                          <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
+                          </span>
+                        </li>
+                      </ul>
+                </script>
+                <textarea type="text" placeholder="Type a new comment" class="form-control panel-body" 
+                  mentio = "" mentio-template-url='/people-mentions.tpl'
+                  mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm" 
+                  mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="comment" id="reply-textarea">
+                </textarea>
             </div>
         </div>
          <div id="ticket-body-right">
@@ -83,7 +69,7 @@
             </div>
 
             <!-- Status -->
-            <div class="field top-medium-pad row">
+            <div class="top-medium-pad row">
                 <div class="five columns">
                     Status
                 </div>
@@ -102,7 +88,7 @@
                 </div>
             </div>
             <!-- Product -->
-            <div class="field top-medium-pad row">
+            <div class="top-medium-pad row">
                 <div class="five columns">
                     Product
                 </div>
@@ -116,7 +102,7 @@
                       tick-property="ticked"
                       selection-mode="single"
                       helper-elements=""
-                      max-height = "200px">
+                      >
                   </div>
                 </div>
             </div>
@@ -136,13 +122,13 @@
                       tick-property="ticked"
                       selection-mode="single"
                       helper-elements=""
-                      max-height = "200px">
+                      >
                   </div>
                 </div>
             </div>
 
             <!-- Type -->
-           <div class="field top-medium-pad row">
+           <div class="top-medium-pad row">
                 <div class="five columns">
                     Type
                 </div>
@@ -155,14 +141,13 @@
                       item-label="name"
                       tick-property="ticked"
                       selection-mode="single"
-                      helper-elements=""
-                      max-height = "200px">
+                      helper-elements="">
                   </div>
                 </div>
             </div>
 
             <!-- Sentiment -->
-           <div class="field top-medium-pad row">
+           <div class="top-medium-pad row">
                 <div class="five columns">
                   Sentiment
                 </div>
@@ -175,14 +160,13 @@
                       item-label="name"
                       tick-property="ticked"
                       selection-mode="single"
-                      helper-elements=""
-                      max-height = "200px">
+                      helper-elements="">
                   </div>
                 </div>
             </div>
             
             <!-- Owned by -->
-            <div class="field top-medium-pad row">
+            <div class="top-medium-pad row">
                 <div class="five columns">
                   Owner Team
                 </div>
@@ -196,8 +180,7 @@
                       item-label="name"
                       tick-property="ticked"
                       selection-mode="single"
-                      helper-elements=""
-                      max-height = "200px">
+                      helper-elements="">
                   </div>
                 </div>
             </div>
@@ -223,7 +206,7 @@
             </div>
 
             <!-- Assigned to -->
-            <div class="field top-medium-pad row" ng-show="ownerTeam.length">
+            <div class="top-medium-pad row" ng-show="ownerTeam.length">
                 <div class="five columns">
                   Assigned Team
                 </div>
@@ -237,16 +220,15 @@
                     item-label="name"
                     tick-property="ticked"
                     selection-mode="single"
-                    helper-elements=""
-                    max-height = "200px">
+                    helper-elements="">
                   </div>
                 </div>
             </div>
 
             <!-- Assigned member -->
-            <div class="field top-medium-pad row"  ng-show="assignedTeam.length">
+            <div class="top-medium-pad row"  ng-show="assignedTeam.length">
                 <div class="five columns">
-                  Assigned Member
+                  Assigned To
                 </div>
                 <div class="seven columns">
                   <div
@@ -257,30 +239,26 @@
                     item-label="name"
                     tick-property="ticked"
                     selection-mode="single"
-                    helper-elements=""
-                    max-height = "200px">
+                    helper-elements="">
                   </div>
                 </div>
             </div>
 
-            <div class="field top-medium-pad row">
-                <div class="six columns">
-                    This is followup of Issue
-                </div>
-                <div class="one column">
-                     <span id="blue-color"> #</span>
-                </div>
+            <div class="top-medium-pad row">
                 <div class="five columns">
+                    Followup of Issue
+                </div>
+                <div class="seven columns">
                  <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="followUpOf"/>
                 </div>
             </div>
-            <div class="field top-medium-pad row">
+            <div class="top-medium-pad row">
                 Add Tags
             </div>
             <div class="top-medium-pad row">
                 <tags-input ng-model='tags'  add-on-space="true"> </tags-input>
             </div>
-            <div class="top-medium-pad border-bottom row"> </div>
+            <!-- <div class="top-medium-pad border-bottom row"> </div>
             <div class="top-medium-pad row">
                 Attachments
             </div>
@@ -293,26 +271,22 @@
             <div class="top-medium-pad border-bottom row"> </div>
              <div class="top-medium-pad row">
                 Previous Issue Raised(AllsWell Clinic)
-            </div> 
-             <div class="top-medium-pad row">
-                <span id="blue-color"> #511287</span>
-                <span id="blue-color"> #511287</span>
-                <span id="blue-color"> #511287</span>
             </div>
-        </div> 
+             <div class="top-medium-pad row">
+                <span class="blue-color"> #511287</span>
+                <span class="blue-color"> #511287</span>
+                <span class="blue-color"> #511287</span>
+            </div> -->
+        </div>
     </div>
     <div id="ticket-footer" class="row">
-            <div class="seven columns">
-                &nbsp;
-            </div>
-            <div class="two columns"> 
+            <div class="offset-by-seven two columns">
                <button class="button-primary" ng-click="save()">Save</button>
             </div>
-            <div class="two columns"> 
+            <div class="two columns">
                <button ng-click="cancel()">Cancel</button>
             </div>
-            <div class="one columns">
-                &nbsp;
+            <div class="offset-by-one">
             </div>
     </div>
 </div>
