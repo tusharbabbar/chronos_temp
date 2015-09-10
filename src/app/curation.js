@@ -1,7 +1,24 @@
 angular.module('chronos').controller('curationCtrl',
-  [ '$scope', 'SourcesListApi', 'ProductsListApi', 'TypesListApi', 'TeamsListApi',
-    'TeamMembersListApi', 'TicketTagApi', 'TicketCommentsListApi', 'TicketApi',
-     function ($scope, SourcesListApi, ProductsListApi, TypesListApi, TeamsListApi, TeamMembersListApi, TicketTagApi, TicketCommentsListApi, TicketApi) {
+  [ '$scope',
+    'UserApi',
+    'SourcesListApi',
+    'ProductsListApi',
+    'TypesListApi',
+    'TeamsListApi',
+    'TeamMembersListApi',
+    'TicketTagApi',
+    'TicketCommentsListApi',
+    'TicketApi',
+     function ($scope,
+      UserApi,
+      SourcesListApi,
+      ProductsListApi,
+      TypesListApi,
+      TeamsListApi,
+      TeamMembersListApi,
+      TicketTagApi,
+      TicketCommentsListApi,
+      TicketApi) {
             var ticketId = 2;
             //default
             $scope.singleSelectSetting = {selectionLimit: 1};
@@ -40,12 +57,16 @@ angular.module('chronos').controller('curationCtrl',
             TeamsListApi.get( {if_assigned : 1}, function (data) {
               $scope.assignedTeams = data.teams;
             });
+            $scope.capitalizeFirstLetter = function toTitleCase(string){
+                return string[0].toUpperCase() + string.slice(1);
+            };
             //get ticket detail
             TicketApi.get( {id : ticketId} , function(data){
                 $scope.ticketDescription = data.description;
                 $scope.ticketId = data.id;
-                $scope.ticketCreatedOn = data.created_on;
-                $scope.ticketCreator = data.created_by.name;
+                temp = data.created_on;
+                $scope.ticketCreatedOn = temp.substring(0, temp.indexOf(" "));
+                $scope.ticketCreator = $scope.capitalizeFirstLetter(data.created_by.name);
                 $scope.childOf = data.child_of;
                 $scope.val = data;
                 console.log("ticket data");
@@ -191,9 +212,8 @@ angular.module('chronos').controller('curationCtrl',
                   data[mapping[items[i]]] = $scope[items[i]][0].id;
                 }
               }
-              console.log("sentiment...");
               console.log($scope.sentiment);
-              if ($scope.sentiment) {
+              if ($scope.sentiment.length) {
                 data.sentiment = $scope.sentiment[0].name;
               }
 
@@ -230,5 +250,20 @@ angular.module('chronos').controller('curationCtrl',
             $scope.cancel = function() {
               //cancel action
               console.log($scope.tags);
+            };
+            $scope.searchPeople = function(term) {
+              console.log(term)
+              if (term.length > 3){
+                UserApi.get({ query: term}, function (data) {
+                  console.log(data)
+                  $scope.items = data.users;
+                }, function (data) {
+                  console.log(data);
+                });
+              }
+            };
+            $scope.getSelectedEmail = function(item) {
+              console.log(item);
+              return "@" + item.name.replace(' ','') + ":" + String(item.id)
             };
 }]);

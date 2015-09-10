@@ -5,7 +5,8 @@ angular.module('chronos', [
   'ngResource',
   'ngSanitize',
   'ngTagsInput',
-  'isteven-multi-select'
+  'isteven-multi-select',
+  'mentio'
 ]);
 
 angular.module('chronos')

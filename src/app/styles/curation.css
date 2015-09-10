@@ -6,27 +6,22 @@
 }
 
 #ticket-header{
-    margin: 10px 10px 10px 10px;
-    border-bottom: 1px solid #C0C0C0;
     font-size: 20px;
+    margin: 10px 10px 10px 10px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
         box-sizing: border-box;
 }
 
-#due-time{
-    text-align: right;
-}
-
-#blue-color{
+.blue-color{
     color:#33CCFF;
 }
 
-#ticket-info-heading{
-    font-size: 14px;
-}
 #ticket-body{
     color:gray;
+    font-size: 15px;
+    border-top: 1px solid #C0C0C0;
+    padding-top:10px;
 }
 
 #ticket-body-left-top{
@@ -39,9 +34,9 @@
 }
 
 #ticket-info{
-    padding: 10px 10px 10px 10px;
     overflow-y: auto;
     max-height: 800px;
+    min-height: 500px;
 }
 
 #profile-pic{
@@ -61,24 +56,10 @@
     float: right;
     max-width: 500px;
     padding-right: 50px;
-    text-align: left;
-}
-
-#reference{
-    color:#33CCFF;
-}
-
-#attachment{
-    width:20px;
-    height:15px;
-}
-
-#time{
-    padding-left:10px;
+    text-align: right;
 }
 
 #ticket-description{
-    clear: both;
     padding-top: 30px;
     min-height: 200px;
 }
@@ -98,40 +79,33 @@
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
+
+#ticket-info-heading{
+    font-size: 18px;
+    font-weight: bold;
+}
 #file-section{
-    min-height: 200px;
     padding-top: 20px;
 }
-#file-type{
+.file-type{
     background-color:#33CCFF;
-    border-radius: 4% 4% 4% 4%;
+    border-radius: 5% 5% 5% 5%;
     color:white;
     font-size: 10px;
     text-align: center;
     padding:3px;
 }
-#attached-files{
-    padding: 10px 0px 10px 10px;
-}
-
 #issue-detail{
      padding-left:15px;
      padding-right: 15px;
-     font-size: 12px;
      margin: 0px;
 }
 #issue-heading{
-    font-size: 15px;
     color:black;
     padding-bottom: 15px;
 }
-.field{
-    font-size: 12px;
-}
 .issue-box{
-    font-size:10px;
     height:30px;
-    width:95%;
 }
 #reply-textarea{
     width: 100%;
@@ -141,6 +115,16 @@
 }
 .border-bottom{
     border-bottom: 1px solid #C0C0C0;
+}
+.buttonLabel {
+    width : 150px;
+}
+.attached-files{
+    padding-bottom: 10px;
+}
+.tags
+{
+    border-radius: 4% 4% 4% 4%;
 }
 #thumbnail{
     max-width : 48px;

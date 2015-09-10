@@ -28,6 +28,7 @@
     "jquery": "~2.1.4",
     "skeleton": "~2.0.4",
     "underscore": "~1.8.3",
+    "ment.io": "~0.9.23",
     "ng-tags-input": "~2.3.0"
   },
   "devDependencies": {
