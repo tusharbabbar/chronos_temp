@@ -106,7 +106,12 @@ angular.module('chronos').factory('LoginApi', [
 ]).factory('AssignmentActionApi', [
   '$resource',
   function($resource) {
-    return $resource(baseUrl + '/assignmentactions');
+    return $resource(baseUrl + '/assignmentactions', {
+    }, {
+      save: {
+        method: 'POST'
+      }
+    });
   }
 ]).factory('TypeApi', [
   '$resource',

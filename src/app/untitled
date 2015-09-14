@@ -1,0 +1,675 @@
+angular.module('chronos').controller('curationCtrl',
+  [ '$scope',
+    '$window',
+    'ticketCurationService',
+    'UserApi',
+    'SourcesListApi',
+    'ProductsListApi',
+    'TypesListApi',
+    'TeamsListApi',
+    'TeamMembersListApi',
+    'TicketTagApi', 
+    'TicketCommentsListApi',
+    'TicketApi',
+     function ($scope,
+      $window,
+      ticketCurationService,
+      UserApi,
+      SourcesListApi,
+      ProductsListApi,
+      TypesListApi,
+      TeamsListApi,
+      TeamMembersListApi,
+      TicketTagApi,
+      TicketCommentsListApi,
+      TicketApi) {
+            //default
+            console.log("Entered in ticket curationCtrl");
+            console.log($scope.ticketId);
+            $scope.singleSelectSetting = {selectionLimit: 1};
+            console.log($scope.statuses);
+            $scope.sentiments = [
+              {name : 'Happy'},
+              {name : 'Neutral'},
+              {name : 'Angry'}
+            ];
+            //get list of sources
+            SourcesListApi.get(function (data) {
+              $scope.sources = data.sources;
+            });
+            //get list of products
+            ProductsListApi.get(function (data) {
+              $scope.products = data.products;
+            });
+            //get list of types
+            TypesListApi.get(function (data) {
+              $scope.types = data.types;
+            });
+            //get list of owner teams
+            TeamsListApi.get( {if_owner : 1}, function (data) {
+              $scope.ownerTeams = data.teams;
+            });
+            //get list of assigned teams
+            TeamsListApi.get( {if_assigned : 1}, function (data) {
+              $scope.assignedTeams = data.teams;
+            });
+            $scope.capitalizeFirstLetter = function toTitleCase(string){
+                return string[0].toUpperCase() + string.slice(1);
+            };
+            //get ticket detail
+            $scope.showTicket = function() {
+              $scope.statuses = [
+                {name : 'RESOLVED'},
+                {name : 'INVALID'}
+              ];
+              var items = ['product', 'status', 'sentiment', 'type', 'source', 'owner',
+                'assigned', 'assignedTeam', 'ownerTeam', 'tags']
+              for (i=0;i<items.length; i++){
+                $scope[items[i]] = [];
+              }
+              $scope.ticketId = ticketCurationService.getTicketId();
+              console.log("here", $scope.ticketId);
+              TicketApi.get( {id : $scope.ticketId} , function(data){
+                $scope.ticketDescription = data.description;
+                $scope.ticketId = data.id;
+                $scope.childOf = data.child_of;
+                $scope.val = data;
+                console.log("ticket data");
+                console.log(data);
+                //set status
+                if( ! (data.status == "RESOLVED" || data.status == "INVALID") ) {
+                    $scope.statuses.push({name : data.status});
+                }
+                for( i in $scope.statuses ){
+                  currentStatus = $scope.statuses[i];
+                  if(currentStatus.name === data.status) {
+                    currentStatus.ticked = true;
+                    $scope.status[0] = currentStatus;
+                  }
+                  else{
+                    currentStatus.ticked = false;
+                  }
+                }
+                //set type
+                for( i in $scope.types ){
+                  currentType = $scope.types[i];
+                  if(currentType.name == data.type) {
+                    currentType.ticked = true;
+                    $scope.type[0] = currentType;
+                  }
+                  else{
+                    currentType.ticked = false;
+                  }
+                }
+                //set source
+                for( i in $scope.sources ){
+                  currentSource = $scope.sources[i];
+                  if(currentSource.name == data.source) {
+                    currentSource.ticked = true;
+                    $scope.source[0] = currentSource;
+                  }
+                  else{
+                     currentSource.ticked = false;
+                  }
+                }
+                //set product
+                for( i in $scope.products ){
+                  currentProduct = $scope.products[i];
+                  if(currentProduct.name == data.product) {
+                    currentProduct.ticked = true;
+                    $scope.product[0] = currentProduct;
+                    console.log($scope.product);
+                  }
+                  else{
+                    currentProduct.ticked = false;
+                  }
+                }
+                //set owner team
+                if (data.owner_details && data.owner_details.team){
+                  for( i in $scope.ownerTeams ){
+                    currentOwnerTeam = $scope.ownerTeams[i];
+                    if(currentOwnerTeam.name == data.owner_details.team.name) {
+                      currentOwnerTeam.ticked = true;
+                      $scope.ownerTeam[0] = currentOwnerTeam;
+                      $scope.getOwnerTeamMembers(currentOwnerTeam, data.owner_details.member);
+                    }
+                    else{
+                      currentOwnerTeam.ticked = false;
+                    }
+                  }
+                }
+                //set assigned team
+                if (data.assignment_details && data.assignment_details.team) {
+                  for( i in $scope.assignedTeams ){
+                    currentAssignedTeam = $scope.assignedTeams[i];
+                    if(currentAssignedTeam.name == data.assignment_details.team.name) {
+                      currentAssignedTeam.ticked = true;
+                      $scope.assignedTeam[0] = currentAssignedTeam;
+                      $scope.getAssignedTeamMembers(currentAssignedTeam, data.assignment_details.member);
+                    }
+                    else{
+                      currentAssignedTeam.ticked = false;
+                    }
+                  }
+                }
+
+                TicketTagApi.get({ticket_id: $scope.ticketId}, function(data){
+                    var tags = data.tags;
+                    console.log("tags");
+                    console.log(data);
+                    if (tags != []){
+                      $scope.tags = [];
+                      for (var i=0; i<tags.length; i++){
+                        $scope.tags.push({text:tags[i]});
+                      }
+                    }
+                  }, function(data){
+                  console.log("TicketTag Error");
+                });
+              });
+            };
+            $scope.getOwnerTeamMembers = function(data, memberInfo){
+              memberInfo = typeof memberInfo !== 'undefined' ? memberInfo : false;
+              console.log("getOwnerTeamMembers");
+              console.log(data);
+              console.log("memberInfo");
+              console.log(memberInfo);
+              TeamMembersListApi.get({team_id : data.id}, function (data){
+                for( i in data.members) {
+                  member = data.members[i];
+                  member.name = member.user.name;
+                }
+                $scope.ownerTeamMembers = data.members;
+                if (memberInfo) {
+                  for( i in $scope.ownerTeamMembers){
+                    ownerTeamMember =  $scope.ownerTeamMembers[i];
+                    if(memberInfo.id == ownerTeamMember.id){
+                      ownerTeamMember.ticked = true;
+                      $scope.owner[0] = ownerTeamMember;
+                    }
+                    else{
+                      ownerTeamMember.ticked = false;
+                    }
+                  }
+                }
+              }, function (errorData){
+                $scope.ownerTeamMembers = [];
+              });
+            };
+
+            $scope.getAssignedTeamMembers = function(data, memberInfo ){
+              TeamMembersListApi.get({team_id : data.id}, function (data){
+                for( i in data.members) {
+                  member = data.members[i];
+                  member.name = member.user.name;
+                }
+                $scope.assignedTeamMembers = data.members;
+                if (memberInfo) {
+                  for( i in $scope.assignedTeamMembers){
+                    assignedTeamMember =  $scope.assignedTeamMembers[i];
+                    if(memberInfo.id == assignedTeamMember.id){
+                      assignedTeamMember.ticked = true;
+                      $scope.assigned[0] = assignedTeamMember;
+                    }
+                    else{
+                       assignedTeamMember.ticked = false;
+                    }
+                  }
+                }
+              }, function (errorData){
+                $scope.assignedTeamMembers = [];
+              });
+            };
+
+            $scope.save = function() {
+              var data = {};
+              data.id = $scope.ticketId;
+              data.description = $scope.ticketDescription;
+              var items = ['product', 'type', 'source', 'owner', 'assigned', 'assignedTeam', 'ownerTeam']
+              var mapping = {
+                product:'product_id',
+                type:'type_id',
+                source:'source_id',
+                owner:'set_owner_member',
+                assigned:'assign_to_member',
+                ownerTeam:'set_owner_team',
+                assignedTeam:'assign_to_team'
+              }
+              for(var i=0; i<items.length; i++){
+                if ($scope[items[i]].length) {
+                  console.log(items[i]);
+                  console.log($scope[items[i]]);
+                  data[mapping[items[i]]] = $scope[items[i]][0].id;
+                }
+              }
+              console.log($scope.sentiment);
+              if ($scope.sentiment.length) {
+                data.sentiment = $scope.sentiment[0].name;
+              }
+
+              if ($scope.status.name === 'INVALID' || $scope.status.name === 'RESOLVED') {
+                data.status = $scope.status[0].name;
+              }
+
+              if ($scope.followUpOf) {
+                data.set_followup_of = $scope.followUpOf;
+              }
+              var dataTags = [];
+              for (i=0; i<$scope.tags.length; i++){
+                dataTags.push($scope.tags[i].text);
+              }
+              data.tags = dataTags;
+              console.log("data sent is ");
+              console.log(data);
+              TicketApi.update(data, function (data) {
+                console.log("ticket updated");
+                //save ticket comment
+                if ($scope.comment) {
+                  console.log($scope.comment);
+                  TicketCommentsListApi.save({ticket_id : $scope.ticketId, body : $scope.comment}, function(data){
+                    console.log(data);
+                  }, function (errorData) {
+                    console.log(errorData);
+                  });
+                }
+              }, function (errorData) {
+                  console.log(errorData);
+              });
+              $window.showCuration(0);
+            };
+            $scope.cancel = function() {
+              $window.showCuration(0);
+            };
+            $scope.searchPeople = function(term) {
+              console.log(term)
+              if (term.length > 3){
+                UserApi.get({ query: term}, function (data) {
+                  console.log(data)
+                  $scope.items = data.users;
+                }, function (data) {
+                  console.log(data);
+                });
+              }
+            };
+            $scope.getSelectedEmail = function(item) {
+              console.log(item);
+              return "@" + item.name.replace(' ','') + ":" + String(item.id)
+            };
+}]);
+
+
+------------------
+
+<div ng-controller="curationCtrl" id="ticket-curration">
+    <div id="curation-top">
+      <div ng-click="cancel()" style="display:inline-block;">
+        <i class="fa fa-times-circle"></i>
+      </div>
+      <div style="display:inline-block; text-align:center;">Ticket ID: <span class="blue-color"> {{ticketId}}</span> </div>
+    </div>
+
+    <div id="curation-main">
+      <!-- Curation main Left screen -->
+        <div id="ticket-curation-left">
+          <div id="ticket-curation-left-top">
+              <div id="description-heading">
+                  DESCRIPTION
+              </div>
+              <div id="ticket-description">
+                   {{ticketDescription}}
+              </div>
+          </div>
+          <div id="ticket-curration-left-bottom" class="row">
+            <script type="text/ng-template" id="/people-mentions.tpl">
+                  <ul class="list-group user-search">
+                    <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
+                      <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
+                      </span>
+                    </li>
+                  </ul>
+            </script>
+            
+            <textarea type="text" placeholder="Type a new comment" class="form-control panel-body" 
+              mentio = "" mentio-template-url='/people-mentions.tpl'
+              mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm" 
+              mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="comment" id="comment-textarea">
+            </textarea>
+          </div>
+        </div>
+
+       <div id="ticket-curration-right">
+          <div id="issue-heading" class="row">
+              ISSUE DETAILS
+          </div>
+          <!-- Status -->
+          <div class="row">
+              <div class="five columns">
+                  Status
+              </div>
+              <div class="seven columns">
+                <div
+                    isteven-multi-select
+                    input-model="statuses"
+                    output-model="status"
+                    button-label="name"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements=""
+                    >
+                </div>
+              </div>
+          </div>
+          <!-- Product -->
+          <div class="top-medium-pad row">
+              <div class="five columns">
+                  Product
+              </div>
+              <div class="seven columns">
+                <div
+                    isteven-multi-select
+                    input-model="products"
+                    output-model="product"
+                    button-label="name"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements=""
+                    >
+                </div>
+              </div>
+          </div>
+
+          <!-- Source -->
+          <div class="field top-medium-pad row">
+              <div class="five columns">
+                  Source
+              </div>
+              <div class="seven columns">
+                <div
+                    isteven-multi-select
+                    input-model="sources"
+                    output-model="source"
+                    button-label="name"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements=""
+                    >
+                </div>
+              </div>
+          </div>
+
+          <!-- Type -->
+         <div class="top-medium-pad row">
+              <div class="five columns">
+                  Type
+              </div>
+              <div class="seven columns">
+                <div
+                    isteven-multi-select
+                    input-model="types"
+                    output-model="type"
+                    button-label="name"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements="">
+                </div>
+              </div>
+          </div>
+
+          <!-- Sentiment -->
+         <div class="top-medium-pad row">
+              <div class="five columns">
+                Sentiment
+              </div>
+              <div class="seven columns">
+                <div
+                    isteven-multi-select
+                    input-model="sentiments"
+                    output-model="sentiment"
+                    button-label="name"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements="">
+                </div>
+              </div>
+          </div>
+ 
+          <!-- Owned by -->
+          <div class="top-medium-pad row">
+              <div class="five columns">
+                Owner Team
+              </div>
+              <div class="seven columns">
+                 <div
+                    isteven-multi-select
+                    input-model="ownerTeams"
+                    output-model="ownerTeam"
+                    button-label="name"
+                    on-item-click="getOwnerTeamMembers(data)"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements="">
+                </div>
+              </div>
+          </div>
+
+          <!-- Owned member -->
+          <div class="field top-medium-pad row" ng-show="ownerTeam.length">
+              <div class="five columns">
+                Owned By
+              </div>
+              <div class="seven columns">
+                <div
+                  isteven-multi-select
+                  input-model="ownerTeamMembers"
+                  output-model="owner"
+                  button-label="name"
+                  item-label="name"
+                  tick-property="ticked"
+                  selection-mode="single"
+                  helper-elements=""
+                  max-height = "200px">
+                </div>
+              </div>
+          </div>
+
+          <!-- Assigned to -->
+          <div class="top-medium-pad row" ng-show="ownerTeam.length">
+              <div class="five columns">
+                Assigned Team
+              </div>
+              <div class="seven columns">
+                <div
+                  isteven-multi-select
+                  input-model="assignedTeams"
+                  output-model="assignedTeam"
+                  on-item-click="getAssignedTeamMembers(data)"
+                  button-label="name"
+                  item-label="name"
+                  tick-property="ticked"
+                  selection-mode="single"
+                  helper-elements="">
+                </div>
+              </div>
+          </div>
+
+          <!-- Assigned member -->
+          <div class="top-medium-pad row"  ng-show="assignedTeam.length">
+              <div class="five columns">
+                Assigned To
+              </div>
+              <div class="seven columns">
+                <div
+                  isteven-multi-select
+                  input-model="assignedTeamMembers"
+                  output-model="assigned"
+                  button-label="name"
+                  item-label="name"
+                  tick-property="ticked"
+                  selection-mode="single"
+                  helper-elements="">
+                </div>
+              </div>
+          </div>
+
+          <div class="top-medium-pad row">
+              <div class="five columns">
+                  Followup of Issue
+              </div>
+              <div class="seven columns">
+               <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="followUpOf" style="width:100%"/>
+              </div>
+          </div>
+          <div class="top-medium-pad row">
+              Add Tags
+          </div>
+          <div class="top-medium-pad row">
+              <tags-input ng-model='tags'  add-on-space="true"> </tags-input>
+          </div>
+      </div>
+  </div>
+
+  <!-- curration bottom screen -->
+  <div id="curation-bottom">
+    <div class="bottom-buttons">
+      <button ng-click="cancel()"> <small> Cancel </small></button>
+    </div>
+    <div class="bottom-buttons">
+      <button class="button-primary" ng-click="save()"><small>Save</small ></button>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom code
+  <div class="offset-by-seven two columns">
+             <button class="button-primary" ng-click="save()">Save</button>
+          </div>
+          <div class="two columns">
+             <button ng-click="cancel()">Cancel</button>
+          </div>
+          <div class="offset-by-one">
+          </div>
+-->
+-----------------
+
+#ticket-curration{
+    width: 97%;
+    height: 100%;
+}
+
+#curation-top{
+    font-size: 20px;
+    width:97%;
+    height:50px;
+    position: fixed;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+        box-sizing: border-box;
+}
+
+#curation-bottom{
+    border-top: 1px solid #C0C0C0;
+    position: fixed;
+    bottom:0px;
+    height : 70px;
+    width:53%;
+    padding:10px;
+    background-color: white;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+        box-sizing: border-box;
+}
+
+.blue-color{
+    color:#33CCFF;
+}
+
+#description-heading,#issue-heading{
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+#curation-main{
+    font-size: 15px;
+    border-top: 1px solid #C0C0C0;
+    width : 100%;
+    margin-top: 50px;
+    margin-bottom: 170px;
+    position: absolute;
+    width: 97%;
+    height: 100%;
+    overflow:hidden;
+    webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+#ticket-curation-left{
+    float: left;
+    width: 55%;
+    height : 100%;
+    position: relative;
+    webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+#ticket-curation-left-top{
+    height: 100%;
+    padding: 10px;
+}
+
+#comment-textarea{
+    width: 100%;
+}
+
+#ticket-description{
+    word-wrap: break-word;
+    height: 100%;
+    overflow-y:auto;
+    padding-bottom: 360px;
+    webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+#ticket-curration-left-bottom{
+    border-top: 1px solid #C0C0C0;
+    padding:10px;
+    position:absolute;
+    bottom:208px;
+    width:100%;
+    height: 100px;
+    background-color: white;
+    webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+#ticket-curration-right{
+    float: right;
+    padding: 10px 10px 250px 10px;
+    width: 45%;
+    height: 100%;
+    border-left: 1px solid #C0C0C0;
+    overflow-y: scroll;
+    webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+
+}
+
+.bottom-buttons{
+    float : right;
+    padding-right: 10px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

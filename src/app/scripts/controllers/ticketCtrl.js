@@ -9,6 +9,12 @@ angular.module('chronos').controller('TicketCtrl',
   'TicketCommentsListApi',
   'TicketMailsApi',
   'UserApi',
+  'SourcesListApi',
+  'ProductsListApi',
+  'TypesListApi',
+  'TeamsListApi',
+  'TeamMembersListApi',
+  'TicketTagApi',
   function($scope,
     $sce,
     $routeParams,
@@ -18,10 +24,47 @@ angular.module('chronos').controller('TicketCtrl',
     taOptions,
     TicketCommentsListApi,
     TicketMailsApi,
-    UserApi){
+    UserApi,
+    SourcesListApi,
+    ProductsListApi,
+    TypesListApi,
+    TeamsListApi,
+    TeamMembersListApi,
+    TicketTagApi){
   headingService.pageHeading.value = 'Issue Details'
   var pages = ['all_issues', 'my_issues', 'my_team_issues'];
-  console.log(ticketFilterService.filters)
+  console.log(ticketFilterService.filters);
+  $scope.sentiments = [
+              {name : 'Happy'},
+              {name : 'Neutral'},
+              {name : 'Angry'}
+            ];
+  var items = ['product', 'status', 'sentiment', 'type', 'source', 'owner',
+                'assigned', 'assignedTeam', 'ownerTeam', 'tags']
+  for (i=0;i<items.length; i++){
+    $scope[items[i]] = [];
+  }
+  //get list of sources
+  SourcesListApi.get(function (data) {
+    $scope.sources = data.sources;
+  });
+  //get list of products
+  ProductsListApi.get(function (data) {
+    $scope.products = data.products;
+  });
+  //get list of types
+  TypesListApi.get(function (data) {
+    $scope.types = data.types;
+  });
+  //get list of owner teams
+  TeamsListApi.get( {if_owner : 1}, function (data) {
+    $scope.ownerTeams = data.teams;
+  });
+  //get list of assigned teams
+  TeamsListApi.get( {if_assigned : 1}, function (data) {
+    $scope.assignedTeams = data.teams;
+  });
+  
   for(var i=0; i<pages.length; i++){
     console.log(ticketFilterService.filters[pages[i]])
     if (ticketFilterService.filters[pages[i]] == 1)
@@ -31,7 +74,85 @@ angular.module('chronos').controller('TicketCtrl',
   TicketApi.get({id:$routeParams.id}, function(data){
     $scope.ticket = data
     date = new Date(data.created_on * 1000)
-    $scope.created_on = date.toString()
+    $scope.created_on = date.toString();
+    
+    //set status
+    if( ! (data.status == "RESOLVED" || data.status == "INVALID") ) {
+        $scope.statuses.push({name : data.status});
+    }
+    for( i in $scope.statuses ){
+      currentStatus = $scope.statuses[i];
+      if(currentStatus.name === data.status) {
+        currentStatus.ticked = true;
+        $scope.status[0] = currentStatus;
+      }
+      else{
+        currentStatus.ticked = false;
+      }
+    }
+    //set type
+    for( i in $scope.types ){
+      currentType = $scope.types[i];
+      if(currentType.name == data.type) {
+        currentType.ticked = true;
+        $scope.type[0] = currentType;
+      }
+      else{
+        currentType.ticked = false;
+      }
+    }
+    //set source
+    for( i in $scope.sources ){
+      currentSource = $scope.sources[i];
+      if(currentSource.name == data.source) {
+        currentSource.ticked = true;
+        $scope.source[0] = currentSource;
+      }
+      else{
+         currentSource.ticked = false;
+      }
+    }
+    //set product
+    for( i in $scope.products ){
+      currentProduct = $scope.products[i];
+      if(currentProduct.name == data.product) {
+        currentProduct.ticked = true;
+        $scope.product[0] = currentProduct;
+        console.log($scope.product);
+      }
+      else{
+        currentProduct.ticked = false;
+      }
+    }
+    //set owner team
+    if (data.owner_details && data.owner_details.team){
+      for( i in $scope.ownerTeams ){
+        currentOwnerTeam = $scope.ownerTeams[i];
+        if(currentOwnerTeam.name == data.owner_details.team.name) {
+          currentOwnerTeam.ticked = true;
+          $scope.ownerTeam[0] = currentOwnerTeam;
+          $scope.getOwnerTeamMembers(currentOwnerTeam, data.owner_details.member);
+        }
+        else{
+          currentOwnerTeam.ticked = false;
+        }
+      }
+    }
+    //set assigned team
+    if (data.assignment_details && data.assignment_details.team) {
+      for( i in $scope.assignedTeams ){
+        currentAssignedTeam = $scope.assignedTeams[i];
+        if(currentAssignedTeam.name == data.assignment_details.team.name) {
+          currentAssignedTeam.ticked = true;
+          $scope.assignedTeam[0] = currentAssignedTeam;
+          $scope.getAssignedTeamMembers(currentAssignedTeam, data.assignment_details.member);
+        }
+        else{
+          currentAssignedTeam.ticked = false;
+        }
+      }
+    }
+
   });
 
   $scope.toggleShowCommenter = function(){
@@ -96,6 +217,58 @@ angular.module('chronos').controller('TicketCtrl',
     }
   };
 
+  $scope.getOwnerTeamMembers = function(data, memberInfo){
+    memberInfo = typeof memberInfo !== 'undefined' ? memberInfo : false;
+    console.log("getOwnerTeamMembers");
+    console.log(data);
+    console.log("memberInfo");
+    console.log(memberInfo);
+    TeamMembersListApi.get({team_id : data.id}, function (data){
+      for( i in data.members) {
+        member = data.members[i];
+        member.name = member.user.name;
+      }
+      $scope.ownerTeamMembers = data.members;
+      if (memberInfo) {
+        for( i in $scope.ownerTeamMembers){
+          ownerTeamMember =  $scope.ownerTeamMembers[i];
+          if(memberInfo.id == ownerTeamMember.id){
+            ownerTeamMember.ticked = true;
+            $scope.owner = ownerTeamMember;
+          }
+        }
+      }
+    }, function (errorData){
+      $scope.ownerTeamMembers = [];
+    });
+  };
+
+  $scope.getAssignedTeamMembers = function(data, memberInfo ){
+    TeamMembersListApi.get({team_id : data.id}, function (data){
+      for( i in data.members) {
+        member = data.members[i];
+        member.name = member.user.name;
+      }
+      $scope.assignedTeamMembers = data.members;
+      if (memberInfo) {
+        for( i in $scope.assignedTeamMembers){
+          assignedTeamMember =  $scope.assignedTeamMembers[i];
+          if(memberInfo.id == assignedTeamMember.id){
+            assignedTeamMember.ticked = true;
+            $scope.assigned = assignedTeamMember;
+          }
+        }
+      }
+    }, function (errorData){
+      $scope.assignedTeamMembers = [];
+    });
+  };
+  
+  $scope.saveTicketDetails = function() {
+    
+  };
+  
+  $scope.comment="comment"
   // taOptions.toolbar = [
   //     ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
   //     ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
