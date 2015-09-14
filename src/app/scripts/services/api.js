@@ -126,7 +126,9 @@ angular.module('chronos').factory('LoginApi', [
 ]).factory('TicketMailsApi', [
   '$resource',
   function($resource) {
-    return $resource(baseUrl + '/tickets/mails', {
+    return $resource(baseUrl + '/tickets/:id/mails', {
+      id: '@id'
+    }, {
       save: {
         method: 'POST'
       }

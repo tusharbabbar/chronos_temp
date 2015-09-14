@@ -5,18 +5,21 @@
   <div ng-include="'/templates/nav-bottom-ticket.html'"></div>
 </div>
 <div class="u-full-width ticket-main-view">
-  <div class="timeline-tile" style="float:left">
+  <div class="timeline-tile" style="">
     <div class="container container-timeline">
       <div ng-include="'/templates/ticket-timeline.html'"></div>
     </div>
   </div>
-  <div class="ticket-details" style="float:right">
+  <div class="ticket-details" style="">
     <div class="container" style="width:90%">
       <div ng-include="'/templates/ticket-details.html'"></div>
       This is ticket details
     </div>
   </div>
 </div>
-<div class="commenter-timeline">
-  <text-angular ta-toolbar="[['p', 'pre', 'quote'],['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],['justifyLeft', 'justifyCenter', 'justifyRight']]" ng-model="comment"></text-angular>
+<div class="commenter-timeline" ng-if="data.showCommenter">
+  <div ng-include="'/templates/commenter-timeline.html'"></div>
+</div>
+<div class="mailer-timeline" ng-if="!data.showCommenter">
+  <div ng-include="'/templates/mailer-timeline.html'"></div>
 </div>
