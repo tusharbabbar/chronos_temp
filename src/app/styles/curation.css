@@ -1,13 +1,27 @@
 #ticket-curration{
-    width: 100%;
-    overflow-y: auto;
+    width: 97%;
     height: 100%;
-    max-height: 700px;
 }
 
-#ticket-header{
+#curation-top{
     font-size: 20px;
-    margin: 10px 10px 10px 10px;
+    width:97%;
+    height:50px;
+    position: fixed;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+        box-sizing: border-box;
+}
+
+#curation-bottom{
+    border-top: 1px solid #C0C0C0;
+    position: fixed;
+    bottom:0px;
+    height : 70px;
+    width:53%;
+    padding:10px;
+    background-color: white;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
         box-sizing: border-box;
@@ -17,123 +31,86 @@
     color:#33CCFF;
 }
 
-#ticket-body{
-    color:gray;
-    font-size: 15px;
-    border-top: 1px solid #C0C0C0;
-    padding-top:10px;
+#description-heading,#issue-heading{
+    font-weight: bold;
+    padding-bottom: 10px;
 }
 
-#ticket-body-left-top{
-    float: left;
-    width: 58%;
-    padding: 10px 10px 10px 10px;
+#curation-main{
+    font-size: 15px;
+    border-top: 1px solid #C0C0C0;
+    width : 100%;
+    margin-top: 50px;
+    margin-bottom: 170px;
+    position: absolute;
+    width: 97%;
+    height: 100%;
+    overflow:hidden;
     webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
 
-#ticket-info{
-    overflow-y: auto;
-    max-height: 800px;
-    min-height: 500px;
-}
-
-#profile-pic{
+#ticket-curation-left{
     float: left;
-    border-radius:50% 50% 50% 50%;  
-    width:50px;
-    height:50px;
+    width: 55%;
+    height : 100%;
+    position: relative;
+    webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
-#doc-info{
-    float: left;
-    max-width: 500px;
-    padding-left:10px;
+#ticket-curation-left-top{
+    height: 100%;
+    padding: 10px;
 }
 
-#time-info{
-    float: right;
-    max-width: 500px;
-    padding-right: 50px;
-    text-align: right;
+#comment-textarea{
+    width: 100%;
 }
 
 #ticket-description{
-    padding-top: 30px;
-    min-height: 200px;
-}
-
-#ticket-body-left-bottom{
-    border-top: 1px solid #C0C0C0;
-    padding-top:30px;
-    padding-right: 10px;
-}
-
-#ticket-body-right{
-    float: right;
-    width: 42%;
-    border-left: 1px solid #C0C0C0;
-    padding: 10px 10px 10px 10px;
+    word-wrap: break-word;
+    height: 100%;
+    overflow-y:auto;
+    padding-bottom: 360px;
     webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
 
-#ticket-info-heading{
-    font-size: 18px;
-    font-weight: bold;
-}
-#file-section{
-    padding-top: 20px;
-}
-.file-type{
-    background-color:#33CCFF;
-    border-radius: 5% 5% 5% 5%;
-    color:white;
-    font-size: 10px;
-    text-align: center;
-    padding:3px;
-}
-#issue-detail{
-     padding-left:15px;
-     padding-right: 15px;
-     margin: 0px;
-}
-#issue-heading{
-    color:black;
-    padding-bottom: 15px;
-}
-.issue-box{
-    height:30px;
-}
-#reply-textarea{
-    width: 100%;
-}
-.top-medium-pad{
-    padding-top: 10px;
-}
-.border-bottom{
-    border-bottom: 1px solid #C0C0C0;
-}
-.buttonLabel {
-    width : 150px;
-}
-.attached-files{
-    padding-bottom: 10px;
-}
-.tags
-{
-    border-radius: 4% 4% 4% 4%;
-}
-#thumbnail{
-    max-width : 48px;
-    max-height: 48px;
-    border-radius: 20% 20% 20% 20%;
-    padding-right: 5px;
+#ticket-curration-left-bottom{
+    border-top: 1px solid #C0C0C0;
+    padding:10px;
+    position:absolute;
+    bottom:208px;
+    width:100%;
+    height: 100px;
+    background-color: white;
+    webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
-#ticket-footer{
-    border-top: 1px solid #C0C0C0;
-    padding: 10px 10px 10px 10px;
+#ticket-curration-right{
+    float: right;
+    padding: 10px 10px 250px 10px;
+    width: 45%;
+    height: 100%;
+    border-left: 1px solid #C0C0C0;
+    overflow-y: scroll;
+    webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+
+}
+
+.bottom-buttons{
+    float : right;
+    padding-right: 10px;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }

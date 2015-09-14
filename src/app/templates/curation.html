@@ -1,292 +1,255 @@
 <div ng-controller="curationCtrl" id="ticket-curration">
-    <div id="ticket-header" class="row">
-        <div id="ticket-id" class="four columns">
-            Ticket ID: <span class="blue-color"> {{ticketId}}</span>
-        </div>
-        
-       <!--  <div class="four columns">
-            Customer: <span id="blue-color"> Allswell Clinic</span>
-        </div>
-       
-        <div id="due-time" class="four columns">
-            Due in 5 hrs
-        </div>  -->
+    <div id="curation-top">
+      <div ng-click="cancel()" style="display:inline-block;">
+        <i class="fa fa-times-circle"></i>
+      </div>
+      <div style="display:inline-block; text-align:center;">Ticket ID: <span class="blue-color"> {{ticketId}}</span> </div>
     </div>
-    <div id="ticket-body" class="row">
-        <div id="ticket-body-left-top">
-            <div id="ticket-info">
-                <div id="ticket-info-heading">
-                   <div id="profile-pic">
-                        <img src="/static/no-profile-image.jpg" id = "profile-pic"/>
-                   </div>
-                   <div id="doc-info">
-                           {{ticketCreator}}
-                   </div>
-                   <div id="time-info">
-                        <span id="time"> {{ticketCreatedOn}} </span>
-                   </div>
-                   <div style="clear:both;"></div>
-                </div>
-                <div id="ticket-description">
-                     {{ticketDescription}}
-                </div>
-               <!--  <div id="file-section">
-                    <div class="attached-files row">
-                        <div class="file-type two columns">
-                           JPEG
-                        </div>
-                       <div class="five columns">
-                           Screen Shot(160 KB)
-                       </div>
-                       <div class="two columns">
-                            View
-                       </div>
-                       <div class="three columns">
-                            <img src="/static/downloads.png" id="attachment"/>
-                       </div>
-                    </div>
-                </div> -->
-            </div>
-             <div id="ticket-body-left-bottom" class="row">
-                <script type="text/ng-template" id="/people-mentions.tpl">
-                      <ul class="list-group user-search">
-                        <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
-                          <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
-                          </span>
-                        </li>
-                      </ul>
-                </script>
-                <textarea type="text" placeholder="Type a new comment" class="form-control panel-body" 
-                  mentio = "" mentio-template-url='/people-mentions.tpl'
-                  mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm" 
-                  mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="comment" id="reply-textarea">
-                </textarea>
-            </div>
-        </div>
-         <div id="ticket-body-right">
-            <div id="issue-heading" class="row">
-                ISSUE DETAILS
-            </div>
 
-            <!-- Status -->
-            <div class="top-medium-pad row">
-                <div class="five columns">
-                    Status
-                </div>
-                <div class="seven columns">
-                  <div
-                      isteven-multi-select
-                      input-model="statuses"
-                      output-model="status"
-                      button-label="name"
-                      item-label="name"
-                      tick-property="ticked"
-                      selection-mode="single"
-                      helper-elements=""
-                      >
-                  </div>
-                </div>
-            </div>
-            <!-- Product -->
-            <div class="top-medium-pad row">
-                <div class="five columns">
-                    Product
-                </div>
-                <div class="seven columns">
-                  <div
-                      isteven-multi-select
-                      input-model="products"
-                      output-model="product"
-                      button-label="name"
-                      item-label="name"
-                      tick-property="ticked"
-                      selection-mode="single"
-                      helper-elements=""
-                      >
-                  </div>
-                </div>
-            </div>
-
-            <!-- Source -->
-            <div class="field top-medium-pad row">
-                <div class="five columns">
-                    Source
-                </div>
-                <div class="seven columns">
-                  <div
-                      isteven-multi-select
-                      input-model="sources"
-                      output-model="source"
-                      button-label="name"
-                      item-label="name"
-                      tick-property="ticked"
-                      selection-mode="single"
-                      helper-elements=""
-                      >
-                  </div>
-                </div>
-            </div>
-
-            <!-- Type -->
-           <div class="top-medium-pad row">
-                <div class="five columns">
-                    Type
-                </div>
-                <div class="seven columns">
-                  <div
-                      isteven-multi-select
-                      input-model="types"
-                      output-model="type"
-                      button-label="name"
-                      item-label="name"
-                      tick-property="ticked"
-                      selection-mode="single"
-                      helper-elements="">
-                  </div>
-                </div>
-            </div>
-
-            <!-- Sentiment -->
-           <div class="top-medium-pad row">
-                <div class="five columns">
-                  Sentiment
-                </div>
-                <div class="seven columns">
-                  <div
-                      isteven-multi-select
-                      input-model="sentiments"
-                      output-model="sentiment"
-                      button-label="name"
-                      item-label="name"
-                      tick-property="ticked"
-                      selection-mode="single"
-                      helper-elements="">
-                  </div>
-                </div>
-            </div>
+    <div id="curation-main">
+      <!-- Curation main Left screen -->
+        <div id="ticket-curation-left">
+          <div id="ticket-curation-left-top">
+              <div id="description-heading">
+                  DESCRIPTION
+              </div>
+              <div id="ticket-description">
+                   {{ticketDescription}}
+              </div>
+          </div>
+          <div id="ticket-curration-left-bottom" class="row">
+            <script type="text/ng-template" id="/people-mentions.tpl">
+                  <ul class="list-group user-search">
+                    <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
+                      <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
+                      </span>
+                    </li>
+                  </ul>
+            </script>
             
-            <!-- Owned by -->
-            <div class="top-medium-pad row">
-                <div class="five columns">
-                  Owner Team
-                </div>
-                <div class="seven columns">
-                   <div
-                      isteven-multi-select
-                      input-model="ownerTeams"
-                      output-model="ownerTeam"
-                      button-label="name"
-                      on-item-click="getOwnerTeamMembers(data)"
-                      item-label="name"
-                      tick-property="ticked"
-                      selection-mode="single"
-                      helper-elements="">
-                  </div>
-                </div>
-            </div>
+            <textarea type="text" placeholder="Type a new comment" class="form-control panel-body" 
+              mentio = "" mentio-template-url='/people-mentions.tpl'
+              mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm" 
+              mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="comment" id="comment-textarea">
+            </textarea>
+          </div>
+        </div>
 
-            <!-- Owned member -->
-            <div class="field top-medium-pad row" ng-show="ownerTeam.length">
-                <div class="five columns">
-                  Owned By
-                </div>
-                <div class="seven columns">
-                  <div
+       <div id="ticket-curration-right">
+          <div id="issue-heading" class="row">
+              ISSUE DETAILS
+          </div>
+          <!-- Status -->
+          <div class="row">
+              <div class="five columns">
+                  Status
+              </div>
+              <div class="seven columns">
+                <div
                     isteven-multi-select
-                    input-model="ownerTeamMembers"
-                    output-model="owner"
+                    input-model="statuses"
+                    output-model="status"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
                     selection-mode="single"
                     helper-elements=""
-                    max-height = "200px">
-                  </div>
+                    >
                 </div>
-            </div>
-
-            <!-- Assigned to -->
-            <div class="top-medium-pad row" ng-show="ownerTeam.length">
-                <div class="five columns">
-                  Assigned Team
-                </div>
-                <div class="seven columns">
-                  <div
+              </div>
+          </div>
+          <!-- Product -->
+          <div class="top-medium-pad row">
+              <div class="five columns">
+                  Product
+              </div>
+              <div class="seven columns">
+                <div
                     isteven-multi-select
-                    input-model="assignedTeams"
-                    output-model="assignedTeam"
-                    on-item-click="getAssignedTeamMembers(data)"
+                    input-model="products"
+                    output-model="product"
+                    button-label="name"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements=""
+                    >
+                </div>
+              </div>
+          </div>
+
+          <!-- Source -->
+          <div class="field top-medium-pad row">
+              <div class="five columns">
+                  Source
+              </div>
+              <div class="seven columns">
+                <div
+                    isteven-multi-select
+                    input-model="sources"
+                    output-model="source"
+                    button-label="name"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements=""
+                    >
+                </div>
+              </div>
+          </div>
+
+          <!-- Type -->
+         <div class="top-medium-pad row">
+              <div class="five columns">
+                  Type
+              </div>
+              <div class="seven columns">
+                <div
+                    isteven-multi-select
+                    input-model="types"
+                    output-model="type"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
                     selection-mode="single"
                     helper-elements="">
-                  </div>
                 </div>
-            </div>
+              </div>
+          </div>
 
-            <!-- Assigned member -->
-            <div class="top-medium-pad row"  ng-show="assignedTeam.length">
-                <div class="five columns">
-                  Assigned To
-                </div>
-                <div class="seven columns">
-                  <div
+          <!-- Sentiment -->
+         <div class="top-medium-pad row">
+              <div class="five columns">
+                Sentiment
+              </div>
+              <div class="seven columns">
+                <div
                     isteven-multi-select
-                    input-model="assignedTeamMembers"
-                    output-model="assigned"
+                    input-model="sentiments"
+                    output-model="sentiment"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
                     selection-mode="single"
                     helper-elements="">
-                  </div>
                 </div>
-            </div>
+              </div>
+          </div>
+ 
+          <!-- Owned by -->
+          <div class="top-medium-pad row">
+              <div class="five columns">
+                Owner Team
+              </div>
+              <div class="seven columns">
+                 <div
+                    isteven-multi-select
+                    input-model="ownerTeams"
+                    output-model="ownerTeam"
+                    button-label="name"
+                    on-item-click="getOwnerTeamMembers(data)"
+                    item-label="name"
+                    tick-property="ticked"
+                    selection-mode="single"
+                    helper-elements="">
+                </div>
+              </div>
+          </div>
 
-            <div class="top-medium-pad row">
-                <div class="five columns">
-                    Followup of Issue
+          <!-- Owned member -->
+          <div class="field top-medium-pad row" ng-show="ownerTeam.length">
+              <div class="five columns">
+                Owned By
+              </div>
+              <div class="seven columns">
+                <div
+                  isteven-multi-select
+                  input-model="ownerTeamMembers"
+                  output-model="owner"
+                  button-label="name"
+                  item-label="name"
+                  tick-property="ticked"
+                  selection-mode="single"
+                  helper-elements=""
+                  max-height = "200px">
                 </div>
-                <div class="seven columns">
-                 <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="followUpOf"/>
+              </div>
+          </div>
+
+          <!-- Assigned to -->
+          <div class="top-medium-pad row" ng-show="ownerTeam.length">
+              <div class="five columns">
+                Assigned Team
+              </div>
+              <div class="seven columns">
+                <div
+                  isteven-multi-select
+                  input-model="assignedTeams"
+                  output-model="assignedTeam"
+                  on-item-click="getAssignedTeamMembers(data)"
+                  button-label="name"
+                  item-label="name"
+                  tick-property="ticked"
+                  selection-mode="single"
+                  helper-elements="">
                 </div>
-            </div>
-            <div class="top-medium-pad row">
-                Add Tags
-            </div>
-            <div class="top-medium-pad row">
-                <tags-input ng-model='tags'  add-on-space="true"> </tags-input>
-            </div>
-            <!-- <div class="top-medium-pad border-bottom row"> </div>
-            <div class="top-medium-pad row">
-                Attachments
-            </div>
-            <div class="top-medium-pad row">
-                <img src="/static/clinic.jpeg" id="thumbnail"/>
-                <img src="/static/clinic.jpeg" id="thumbnail"/>
-                <img src="/static/clinic.jpeg" id="thumbnail"/>
-                <img src="/static/clinic.jpeg" id="thumbnail"/>
-            </div>
-            <div class="top-medium-pad border-bottom row"> </div>
-             <div class="top-medium-pad row">
-                Previous Issue Raised(AllsWell Clinic)
-            </div>
-             <div class="top-medium-pad row">
-                <span class="blue-color"> #511287</span>
-                <span class="blue-color"> #511287</span>
-                <span class="blue-color"> #511287</span>
-            </div> -->
-        </div>
+              </div>
+          </div>
+
+          <!-- Assigned member -->
+          <div class="top-medium-pad row"  ng-show="assignedTeam.length">
+              <div class="five columns">
+                Assigned To
+              </div>
+              <div class="seven columns">
+                <div
+                  isteven-multi-select
+                  input-model="assignedTeamMembers"
+                  output-model="assigned"
+                  button-label="name"
+                  item-label="name"
+                  tick-property="ticked"
+                  selection-mode="single"
+                  helper-elements="">
+                </div>
+              </div>
+          </div>
+
+          <div class="top-medium-pad row">
+              <div class="five columns">
+                  Followup of Issue
+              </div>
+              <div class="seven columns">
+               <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="followUpOf" style="width:100%"/>
+              </div>
+          </div>
+          <div class="top-medium-pad row">
+              Add Tags
+          </div>
+          <div class="top-medium-pad row">
+              <tags-input ng-model='tags'  add-on-space="true"> </tags-input>
+          </div>
+      </div>
+  </div>
+
+  <!-- curration bottom screen -->
+  <div id="curation-bottom">
+    <div class="bottom-buttons">
+      <button ng-click="cancel()"> <small> Cancel </small></button>
     </div>
-    <div id="ticket-footer" class="row">
-            <div class="offset-by-seven two columns">
-               <button class="button-primary" ng-click="save()">Save</button>
-            </div>
-            <div class="two columns">
-               <button ng-click="cancel()">Cancel</button>
-            </div>
-            <div class="offset-by-one">
-            </div>
+    <div class="bottom-buttons">
+      <button class="button-primary" ng-click="save()"><small>Save</small ></button>
     </div>
+  </div>
 </div>
+
+<!-- Bottom code
+  <div class="offset-by-seven two columns">
+             <button class="button-primary" ng-click="save()">Save</button>
+          </div>
+          <div class="two columns">
+             <button ng-click="cancel()">Cancel</button>
+          </div>
+          <div class="offset-by-one">
+          </div>
+-->
