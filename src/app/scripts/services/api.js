@@ -134,6 +134,18 @@ angular.module('chronos').factory('LoginApi', [
       }
     });
   }
+]).factory('TicketTimelineApi', [
+  '$resource',
+  function($resource) {
+    return $resource(baseUrl + '/ticket/:id/timeline', {
+      id: '@id'
+    }, {
+      get: {
+        method: 'GET',
+        isArray: false
+      }
+    });
+  }
 ]).factory('MailgunListenerApi', [
   '$resource',
   function($resource) {

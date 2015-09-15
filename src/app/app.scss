@@ -15,6 +15,11 @@ font-family: 'Open Sans';
 src: url("/assets/OpenSans-Regular.ttf");
 }
 
+@font-face {
+font-family: 'Open Sans Light';
+src: url("/assets/OpenSans-Light.ttf");
+}
+
 body {
   padding: 0px;
   background-color: #F7F7F7;
@@ -326,12 +331,12 @@ body {
 }
 
 .timeline-tile {
-  position: absolute;
   border-right: 1px solid $border-color;
   width: 74%;
   height: 100%;
   min-height: 600px;
-  margin-bottom: $top-browser;
+  padding-bottom: $top-browser + 70px;
+  float: left;
 }
 
 .ticket-details {
@@ -350,6 +355,7 @@ body {
   border-right: 1px solid $border-color;
   width: 73.31%;
   height: 100%;
+  box-shadow: -1px -2px 5px 1px $border-color;
   max-height: 235px;
   min-height: 235px;
   position: fixed;
@@ -365,6 +371,13 @@ body {
   z-index: 12;
 }
 
+.button-bottom {
+  @extend .commenter-timeline;
+  max-height: 70px;
+  min-height: 70px;
+  padding: 10px
+}
+
 .mailer-timeline {
   @extend .commenter-timeline;
   max-height: 340px;
@@ -377,14 +390,15 @@ body {
   height: 40px
 }
 
-.ta-bind {
+.text-angular .ta-bind {
   min-height: 200px;
   line-height: 20px;
   padding: 5px
 }
 
 .ta-bind p {
-    margin: 0px
+    margin: 0px;
+    padding: 5px;
 }
 
 .ta-editor {
@@ -411,4 +425,32 @@ mentio-menu li {
 
 mentio-menu .active {
   color: $font-color;
+}
+
+.timeline-row {
+  @extend .row;
+  background-color:white;
+  border: 1px solid $border-color;
+  margin-bottom: 10px
+}
+
+.timeline-header {
+  border-bottom: 1px solid $border-color;
+  min-height: 38px;
+  padding: 0px 10px
+}
+
+.timeline-footer {
+  border-top: 1px solid $border-color;
+  min-height: 38px;
+  padding: 0px 10px
+}
+
+.timeline-body {
+  padding: 0px 10px;
+  min-height: 38px
+}
+
+.action-text {
+  font-size: 1.2em; float:left; margin-right: 10px; height:100%; padding-top:10px
 }
