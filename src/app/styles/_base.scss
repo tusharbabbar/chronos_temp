@@ -9,3 +9,7 @@ textarea,
 button {
   font: inherit;
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
