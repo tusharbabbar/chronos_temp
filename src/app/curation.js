@@ -1,5 +1,7 @@
 angular.module('chronos').controller('curationCtrl',
   [ '$scope',
+    '$window',
+    'ticketCurationService',
     'UserApi',
     'SourcesListApi',
     'ProductsListApi',
@@ -10,6 +12,8 @@ angular.module('chronos').controller('curationCtrl',
     'TicketCommentsListApi',
     'TicketApi',
      function ($scope,
+      $window,
+      ticketCurationService,
       UserApi,
       SourcesListApi,
       ProductsListApi,
@@ -19,24 +23,16 @@ angular.module('chronos').controller('curationCtrl',
       TicketTagApi,
       TicketCommentsListApi,
       TicketApi) {
-            var ticketId = 2;
             //default
+            console.log("Entered in ticket curationCtrl");
+            console.log($scope.ticketId);
             $scope.singleSelectSetting = {selectionLimit: 1};
-            $scope.statuses = [
-              {name : 'RESOLVED'},
-              {name : 'INVALID'}
-            ];
             console.log($scope.statuses);
             $scope.sentiments = [
               {name : 'Happy'},
               {name : 'Neutral'},
               {name : 'Angry'}
             ];
-            var items = ['product', 'status', 'sentiment', 'type', 'source', 'owner',
-                'assigned', 'assignedTeam', 'ownerTeam', 'tags']
-            for (i=0;i<items.length; i++){
-              $scope[items[i]] = [];
-            }
             //get list of sources
             SourcesListApi.get(function (data) {
               $scope.sources = data.sources;
@@ -61,25 +57,37 @@ angular.module('chronos').controller('curationCtrl',
                 return string[0].toUpperCase() + string.slice(1);
             };
             //get ticket detail
-            TicketApi.get( {id : ticketId} , function(data){
+            $scope.showTicket = function() {
+              $scope.statuses = [
+                {name : 'RESOLVED'},
+                {name : 'INVALID'}
+              ];
+              var items = ['product', 'status', 'sentiment', 'type', 'source', 'owner',
+                'assigned', 'assignedTeam', 'ownerTeam', 'tags']
+              for (i=0;i<items.length; i++){
+                $scope[items[i]] = [];
+              }
+              $scope.ticketId = ticketCurationService.getTicketId();
+              console.log("here", $scope.ticketId);
+              TicketApi.get( {id : $scope.ticketId} , function(data){
                 $scope.ticketDescription = data.description;
                 $scope.ticketId = data.id;
-                temp = data.created_on;
-                $scope.ticketCreatedOn = temp.substring(0, temp.indexOf(" "));
-                $scope.ticketCreator = $scope.capitalizeFirstLetter(data.created_by.name);
                 $scope.childOf = data.child_of;
                 $scope.val = data;
                 console.log("ticket data");
                 console.log(data);
                 //set status
                 if( ! (data.status == "RESOLVED" || data.status == "INVALID") ) {
-                  $scope.statuses.push({name : data.status});
+                    $scope.statuses.push({name : data.status});
                 }
                 for( i in $scope.statuses ){
                   currentStatus = $scope.statuses[i];
                   if(currentStatus.name === data.status) {
                     currentStatus.ticked = true;
-                    $scope.status.push(currentStatus);
+                    $scope.status[0] = currentStatus;
+                  }
+                  else{
+                    currentStatus.ticked = false;
                   }
                 }
                 //set type
@@ -87,7 +95,10 @@ angular.module('chronos').controller('curationCtrl',
                   currentType = $scope.types[i];
                   if(currentType.name == data.type) {
                     currentType.ticked = true;
-                    $scope.type.push(currentType);
+                    $scope.type[0] = currentType;
+                  }
+                  else{
+                    currentType.ticked = false;
                   }
                 }
                 //set source
@@ -95,7 +106,10 @@ angular.module('chronos').controller('curationCtrl',
                   currentSource = $scope.sources[i];
                   if(currentSource.name == data.source) {
                     currentSource.ticked = true;
-                    $scope.source.push(currentSource);
+                    $scope.source[0] = currentSource;
+                  }
+                  else{
+                     currentSource.ticked = false;
                   }
                 }
                 //set product
@@ -103,7 +117,11 @@ angular.module('chronos').controller('curationCtrl',
                   currentProduct = $scope.products[i];
                   if(currentProduct.name == data.product) {
                     currentProduct.ticked = true;
-                    $scope.product.push(currentProduct);
+                    $scope.product[0] = currentProduct;
+                    console.log($scope.product);
+                  }
+                  else{
+                    currentProduct.ticked = false;
                   }
                 }
                 //set owner team
@@ -112,8 +130,11 @@ angular.module('chronos').controller('curationCtrl',
                     currentOwnerTeam = $scope.ownerTeams[i];
                     if(currentOwnerTeam.name == data.owner_details.team.name) {
                       currentOwnerTeam.ticked = true;
-                      $scope.ownerTeam.push(currentOwnerTeam);
+                      $scope.ownerTeam[0] = currentOwnerTeam;
                       $scope.getOwnerTeamMembers(currentOwnerTeam, data.owner_details.member);
+                    }
+                    else{
+                      currentOwnerTeam.ticked = false;
                     }
                   }
                 }
@@ -123,13 +144,16 @@ angular.module('chronos').controller('curationCtrl',
                     currentAssignedTeam = $scope.assignedTeams[i];
                     if(currentAssignedTeam.name == data.assignment_details.team.name) {
                       currentAssignedTeam.ticked = true;
-                      $scope.assignedTeam.push(currentAssignedTeam);
+                      $scope.assignedTeam[0] = currentAssignedTeam;
                       $scope.getAssignedTeamMembers(currentAssignedTeam, data.assignment_details.member);
+                    }
+                    else{
+                      currentAssignedTeam.ticked = false;
                     }
                   }
                 }
 
-                TicketTagApi.get({ticket_id: ticketId}, function(data){
+                TicketTagApi.get({ticket_id: $scope.ticketId}, function(data){
                     var tags = data.tags;
                     console.log("tags");
                     console.log(data);
@@ -142,8 +166,8 @@ angular.module('chronos').controller('curationCtrl',
                   }, function(data){
                   console.log("TicketTag Error");
                 });
-            });
-
+              });
+            };
             $scope.getOwnerTeamMembers = function(data, memberInfo){
               memberInfo = typeof memberInfo !== 'undefined' ? memberInfo : false;
               console.log("getOwnerTeamMembers");
@@ -161,7 +185,10 @@ angular.module('chronos').controller('curationCtrl',
                     ownerTeamMember =  $scope.ownerTeamMembers[i];
                     if(memberInfo.id == ownerTeamMember.id){
                       ownerTeamMember.ticked = true;
-                      $scope.owner = ownerTeamMember;
+                      $scope.owner[0] = ownerTeamMember;
+                    }
+                    else{
+                      ownerTeamMember.ticked = false;
                     }
                   }
                 }
@@ -182,7 +209,10 @@ angular.module('chronos').controller('curationCtrl',
                     assignedTeamMember =  $scope.assignedTeamMembers[i];
                     if(memberInfo.id == assignedTeamMember.id){
                       assignedTeamMember.ticked = true;
-                      $scope.assigned = assignedTeamMember;
+                      $scope.assigned[0] = assignedTeamMember;
+                    }
+                    else{
+                       assignedTeamMember.ticked = false;
                     }
                   }
                 }
@@ -245,11 +275,10 @@ angular.module('chronos').controller('curationCtrl',
               }, function (errorData) {
                   console.log(errorData);
               });
-
+              $window.showCuration(0);
             };
             $scope.cancel = function() {
-              //cancel action
-              console.log($scope.tags);
+              $window.showCuration(0);
             };
             $scope.searchPeople = function(term) {
               console.log(term)

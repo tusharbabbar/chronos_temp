@@ -1,0 +1,27 @@
+<div class="container" style="margin-top: 20px">
+  <div class="row">
+    <div class="two columns">
+      <small>Denial Reason</small>
+    </div>
+    <div class="four columns">
+      <div
+      isteven-multi-select
+      input-model="denyReasons"
+      output-model="$parent.data.denial_reason"
+      button-label="name"
+      item-label="name"
+      tick-property="ticked"
+      helper-elements="reset"
+      selection-mode="single"
+      >
+      </div>
+    </div>
+  </div>
+  <div text-angular ta-name="comment-text" ng-model="data.comment" ta-toolbar="[['p', 'pre', 'quote'],['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],['justifyLeft', 'justifyCenter', 'justifyRight']]" placeholder="Enter new comment"></div>
+  <div class="row" style="padding: 5px">
+    <small>
+      <button style="float:right" ng-click="removeModal()">CAncel</button>
+      <button class="button-primary" style="float:right; margin-right:5px" ng-click="denyAssignment()">Deny</button>
+    </small>
+  </div>
+</div>
