@@ -18,6 +18,7 @@
                     tick-property="ticked"
                     selection-mode="single"
                     helper-elements=""
+                    is-disabled="true"
                     >
                 </div>
               </div>
@@ -38,6 +39,7 @@
                     tick-property="ticked"
                     selection-mode="single"
                     helper-elements=""
+                    is-disabled="true"
                     >
                 </div>
               </div>
@@ -57,7 +59,8 @@
                     item-label="name"
                     tick-property="ticked"
                     selection-mode="single"
-                    helper-elements="">
+                    helper-elements=""
+                    is-disabled="true">
                 </div>
               </div>
           </div>
@@ -70,13 +73,14 @@
               <div class="seven columns">
                 <div
                     isteven-multi-select
-                    input-model="sentiments"
-                    output-model="sentiment"
+                    input-model="$parent.sentiments"
+                    output-model="$parent.sentiment"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
                     selection-mode="single"
-                    helper-elements="">
+                    helper-elements=""
+                    >
                 </div>
               </div>
           </div>
@@ -89,8 +93,8 @@
               <div class="seven columns">
                  <div
                     isteven-multi-select
-                    input-model="ownerTeams"
-                    output-model="ownerTeam"
+                    input-model="$parent.ownerTeams"
+                    output-model="$parent.ownerTeam"
                     button-label="name"
                     on-item-click="getOwnerTeamMembers(data)"
                     item-label="name"
@@ -109,8 +113,8 @@
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="ownerTeamMembers"
-                  output-model="owner"
+                  input-model="$parent.ownerTeamMembers"
+                  output-model="$parent.owner"
                   button-label="name"
                   item-label="name"
                   tick-property="ticked"
@@ -129,9 +133,9 @@
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="assignedTeams"
-                  output-model="assignedTeam"
-                  on-item-click="getAssignedTeamMembers(data)"
+                  input-model="$parent.reassignedTeams"
+                  output-model="$parent.reassignedTeam"
+                  on-item-click="getReassignedTeamMembers(data)"
                   button-label="name"
                   item-label="name"
                   tick-property="ticked"
@@ -142,15 +146,15 @@
           </div>
 
           <!-- Assigned member -->
-          <div class="top-medium-pad row"  ng-show="assignedTeam.length">
+          <div class="top-medium-pad row"  ng-show="reassignedTeam.length">
               <div class="five columns">
                 Reassigned To
               </div>
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="assignedTeamMembers"
-                  output-model="assigned"
+                  input-model="$parent.reassignedTeamMembers"
+                  output-model="$parent.reassigned"
                   button-label="name"
                   item-label="name"
                   tick-property="ticked"
@@ -165,7 +169,7 @@
                   Followup of Issue
               </div>
               <div class="seven columns">
-               <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="followUpOf" style="width:100%"/>
+               <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="$parent.followUpOf" style="width:100%"/>
               </div>
           </div>
           <div class="top-medium-pad row">

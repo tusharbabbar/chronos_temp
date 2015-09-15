@@ -20,8 +20,7 @@ angular.module('chronos').factory('Util', [
       $window.localStorage.UserId = user_id;
     };
     var getLoggedInUserId = function () {
-      user_id = $window.localStorage.UserId;
-      return user;
+      return $window.localStorage.UserId;
     };
     var logoutUser = function () {
       $window.localStorage.clear();

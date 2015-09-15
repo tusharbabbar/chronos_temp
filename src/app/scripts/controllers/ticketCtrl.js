@@ -1,5 +1,7 @@
 angular.module('chronos').controller('TicketCtrl',
   [ '$scope',
+  '$location',
+  'Util',
   '$sce',
   '$routeParams',
   'TicketApi',
@@ -15,7 +17,10 @@ angular.module('chronos').controller('TicketCtrl',
   'TeamsListApi',
   'TeamMembersListApi',
   'TicketTagApi',
+  'AssignmentActionApi',
   function($scope,
+    $location,
+    Util,
     $sce,
     $routeParams,
     TicketApi,
@@ -30,17 +35,17 @@ angular.module('chronos').controller('TicketCtrl',
     TypesListApi,
     TeamsListApi,
     TeamMembersListApi,
-    TicketTagApi){
+    TicketTagApi,
+    AssignmentActionApi){
   headingService.pageHeading.value = 'Issue Details'
   var pages = ['all_issues', 'my_issues', 'my_team_issues'];
-  console.log(ticketFilterService.filters);
   $scope.sentiments = [
               {name : 'Happy'},
               {name : 'Neutral'},
               {name : 'Angry'}
             ];
-  var items = ['product', 'status', 'sentiment', 'type', 'source', 'owner',
-                'assigned', 'assignedTeam', 'ownerTeam', 'tags']
+  var items = ['product', 'sentiment', 'type', 'source', 'owner',
+                'reassigned', 'reassignedTeam', 'ownerTeam', 'tags']
   for (i=0;i<items.length; i++){
     $scope[items[i]] = [];
   }
@@ -62,7 +67,7 @@ angular.module('chronos').controller('TicketCtrl',
   });
   //get list of assigned teams
   TeamsListApi.get( {if_assigned : 1}, function (data) {
-    $scope.assignedTeams = data.teams;
+    $scope.reassignedTeams = data.teams;
   });
   
   for(var i=0; i<pages.length; i++){
@@ -71,25 +76,24 @@ angular.module('chronos').controller('TicketCtrl',
       $scope.previousPage = pages[i].replace('_', " ")
   }
 
+  $scope.msToTime = function(duration) {
+    var hours = parseInt((duration/(1000*60*60)));
+    hours = (hours < 10 && hours > -10) ? "0" + hours : hours;
+    return hours;
+  };
+
+  $scope.go = function(path) {
+    console.log(path);
+    $location.path(path);
+  };
+
+
   TicketApi.get({id:$routeParams.id}, function(data){
     $scope.ticket = data
+    $scope.followUpOf = data.child_of;
     date = new Date(data.created_on * 1000)
     $scope.created_on = date.toString();
-    
-    //set status
-    if( ! (data.status == "RESOLVED" || data.status == "INVALID") ) {
-        $scope.statuses.push({name : data.status});
-    }
-    for( i in $scope.statuses ){
-      currentStatus = $scope.statuses[i];
-      if(currentStatus.name === data.status) {
-        currentStatus.ticked = true;
-        $scope.status[0] = currentStatus;
-      }
-      else{
-        currentStatus.ticked = false;
-      }
-    }
+    $scope.isNotOwner = true;
     //set type
     for( i in $scope.types ){
       currentType = $scope.types[i];
@@ -101,6 +105,16 @@ angular.module('chronos').controller('TicketCtrl',
         currentType.ticked = false;
       }
     }
+
+    diffrence = 0;
+    if( data.created_on){
+      currentTimeInMilliSeconds = Date.now();
+      if (data.sla){
+        slaTimeInMilliSeconds = data.sla * 60 * 60 * 1000;
+        diffrence = slaTimeInMilliSeconds - (currentTimeInMilliSeconds - data.created_on * 1000);
+      }
+    }
+    $scope.dueTime = $scope.msToTime(diffrence);
     //set source
     for( i in $scope.sources ){
       currentSource = $scope.sources[i];
@@ -118,10 +132,20 @@ angular.module('chronos').controller('TicketCtrl',
       if(currentProduct.name == data.product) {
         currentProduct.ticked = true;
         $scope.product[0] = currentProduct;
-        console.log($scope.product);
       }
       else{
         currentProduct.ticked = false;
+      }
+    }
+    //set sentiments
+    for( i in $scope.sentiments ){
+      currentSentiment = $scope.sentiments[i];
+      if(currentSentiment.name == data.sentiment){
+        currentSentiment.ticked = true;
+        $scope.sentiment[0] = currentSentiment;
+      }
+      else{
+        currentSentiment.ticked = false;
       }
     }
     //set owner team
@@ -138,30 +162,33 @@ angular.module('chronos').controller('TicketCtrl',
         }
       }
     }
-    //set assigned team
+    //set reassigned team
     if (data.assignment_details && data.assignment_details.team) {
-      for( i in $scope.assignedTeams ){
-        currentAssignedTeam = $scope.assignedTeams[i];
-        if(currentAssignedTeam.name == data.assignment_details.team.name) {
-          currentAssignedTeam.ticked = true;
-          $scope.assignedTeam[0] = currentAssignedTeam;
-          $scope.getAssignedTeamMembers(currentAssignedTeam, data.assignment_details.member);
+      for( i in $scope.reassignedTeams ){
+        currentReassignedTeam = $scope.reassignedTeams[i];
+        if(currentReassignedTeam.name == data.assignment_details.team.name) {
+          currentReassignedTeam.ticked = true;
+          $scope.reassignedTeam[0] = currentReassignedTeam;
+          $scope.getReassignedTeamMembers(currentReassignedTeam, data.assignment_details.member);
         }
         else{
-          currentAssignedTeam.ticked = false;
+          currentReassignedTeam.ticked = false;
         }
       }
+    }
+
+    //enable owner permissions
+    if(data.owner_details && data.owner_details.member && Util.getLoggedInUserId() == data.owner_details.member.user.id) {
+       $scope.isNotOwner = false;
     }
 
   });
 
   $scope.toggleShowCommenter = function(){
     $scope.data.showCommenter = !$scope.data.showCommenter
-    console.log($scope.data.showCommenter)
   }
 
   // Add comments
-
   $scope.data = {};
   $scope.data.showCommenter = true;
 
@@ -201,15 +228,36 @@ angular.module('chronos').controller('TicketCtrl',
       })
     }
   }
+
+  $scope.invalidStatus = function () {
+    data = {};
+    data.id = $scope.ticket.id;
+    data.status = 'INVALID';
+    TicketApi.update(data, function (data) {
+                console.log("status changed");
+              }, function (errorData) {
+                  console.log(errorData);
+              });
+  };
+
+  $scope.acknowledgeTicket = function(){
+    data = {};
+    data.ticket_id = $scope.ticket.id;
+    data.action = 'ACKNOWLEDGE';
+    AssignmentActionApi.save(data, function(data) {
+      console.log("Reassignment done");
+    }, function (errorData) {
+      console.log(errorData);
+    });
+  };
+
   $scope.getSelectedEmail = function(item) {
     console.log(item);
     return item.email + ","
   };
   $scope.searchPeople = function(term) {
-    console.log(term)
     if (term.length > 3){
       UserApi.get({ query: term}, function (data) {
-        console.log(data)
         $scope.data.items = data.users;
       }, function (data) {
         console.log(data);
@@ -217,12 +265,56 @@ angular.module('chronos').controller('TicketCtrl',
     }
   };
 
-  $scope.getOwnerTeamMembers = function(data, memberInfo){
+  $scope.saveTicketDetails = function() {
+     var data = {};
+              data.id = $scope.ticket.id;
+              var items = ['owner', 'ownerTeam']
+              var mapping = {
+                owner:'set_owner_member',
+                ownerTeam:'set_owner_team',
+              }
+              for(var i=0; i<items.length; i++){
+                if ($scope[items[i]].length) {
+                  data[mapping[items[i]]] = $scope[items[i]][0].id;
+                }
+              }
+              if ($scope.followUpOf) {
+                data.set_followup_of = $scope.followUpOf;
+              }
+              var dataTags = [];
+              for (i=0; i<$scope.tags.length; i++){
+                dataTags.push($scope.tags[i].text);
+              }
+              data.tags = dataTags;
+              TicketApi.update(data, function (data) {
+                console.log("ticket updated");
+              }, function (errorData) {
+                  console.log(errorData);
+              });
+
+              //ticket reassignment
+              data = {}
+              data.ticket_id = $scope.ticket.id;
+              data.action = 'REASSIGN';
+              var items = ['reassignedTeam', 'reassigned']
+              var mapping = {
+                reassignedTeam : 'reassign_team_id',
+                reassigned : 'reassign_member_id',
+              }
+              for(var i=0; i<items.length; i++){
+                if ($scope[items[i]].length) {
+                  data[mapping[items[i]]] = $scope[items[i]][0].id;
+                }
+              }
+              AssignmentActionApi.save(data, function(data) {
+                console.log("Reassignment done");
+              }, function (errorData) {
+                console.log(errorData);
+              });
+  };
+
+   $scope.getOwnerTeamMembers = function(data, memberInfo){
     memberInfo = typeof memberInfo !== 'undefined' ? memberInfo : false;
-    console.log("getOwnerTeamMembers");
-    console.log(data);
-    console.log("memberInfo");
-    console.log(memberInfo);
     TeamMembersListApi.get({team_id : data.id}, function (data){
       for( i in data.members) {
         member = data.members[i];
@@ -243,31 +335,27 @@ angular.module('chronos').controller('TicketCtrl',
     });
   };
 
-  $scope.getAssignedTeamMembers = function(data, memberInfo ){
+  $scope.getReassignedTeamMembers = function(data, memberInfo ){
     TeamMembersListApi.get({team_id : data.id}, function (data){
       for( i in data.members) {
         member = data.members[i];
         member.name = member.user.name;
       }
-      $scope.assignedTeamMembers = data.members;
+      $scope.reassignedTeamMembers = data.members;
       if (memberInfo) {
-        for( i in $scope.assignedTeamMembers){
-          assignedTeamMember =  $scope.assignedTeamMembers[i];
-          if(memberInfo.id == assignedTeamMember.id){
-            assignedTeamMember.ticked = true;
-            $scope.assigned = assignedTeamMember;
+        for( i in $scope.reassignedTeamMembers){
+          reassignedTeamMember =  $scope.reassignedTeamMembers[i];
+          if(memberInfo.id == reassignedTeamMember.id){
+            reassignedTeamMember.ticked = true;
+            $scope.reassigned = reassignedTeamMember;
           }
         }
       }
     }, function (errorData){
-      $scope.assignedTeamMembers = [];
+      $scope.reassignedTeamMembers = [];
     });
   };
-  
-  $scope.saveTicketDetails = function() {
-    
-  };
-  
+
   $scope.comment="comment"
   // taOptions.toolbar = [
   //     ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
