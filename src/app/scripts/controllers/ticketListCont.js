@@ -1,11 +1,13 @@
 angular.module('chronos').controller('TicketListCtrl',
 	['$scope',
+  '$location',
 	'$window',
 	'ticketFilterService',
 	'headingService',
 	'ticketCurationService',
 	function (
 		$scope,
+    $location,
 		$window,
 		ticketFilterService,
 		headingService,
@@ -16,14 +18,21 @@ angular.module('chronos').controller('TicketListCtrl',
 
   console.log(headingService.pageHeading)
 
-  $scope.openTicketCuration = function(id) {
-    console.log(id)
-    ticketCurationService.setTicketId(id);
-    console.log(ticketCurationService)
-    console.log(ticketCurationService.getTicketId())
-    console.log("ticket Id set in services");
-    $window.showCuration(1);
-    angular.element(document.getElementById('curation-main')).scope().showTicket();
+  $scope.openTicket = function(id) {
+    for(i in $scope.tickets.list){
+      currentTicket = $scope.tickets.list[i];
+      if(currentTicket.id == id){
+        if(currentTicket.status == 'ORPHAN' || currentTicket.status == 'CURATION'){
+          ticketCurationService.setTicketId(id);
+          $window.showCuration(1);
+          angular.element(document.getElementById('curation-main')).scope().showTicket();
+        }
+        else{
+          $window.showCuration(0);
+          $location.path("/ticket/" + id);
+        }
+      }
+    }
   };
 
   $scope.pageChange = function(newPageNumber){

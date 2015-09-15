@@ -19,7 +19,7 @@
         <th class="two columns"><big>Assignee</big></th>
       </thead>
       <tbody>
-        <tr class="listing-row boxed row" ng-repeat="ticket in tickets.list" ng-click = "$parent.openTicketCuration(ticket.id)">
+        <tr class="listing-row boxed row" ng-repeat="ticket in tickets.list" ng-click = "$parent.openTicket(ticket.id)">
           <td class="one column">
             <i class="listing-font fa fa-envelope" style="font-size:1.3em" ng-if="ticket.source === 'email'"></i>
             <i class="listing-font fa fa-chat" ng-if="ticket.source === 'chat'"></i>
