@@ -263,23 +263,16 @@ angular.module('chronos').controller('curationCtrl',
               console.log(data);
               TicketApi.update(data, function (data) {
                 console.log("ticket updated");
-                //save ticket comment
-                if ($scope.comment) {
-                  console.log($scope.comment);
-                  TicketCommentsListApi.save({ticket_id : $scope.ticketId, body : $scope.comment}, function(data){
-                    console.log(data);
-                  }, function (errorData) {
-                    console.log(errorData);
-                  });
-                }
               }, function (errorData) {
                   console.log(errorData);
               });
               $window.showCuration(0);
             };
+            //close curation screen
             $scope.cancel = function() {
               $window.showCuration(0);
             };
+            //search user from users api for mention
             $scope.searchPeople = function(term) {
               console.log(term)
               if (term.length > 3){
@@ -291,8 +284,27 @@ angular.module('chronos').controller('curationCtrl',
                 });
               }
             };
+            //select user for mention
             $scope.getSelectedEmail = function(item) {
               console.log(item);
-              return "@" + item.name.replace(' ','') + ":" + String(item.id)
+              return "<span style='border:1px solid red'>"+"@" + item.name.replace(' ','') + ":" + String(item.id)+"</span>";
+            };
+            //add comment on ticket
+            $scope.addComment = function(){
+              if (($scope.comment != "") && ($scope.comment.length > 10)){
+                data = {
+                  ticket_id : $scope.ticketId,
+                  body: $scope.comment
+                }
+                TicketCommentsListApi.save(data, function(data){
+                  $scope.comment = "";
+                  console.log("comment added");
+                }, function(errorData){
+                  console.log(errorData);
+                });
+              }
+              else {
+                alert('htmlVariable must be greater than 10 chars;')
+              }
             };
 }]);

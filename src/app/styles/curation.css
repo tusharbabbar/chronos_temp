@@ -74,7 +74,7 @@
     word-wrap: break-word;
     height: 100%;
     overflow-y:auto;
-    padding-bottom: 360px;
+    padding-bottom: 535px;
     webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
@@ -86,7 +86,7 @@
     position:absolute;
     bottom:208px;
     width:100%;
-    height: 100px;
+    height: 275px;
     background-color: white;
     webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -113,4 +113,8 @@
 
 ::-webkit-scrollbar {
     display: none;
+}
+
+.ta-toolbar{
+    height:85px;
 }

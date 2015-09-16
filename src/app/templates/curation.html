@@ -26,12 +26,17 @@
                     </li>
                   </ul>
             </script>
-
-            <textarea type="text" placeholder="Type a new comment" class="form-control panel-body"
+            <div text-angular ta-name="comment-text" ng-model="comment" ta-toolbar="[['p', 'pre', 'quote'],['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],['justifyLeft', 'justifyCenter', 'justifyRight']]" placeholder="Enter new comment"
+            style="padding-bottom:10px">
+            </div>
+            <textarea
+              type="text" placeholder="Type a new comment" class="form-control panel-body"
               mentio = "" mentio-template-url='/people-mentions.tpl'
               mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
-              mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="comment" id="comment-textarea">
+              mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="comment" id="comment-textarea"
+              ng-hide="true">
             </textarea>
+            <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="addComment()"><small>Add Comment</small></button>
           </div>
         </div>
 
