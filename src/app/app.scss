@@ -118,7 +118,6 @@ body {
 
 .nav-left {
   background-color: #095675;
-  padding-top: $top-browser;
   height: 100%;
   width: 300px;
   position: fixed;
@@ -452,4 +451,26 @@ mentio-menu .active {
 
 .action-text {
   font-size: 1.2em; float:left; margin-right: 10px; height:100%; padding-top:10px
+}
+
+.back-button {
+  height: $top-browser;
+  padding : 20px;
+  width : inherit;
+  text-align : right;
+   -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.menu-list {
+  font-size: large;
+  padding-bottom : 20px;
+}
+
+.menu-list:hover {
+  background-color:#084963;
+}
+.menu-list a{
+  color:white;
 }
