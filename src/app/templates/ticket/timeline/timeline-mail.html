@@ -1,0 +1,25 @@
+<div class="timeline-header row">
+  <span style="font-size: 2em; float:left; margin-right: 10px; height:100%"><i class="ionicons ion-ios-email-outline"></i></span>
+  <span class="action-text" style="" ng-if="t.mail_type=='INBOUND'">Recieved from {{t.created_by.name}}</span>
+  <span class="action-text" style="" ng-if="t.mail_type=='OUTBOUND'">Sent By {{t.created_by.name}}</span>
+  <span style="float:right;color:#666; padding: 10px 0px">{{t.timestamp}}</span>
+</div>
+<div class="timeline-body row">
+  <div style="padding: 5px; padding-bottom:0px">
+    Subject: <b>{{t.subject}}</b>
+  </div>
+  <div ta-bind ng-model="t.body">
+  </div>
+</div>
+</div>
+<div ng-if="t.type == 'Ticket'">
+<div class="timeline-header row">
+  <span style="font-size: 2em; float:left; margin-right: 10px; height:100%"><i class="ionicons ion-ios-compose-outline"></i></i></span>
+  <span class="action-text" style="">Modified by {{t.modified_by.name}}</span>
+  <span style="float:right;color:#666; padding: 10px 0px">{{t.timestamp}}</span>
+</div>
+<div class="timeline-body row">
+  <div style="padding: 5px; padding-bottom:0px" ng-repeat="(key, value) in t.changed">
+      <span style="text-transform:uppercase">{{key}}</span> changed to <span style="text-transform:uppercase">{{value}}</span>
+  </div>
+</div>

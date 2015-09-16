@@ -77,8 +77,8 @@ angular.module('chronos').controller('TicketCtrl',
     if (ticketFilterService.filters[pages[i]] == 1)
       $scope.previousPage = pages[i].replace('_', " ")
   }
-  $scope.denyReasons = [{name:'Deny_Need_more_Info'}, {name:'Deny_False_Alarm'}, {name:'Deny_Wrong_Team'},
-      {name:'Deny_Wrong_Type'}, {name:'Deny_Other_Reason'}]
+  $scope.denyReasons = [{name:'Need_more_Info'}, {name:'False_Alarm'}, {name:'Wrong_Team'},
+      {name:'Wrong_Type'}, {name:'Other_Reason'}]
 
   $scope.msToTime = function(duration) {
     var hours = parseInt((duration/(1000*60*60)));
@@ -273,17 +273,6 @@ angular.module('chronos').controller('TicketCtrl',
               });
   };
 
-  $scope.acknowledgeTicket = function(){
-    data = {};
-    data.ticket_id = $scope.ticket.id;
-    data.action = 'ACKNOWLEDGE';
-    AssignmentActionApi.save(data, function(data) {
-      console.log("Reassignment done");
-    }, function (errorData) {
-      console.log(errorData);
-    });
-  };
-
   $scope.getSelectedEmail = function(item) {
     console.log(item);
     return item.email + ","
@@ -335,8 +324,26 @@ angular.module('chronos').controller('TicketCtrl',
       }
     }
   }
+
+  $scope.acknowledgeTicket = function(){
+    data = {};
+    data.ticket_id = $scope.ticket.id;
+    data.assignment_id = $scope.ticket.assignment_details.assignment_id
+    data.action = 'ACKNOWLEDGE';
+    console.log($scope.ticket, data);
+    AssignmentActionApi.save(data, function(data) {
+      $scope.ticket = data
+    }, function (errorData) {
+      console.log(errorData);
+    });
+  };
+
   $scope.denyAssignment = function(){
-    data = {ticket_id: $scope.ticket.id, action: "DENY", assignment_id: $scope.ticket.assignment_details.id}
+    data = {
+      ticket_id: $scope.ticket.id,
+      action: "DENY",
+      assignment_id: $scope.ticket.assignment_details.assignment_id
+    }
     console.log($scope.data.comment, $scope.data.denial_reason)
     if (($scope.data.comment != "") && ($scope.data.denial_reason.length === 1)){
       data.deny_comment = $scope.data.comment;
@@ -344,8 +351,8 @@ angular.module('chronos').controller('TicketCtrl',
       AssignmentActionApi.save(data, function(data){
         $scope.data.comment = ""
         $scope.data.denial_reason = []
-        $scope.data.ticket = data
-        $scope.showDenyCommenter = false
+        $scope.ticket = data
+        $scope.data.showDenyCommenter = false
       })
     }
   }

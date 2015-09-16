@@ -1,0 +1,11 @@
+<div style="font-size:1em; padding-left:25px">
+  <span ng-if="ticket.assignment_details">
+    <button class="button-primary" ng-click=acknowledgeTicket() ng-if="ticket.assignment_details.action != 'ACKNOWLEDGE'"><small>Acknowledge</small></button>
+    <span  style="font-size: 1.5em;color:#81BA46" ng-if="ticket.assignment_details.action == 'ACKNOWLEDGE'"><i class="ionicons ion-android-done"></i> Acknowleged</span>
+    <button class="button-secondary" ng-click="pressDeny()" ng-if="ticket.assignment_details.action != 'DENY'"><small>Deny</small></button>
+    <span style="font-size: 1.5em;color:#E54D54" ng-if="ticket.assignment_details.action == 'DENY'"><i class="ionicons ion-android-close" ></i> Denied</span>
+  </span>
+  <button ng-hide="$parent.isNotOwner" ng-click="pressResolve()"><small>Mark as Resolved</small></button>
+  <button ng-hide="$parent.isNotOwner" ng-click="invalidStatus()"><small>Mark as Invalid</small></button>
+  <button class="button-primary" style="float:right" ng-click="saveTicketDetails()"><small>Save</small></button>
+</div>

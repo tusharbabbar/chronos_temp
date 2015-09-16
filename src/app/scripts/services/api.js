@@ -142,7 +142,7 @@ angular.module('chronos').factory('LoginApi', [
 ]).factory('TicketTimelineApi', [
   '$resource',
   function($resource) {
-    return $resource(baseUrl + '/ticket/:id/timeline', {
+    return $resource(baseUrl + '/tickets/:id/timeline', {
       id: '@id'
     }, {
       get: {

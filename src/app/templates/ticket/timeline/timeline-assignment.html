@@ -1,0 +1,26 @@
+<div class="timeline-header row" ng-if="t.type == 'Assignment'">
+  <span style="font-size: 2em; float:left; margin-right: 10px; height:100%" ><i class="ionicons ion-ios-flag-outline"></i></span>
+  <span class="action-text" style="" >Assigned to {{t.assignment_details.member.user.name}} By {{t.modified_by.name}}</span>
+  <span style="float:right;color:#666; padding: 10px 0px">{{t.timestamp}}</span>
+</div>
+<div ng-if="t.type == 'Assignment Update'">
+  <div class="timeline-header row" >
+    <div ng-if="t.changed.action != null">
+      <span style="font-size: 2em; float:left; margin-right: 10px; height:100%" ng-if="t.changed.action =='ACKNOWLEDGE'"><i class="ionicons ion-ios-checkmark-empty"></i></span>
+      <span style="font-size: 2em; float:left; margin-right: 10px; height:100%" ng-if="t.changed.action =='DENY'"><i class="ionicons ion-ios-close-empty"></i></span>
+      <span style="font-size: 2em; float:left; margin-right: 10px; height:100%" ng-if="t.changed.action =='SYSTEM REASSIGN'"><i class="ionicons ion-ios-refresh-empty"></i></span>
+      <span class="action-text" style="" ng-if="t.changed.action =='ACKNOWLEDGE'">{{t.changed.action}} by {{t.modified_by.name}}</span>
+      <span class="action-text" style="" ng-if="t.changed.action =='SYSTEM REASSIGN'">{{t.changed.action}} to {{t.changed.assignment.member.user.name}}</span>
+      <span class="action-text" style="" ng-if="t.changed.action =='DENY'">{{t.changed.action}} by {{t.changed.assignment.member.user.name}} due to {{t.changed.assignment.action_reason.name}}</span>
+      <span style="float:right;color:#666; padding: 10px 0px">{{t.timestamp}}</span>
+    </div>
+    <div ng-if="t.changed.action === null">
+      <span style="font-size: 2em; float:left; margin-right: 10px; height:100%" ><i class="ionicons ion-ios-flag-outline"></i></span>
+      <span class="action-text" style="" >Assigned to {{t.changed.assignment.member.user.name}} By {{t.modified_by.name}}</span>
+      <span style="float:right;color:#666; padding: 10px 0px">{{t.timestamp}}</span>
+    </div>
+  </div>
+  <div class="timeline-body row" ng-if="t.changed.assignment.comment">
+    <div ta-bind ng-model="t.changed.assignment.comment.body"></div>
+  </div>
+</div>

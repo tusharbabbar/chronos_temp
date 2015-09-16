@@ -1,0 +1,35 @@
+<div>
+  <!-- <div class="timeline-row" style="background-color:white; border: 1px solid #D7D7D7; border-radius:4px;">
+    <div class="row" style="padding:10px; margin:5px; color: #4DC5EA">
+      <div class="two columns">{{ticket.created_by.name}}
+      </div>
+      <div class="offset-by-one two columns">{{ticket.created_by.email}}
+      </div>
+      <div class="offset-by-one two columns">{{ticket.created_by.phone}}
+      </div>
+      <div style="float:right;color:#666">{{created_on}}</div>
+    </div>
+    <div class="row"  style="padding:15px; margin:5px">
+      <div class="twelve columns" data-ng-bind-model="ticket.description">{{ticket.description}}</div>
+    </div>
+  </div> -->
+  <!-- <div style="border-bottom: 1px solid #D7D7D7"> -->
+  <div class='timeline-row' ng-repeat="t in timeline">
+    <div ng-if="t.type == 'Created'">
+      <div ng-include="'/templates/ticket/timeline/timeline-ticket-created.html'"></div>
+    </div>
+    <div ng-if="t.type == 'Comment'">
+      <div ng-include="'/templates/ticket/timeline/timeline-comment.html'"></div>
+    </div>
+    <div ng-if="t.type == 'Mail'">
+      <div ng-include="'/templates/ticket/timeline/timeline-mail.html'"></div>
+    </div>
+    <div ng-if="t.type == 'Ownership'">
+      <div ng-include="'/templates/ticket/timeline/timeline-ownership.html'"></div>
+    </div>
+    <div ng-if="t.type == 'Assignment' || t.type == 'Assignment Update'">
+      <div ng-include="'/templates/ticket/timeline/timeline-assignment.html'"></div>
+    </div>
+  </div>
+  <!-- <div> -->
+</div>
