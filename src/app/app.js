@@ -21,6 +21,16 @@ angular.module('chronos')
   }).when('/ticket/:id', {
     templateUrl: 'templates/ticket.html',
     controller: 'TicketCtrl'
+  }).when('/types', {
+      templateUrl: 'templates/types.html',
+      controller: 'TypeCtrl'
+  }).when('/sources', {
+      templateUrl: 'templates/sources.html',
+      controller: 'SourceCtrl'
+  }).when('/products', {
+      templateUrl: 'templates/products.html',
+      controller: 'ProductCtrl',
+      controllerAs: 'ProductCtrl'
   });
 }]).factory('authHttpResponseInterceptor', [
   '$q',
