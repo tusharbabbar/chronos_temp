@@ -1,5 +1,6 @@
 @import "styles/_base";
 @import "styles/_bootstrap";
+@import "styles/_curation";
 
 $top-browser :80px;
 $border-color : #DCDCDC;
@@ -180,17 +181,11 @@ body {
 }
 
 .burger-menu {
-    border: 0px solid #000000;
-    display: inline-block;
     margin-right: 25px;
     width: 24px;
-    background-color: #FFFFFF;
     color: #A9A9A9;
     cursor: hand;
     cursor: pointer;
-}
-
-.burger-menu:hover {
 }
 
 .back-arrow {
@@ -214,11 +209,7 @@ body {
 }
 
 .listing-head-row .column, .listing-head-row .columns ,.listing-row .columns ,.listing-row .column {
-  margin-left: 10px;
-}
-
-.listing-row .columns {
-  margin-left: 10px;
+  margin-left: 15px;
 }
 
 .filters {
@@ -353,7 +344,7 @@ body {
   border-right: 1px solid $border-color;
   width: 73.31%;
   height: 100%;
-  box-shadow: -1px -3px 10px 1px $border-color;
+  // box-shadow: -1px -3px 10px 1px $border-color;
   max-height: 235px;
   min-height: 235px;
   position: fixed;
@@ -388,13 +379,13 @@ body {
   height: 40px
 }
 
-.text-angular .ta-bind {
+text-angular .ta-bind {
   min-height: 200px;
   line-height: 20px;
   padding: 5px
 }
 
-.ta-bind p {
+.ta-bind {
     margin: 0px;
     padding: 5px;
 }
@@ -430,7 +421,7 @@ mentio-menu .active {
   background-color:white;
   // border-bottom: 0px;
   margin-bottom: 12px;
-  box-shadow: 0px 0px 10px 1px $border-color;
+  box-shadow: 4px 4px 14px 1px $border-color;
 }
 
 .timeline-header {
@@ -475,4 +466,12 @@ mentio-menu .active {
 }
 .menu-list a{
   color:white;
+}
+
+.logout {
+  height: 35px; font-size:1em; cursor:hand; cursor:pointer;
+}
+
+.logout:hover {
+  color: red
 }

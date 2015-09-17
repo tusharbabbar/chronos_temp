@@ -15,7 +15,7 @@
             </li>
           </ul>
     </script>
-    <input type="text" placeholder="Enter Send To" class="form-control panel-body"
+    <input type="text" placeholder="Enter Send To" class="form-control" style="width: 100%"
       mentio = "" mentio-template-url='/people-mentions-new.tpl'
       mentio-typed-text="typedTerm" mentio-items="data.items | filter:name:typedTerm"
       mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="data.to" id="reply-textarea">

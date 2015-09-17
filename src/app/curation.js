@@ -287,7 +287,7 @@ angular.module('chronos').controller('curationCtrl',
             //select user for mention
             $scope.getSelectedEmail = function(item) {
               console.log(item);
-              return "<span style='border:1px solid red'>"+"@" + item.name.replace(' ','') + ":" + String(item.id)+"</span>";
+              return "<span style='color: #4DC5EA;'>"+"@"+item.name+"</span>";
             };
             //add comment on ticket
             $scope.addComment = function(){

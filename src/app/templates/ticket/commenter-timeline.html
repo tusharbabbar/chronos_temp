@@ -5,3 +5,18 @@
     <button class="button-primary" style="float:right; margin-right:5px" ng-click="addComment()">Add Comment</button>
   </small>
 </div>
+<script type="text/ng-template" id="/people-mentions.tpl">
+      <ul class="list-group user-search">
+        <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
+          <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
+          </span>
+        </li>
+      </ul>
+</script>
+<textarea
+  type="text" placeholder="Type a new comment" class="form-control panel-body"
+  mentio = "" mentio-template-url='/people-mentions.tpl'
+  mentio-typed-text="typedTerm" mentio-items="data.items | filter:name:typedTerm"
+  mentio-select="getSelectedMention(item)" mentio-search="searchPeople(term)" ng-model="data.comment" id="comment-textarea"
+  ng-hide="true">
+</textarea>

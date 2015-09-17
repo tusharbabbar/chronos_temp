@@ -26,7 +26,7 @@
                     </li>
                   </ul>
             </script>
-            <div text-angular ta-name="comment-text" ng-model="comment" ta-toolbar="[['p', 'pre', 'quote'],['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],['justifyLeft', 'justifyCenter', 'justifyRight']]" placeholder="Enter new comment"
+            <div text-angular ta-name="comment-text" ng-model="comment" ta-toolbar="[['p', 'pre', 'quote','bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo','justifyLeft', 'justifyCenter', 'justifyRight']]" placeholder="Enter new comment"
             style="padding-bottom:10px">
             </div>
             <textarea
@@ -36,7 +36,7 @@
               mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="comment" id="comment-textarea"
               ng-hide="true">
             </textarea>
-            <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="addComment()"><small>Add Comment</small></button>
+            <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="addComment()"><small><small>Comment</small></small></button>
           </div>
         </div>
 

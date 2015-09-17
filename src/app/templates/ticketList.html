@@ -11,12 +11,13 @@
       <thead class="row listing-head-row">
         <th class="one column"><big>Source</big></th>
         <th class="one column"><big>ID</big></th>
-        <th class="three columns"><big>Description</big></th>
+        <th class="one column"><big>State</big></th>
+        <th class="four columns"><big>Description</big></th>
         <th class="one column"><big>Product</big></th>
         <th class="one column"><big>Type</big></th>
-        <th class="two columns"><big>State</big></th>
-        <th class="one column"><big>SLA(Hrs)</big></th>
+        <th class="two columns"><big>Owner</big></th>
         <th class="two columns"><big>Assignee</big></th>
+        <th class="one column"><big>SLA(Hrs)</big></th>
       </thead>
       <tbody>
         <tr class="listing-row boxed row" ng-repeat="ticket in tickets.list" ng-click = "$parent.openTicket(ticket.id)">
@@ -27,13 +28,19 @@
             <span ng-if="ticket.source != 'email' && ticket.source != 'chat' && ticket.source != 'call'">{{ticket.Source}}</span>
           </td>
           <td class="one column">#{{ticket.id}}</td>
-          <td class="three columns">{{ticket.description}}</td>
+          <td class="one columns">{{ticket.status}}</td>
+          <td class="four columns">{{ticket.description}}</td>
           <td class="one column" style="text-transform:uppercase">{{ticket.product}}</td>
           <td class="one column" style="text-transform:uppercase">{{ticket.type}}</td>
-          <td class="two columns">{{ticket.status}}</td>
+          <td class="two columns">
+            <div class="row">{{ticket.owner_details.member.user.name}}</div>
+            <div class="row">{{ticket.owner_details.team.name}}</div>
+          </td>
+          <td class="two columns">
+            <div class="row">{{ticket.assignment_details.member.user.name}}</div>
+            <div class="row">{{ticket.assignment_details.team.name}}</div>
+          </td>
           <td class="one column">{{ticket.sla}}</td>
-          <td class="two columns">{{ticket.assignment_details.members.user.name}}</td>
-          <td class="two columns">{{ticket.description}}</td>
         </tr>
       </tbody>
     </table>
