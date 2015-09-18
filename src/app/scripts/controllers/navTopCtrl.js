@@ -3,6 +3,7 @@ angular.module('chronos').controller('navTopCtrl',['$scope', 'headingService', '
   $scope.showLogout = false;
   $scope.logout = function(){
     Util.logoutUser()
+    $scope.showLogout = !$scope.showLogout
     $location.path('/login')
   }
   $scope.toggleShowLogout = function(){
