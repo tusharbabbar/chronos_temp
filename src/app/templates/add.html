@@ -1,0 +1,54 @@
+<div ng-controller="addCtrl">
+  <div class="row" style="padding:20px">
+
+    <!-- Add Product -->
+    <div class="four columns" style="border:1px solid grey; background-color:white;">
+      <div class="heading" style="height:50px; padding:10px; border-bottom:1px solid grey;">
+        <h4> Add Product </h4>
+      </div>
+      <div class="main" style="height:250px; border-bottom:1px solid grey; overflow-y:scroll;">
+        <div ng-repeat="product in products" style="padding:20px;">
+          {{product.name}}
+        </div>
+      </div>
+      <div style="padding:10px">
+        <input type="text" ng-model="product" placeholder="product">
+        <button class="button-primary" style="float:right; margin-right:5px" ng-click="addProduct()"><small>Add Product</small></button>
+      </div>
+    </div>
+
+    <!-- Add Source -->
+    <div class="four columns" style="border:1px solid grey; background-color:white;">
+      <div class="heading" style="height:50px; padding:10px; border-bottom:1px solid grey;">
+        <h4> Add Source </h4>
+      </div>
+      <div class="main" style="height:250px; border-bottom:1px solid grey; overflow-y:scroll;">
+        <div ng-repeat="source in sources" style="padding:20px;">
+          {{source.name}}
+        </div>
+      </div>
+      <div style="padding:10px">
+        <input type="text" ng-model="source" placeholder="source">
+        <button class="button-primary" style="float:right; margin-right:5px" ng-click="addSource()"><small>Add source</small></button>
+      </div>
+    </div>
+
+    <!-- Add Type -->
+    <div class="four columns" style="border:1px solid grey; background-color:white;">
+      <div class="heading" style="height:50px; padding:10px; border-bottom:1px solid grey;">
+        <h4> Add Type </h4>
+      </div>
+      <div class="main" style="height:250px; border-bottom:1px solid grey; overflow-y:scroll;">
+        <div ng-repeat="type in types" style="padding:20px;">
+          {{type.name}}
+        </div>
+      </div>
+      <div style="padding:10px">
+        <input type="text" ng-model="type" placeholder="type" style="width:120px">
+        <input type="number" ng-model="sla" placeholder="sla" style="width:120px">
+        <button class="button-primary" style="float:right; margin-right:5px" ng-click="addType()"><small>Add Type</small></button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div>
+  <div class="row" style="padding:20px">
+    <div style="height:50px; padding:10px;">
+        <h4> Add Team </h4>
+      </div>
+    <!-- Add Team -->
+    <div style="border:1px solid grey;">
+      <div class="main" style="height:550px; border-bottom:1px solid grey; overflow-y:scroll;">
+        <div ng-repeat="team in team_details" style="border:1px solid white; background-color:white; padding:10px; margin:20px; border-radius:10px;">
+          <!-- {{team}} -->
+          <div class="row">
+            <div class="three columns">
+              {{team.name}}
+            </div>
+            <div class="three columns">
+              {{team.type == 1 ? "Assigned Team" : "Owner Team"}}
+            </div>
+            <div class="two columns">
+              {{team.levels.length ? team.levels.length : 0}}
+            </div>
+            <div class="two columns">
+              default LM count
+            </div>
+            <div class="two columns">
+              <button class="button-primary" style="height:25px" ng-click="addTeam()">
+                <i class="ionicons ion-edit"></i>
+              </button>
+            </div>
+          </div>
+           <div>
+            <div class="row" ng-repeat="level in team.levels" style="text-align:left; margin-bottom:20px;">
+              Level&nbsp;:&nbsp;{{level.id}}
+              <div style="border:1px solid grey">
+                <div ng-repeat="member in level.members" style="border:1px solid grey; padding:20px; margin:20px; display: inline-block;">
+                  {{member.user.name}} <br/>
+                  {{member.user.email}} <br/>
+                  {{member.user.phone}}
+                </div>
+                <div style="padding:10px">
+                  <script type="text/ng-template" id="/people-mentions.tpl">
+                    <ul class="list-group user-search">
+                      <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
+                        <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
+                        </span>
+                      </li>
+                   </ul>
+                  </script>
+                  <textarea type="text" placeholder="add member" class="form-control panel-body"
+                    mentio = "" mentio-template-url='/people-mentions.tpl'
+                    mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
+                    mentio-select="addMember(item)" mentio-search="searchPeople(term)">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div style="padding:10px">
+              <input type="number" ng-model="team.input" placeholder="SLA">
+              <button class="button-primary" style="margin-left:20px" ng-click="addLevel(team.id, team.input)"><small>Add Level</small>
+              </button>
+            </div>
+           </div>
+        </div>
+      </div>
+      <div style="padding:10px">
+        <input type="text" ng-model="team" placeholder="team">
+        <select style="margin-left:20px;" ng-model="type">
+          <option value=""></option>
+          <option value="0">Assigned Team</option>
+          <option value="1">Owner Team</option>
+        </select>
+        <button class="button-primary" style="margin-left:20px" ng-click="addTeam()"><small>Add Team</small></button>
+      </div>
+  </div>
+</div>
