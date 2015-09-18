@@ -249,12 +249,15 @@ angular.module('chronos').factory('LoginApi', [
       }
     });
   }
-]).factory('TeamLevelApi', [
+]).factory('TeamLevelsListApi', [
   '$resource',
   function($resource) {
     return $resource(baseUrl + '/teamlevels', {
       update: {
         method: 'PATCH'
+      },
+      save: {
+        method: 'POST'
       }
     });
   }
