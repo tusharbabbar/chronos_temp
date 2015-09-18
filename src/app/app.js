@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('chronos', [
   'ngRoute',
   'ngResource',
@@ -13,20 +11,20 @@ angular.module('chronos', [
 angular.module('chronos')
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
-    templateUrl: 'templates/ticketList.html',
+    templateUrl: '/static/ticketList.html',
     controller: 'TicketListCtrl'
   }).when('/login', {
-    templateUrl: 'templates/login.html',
+    templateUrl: '/static/login.html',
     controller: 'LoginCtrl'
   }).when('/ticket/:id', {
-    templateUrl: 'templates/ticket.html',
+    templateUrl: '/static/ticket.html',
     controller: 'TicketCtrl'
   }).when('/configure/meta', {
-    templateUrl: 'templates/add.html',
+    templateUrl: '/static/add.html',
     controller: 'addCtrl'
   });
   // .when('/configure/teams', {
-  //   templateUrl: 'templates/addTeam.html',
+  //   templateUrl: 'static/addTeam.html',
   //   controller: 'addTeamCtrl'
   // });
 }]).factory('authHttpResponseInterceptor', [
@@ -48,8 +46,8 @@ angular.module('chronos')
       responseError: function (rejection) {
         if (rejection.status === 401) {
           console.log('Response Error 401', rejection);
-          $('#nav-top').css('display', 'none')
-          $('#nav-top-left').css('left', 'none')
+          $('#nav-top').css('display', 'none');
+          $('#nav-top-left').css('left', 'none');
           $location.path('/login').search('returnTo', $location.path());
         } else {
           console.log('Api Error');
@@ -63,4 +61,4 @@ angular.module('chronos')
   function ($httpProvider) {
     //Http Intercpetor to check auth failures for xhr requests
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
-  }])
+  }]);

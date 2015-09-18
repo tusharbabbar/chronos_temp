@@ -189,14 +189,14 @@ angular.module('chronos').controller('TicketCtrl',
 
   TicketTimelineApi.query({id:$routeParams.id}, function(data){
     for(var i=0; i< data.length; i++){
-      date = new Date(data[i]['timestamp'] * 1000)
+      var date = new Date(data[i]['timestamp'] * 1000)
       data[i]['date'] = date.toString()
     }
     $scope.timeline = data
   })
 
   $scope.updateTimeline = function(timestamp){
-    data = {
+    var data = {
       id:$routeParams.id,
       timestamp:timestamp
     };

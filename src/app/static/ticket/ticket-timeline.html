@@ -16,19 +16,19 @@
   <!-- <div style="border-bottom: 1px solid #D7D7D7"> -->
   <div class='timeline-row' ng-repeat="t in timeline">
     <div ng-if="t.type == 'Created'">
-      <div ng-include="'/templates/ticket/timeline/timeline-ticket-created.html'"></div>
+      <div ng-include="'/static/ticket/timeline/timeline-ticket-created.html'"></div>
     </div>
     <div ng-if="t.type == 'Comment'">
-      <div ng-include="'/templates/ticket/timeline/timeline-comment.html'"></div>
+      <div ng-include="'/static/ticket/timeline/timeline-comment.html'"></div>
     </div>
     <div ng-if="t.type == 'Mail'">
-      <div ng-include="'/templates/ticket/timeline/timeline-mail.html'"></div>
+      <div ng-include="'/static/ticket/timeline/timeline-mail.html'"></div>
     </div>
     <div ng-if="t.type == 'Ownership'">
-      <div ng-include="'/templates/ticket/timeline/timeline-ownership.html'"></div>
+      <div ng-include="'/static/ticket/timeline/timeline-ownership.html'"></div>
     </div>
     <div ng-if="t.type == 'Assignment' || t.type == 'Assignment Update'">
-      <div ng-include="'/templates/ticket/timeline/timeline-assignment.html'"></div>
+      <div ng-include="'/static/ticket/timeline/timeline-assignment.html'"></div>
     </div>
   </div>
   <!-- <div> -->

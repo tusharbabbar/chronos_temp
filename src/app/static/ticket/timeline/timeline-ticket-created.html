@@ -28,8 +28,8 @@
 <div class='timeline-footer row' ng-if="t.type == 'Created'" style="padding-top: 10px">
   <span  style="font-size: 1em; float:left; margin-right: 10px; height:100%">
     <i class="listing-font fa fa-envelope" style="font-size:1.3em" ng-if="t.ticket.source.name === 'email'"></i>
-    <i class="listing-font fa fa-chat" ng-if="t.ticket.source.name === 'chat'"></i>
-    <i class="listing-font fa fa-phone" ng-if="t.ticket.source.name === 'call'"></i>
+    <i class="listing-font fa fa-chat" style="font-size:1.3em" ng-if="t.ticket.source.name === 'chat'"></i>
+    <i class="listing-font fa fa-phone" style="font-size:1.3em" ng-if="t.ticket.source.name === 'call'"></i>
     <span ng-if="t.ticket.source.name != 'email' && t.ticket.source.name != 'chat' && t.ticket.source.name != 'call'">{{t.ticket.source.name}}</span>
   </span>
   <span class="offset-by-one two columns" style="font-size: 1em; float:left; margin-right: 10px; height:100%">Product: {{t.ticket.product.name}}</span>

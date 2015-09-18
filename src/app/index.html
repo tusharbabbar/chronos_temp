@@ -15,23 +15,24 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- endinject -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   </head>
   <body ng-app='chronos'>
     <div class="nav-left boxed" id="nav-left">
-      <div ng-include src="'/templates/sideNav.html'"></div>
+      <div ng-include src="'/static/sideNav.html'"></div>
     </div>
     <div class="nav-top boxed" id="nav-top">
-      <div ng-include="'/templates/nav-top.html'" ng-controller="navTopCtrl"></div>
+      <div ng-include="'/static/nav-top.html'" ng-controller="navTopCtrl"></div>
     </div>
     <div class="nav-top-left boxed" id="nav-top-left">
-      <div ng-include="'/templates/nav-top.html'" ng-controller="navTopCtrl"></div>
+      <div ng-include="'/static/nav-top.html'" ng-controller="navTopCtrl"></div>
     </div>
     <div class="main-view boxed" id="main-view">
       <ng-view></ng-view>
     </div>
     <div class="curation-hover" id="curation-hover">
       <div class="curation-screen">
-        <div ng-include="'/templates/curation.html'"></div>
+        <div ng-include="'/static/curation.html'"></div>
       </div>
     </div>
     <!-- inject:vendor:js -->
@@ -56,6 +57,11 @@
     <!-- endinject -->
     <!-- inject:js -->
     <script src="/app.js"></script>
+    <script src="/scripts/services/util.js"></script>
+    <script src="/scripts/services/ticketFilterService.js"></script>
+    <script src="/scripts/services/ticketCurationService.js"></script>
+    <script src="/scripts/services/headingService.js"></script>
+    <script src="/scripts/services/api.js"></script>
     <script src="/scripts/controllers/ticketListCont.js"></script>
     <script src="/scripts/controllers/ticketCtrl.js"></script>
     <script src="/scripts/controllers/navTopCtrl.js"></script>
@@ -63,14 +69,8 @@
     <script src="/scripts/controllers/filterCtrl.js"></script>
     <script src="/scripts/controllers/addTeamCtrl.js"></script>
     <script src="/scripts/controllers/addCtrl.js"></script>
-    <script src="/scripts/services/util.js"></script>
-    <script src="/scripts/services/ticketFilterService.js"></script>
-    <script src="/scripts/services/ticketCurationService.js"></script>
-    <script src="/scripts/services/headingService.js"></script>
-    <script src="/scripts/services/api.js"></script>
     <script src="/js/transit.js"></script>
     <script src="/curation.js"></script>
-    <script src="/chronos-templates.js"></script>
     <!-- endinject -->
   </body>
 </html>
