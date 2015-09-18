@@ -3,11 +3,14 @@ angular.module('chronos').controller('addCtrl',
     'SourcesListApi',
     'ProductsListApi',
     'TypesListApi',
+    'headingService',
      function($scope,
       SourcesListApi,
       ProductsListApi,
-      TypesListApi
+      TypesListApi,
+      headingService
       ){
+          headingService.pageHeading.value = 'Configurations'
           //get list of sources
           SourcesListApi.get(function (data) {
             $scope.sources = data.sources;
@@ -32,7 +35,7 @@ angular.module('chronos').controller('addCtrl',
               console.log("Product added successfully");
             }, function(errorData){
               console.log(errorData);
-            });    
+            });
           };
 
           $scope.addSource = function(){
@@ -40,13 +43,13 @@ angular.module('chronos').controller('addCtrl',
               alert('Source Field can not be empty');
               return;
             }
-            
+
             SourcesListApi.save( {name : $scope.source} , function(data){
               $scope.source="";
               console.log("Source added successfully");
             }, function(errorData){
               console.log(errorData);
-            });     
+            });
           };
 
           $scope.addType = function(){
@@ -63,6 +66,6 @@ angular.module('chronos').controller('addCtrl',
               console.log("type added successfully");
             }, function(errorData){
               console.log(errorData);
-            });  
+            });
           };
 }]);

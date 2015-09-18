@@ -21,13 +21,14 @@ angular.module('chronos')
   }).when('/ticket/:id', {
     templateUrl: 'templates/ticket.html',
     controller: 'TicketCtrl'
-  }).when('/configure/add', {
+  }).when('/configure/meta', {
     templateUrl: 'templates/add.html',
     controller: 'addCtrl'
-  }).when('/configure/addTeam', {
-    templateUrl: 'templates/addTeam.html',
-    controller: 'addTeamCtrl'
   });
+  // .when('/configure/teams', {
+  //   templateUrl: 'templates/addTeam.html',
+  //   controller: 'addTeamCtrl'
+  // });
 }]).factory('authHttpResponseInterceptor', [
   '$q',
   '$location',
