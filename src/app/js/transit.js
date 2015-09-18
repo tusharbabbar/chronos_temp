@@ -9,7 +9,7 @@ window.showCuration = function(value){
 }
 
 window.toggleLeftNav = function(){
-  if ($('#nav-left').css('left') === '-300px'){
+  if ($('#nav-left').css('left') === '-350px'){
     // newWidth = $(window).width() - 308;
     $('#nav-left').css('left','0px')
     // $('#main-view').css('left', '292px')
@@ -22,7 +22,7 @@ window.toggleLeftNav = function(){
   }
   else if ($('#nav-left').css('left') === '0px') {
     // newWidth = '100%';
-    $('#nav-left').css('left','-300px')
+    $('#nav-left').css('left','-350px')
     // $('#main-view').css('width', newWidth)
     // $('#nav-top').css('width', newWidth)
     // $('#nav-top-left').css('width', newWidth)

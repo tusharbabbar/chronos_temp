@@ -131,9 +131,9 @@ body {
 .nav-left {
   background-color: #095675;
   height: 100%;
-  width: 300px;
+  width: 350px;
   position: fixed;
-  left: -300px;
+  left: -350px;
   top: 0px;
   transition: left 0.5s;
   color: #FFFFFF;
@@ -468,8 +468,8 @@ mentio-menu .active {
 }
 
 .menu-list {
-  font-size: large;
-  padding-bottom : 20px;
+  font-size: x-large;
+  padding : 10px;
 }
 
 .menu-list:hover {
