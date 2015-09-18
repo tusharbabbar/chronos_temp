@@ -327,7 +327,7 @@ angular.module('chronos').controller('TicketCtrl',
         data.send_custom_mail = 0
         data.subject = $scope.data.subject
         data.body = $scope.data.mail
-        data.mail = $scope.data.to
+        data.recipient = $scope.data.to
         TicketApi.update(data, function(data){
           console.log(data)
           $scope.data['mail'] = "";

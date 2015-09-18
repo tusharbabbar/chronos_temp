@@ -257,7 +257,7 @@ angular.module('chronos').controller('curationCtrl',
                       data.send_custom_mail = 0;
                       data.subject = $scope.mail.subject;
                       data.body = $scope.mail.body;
-                      data.mail = $scope.mail.to;
+                      data.recipient = $scope.mail.to;
                     }
                     else {
                       alert("Must specify Subject, Body and To.")
@@ -314,7 +314,6 @@ angular.module('chronos').controller('curationCtrl',
                   console.log(errorData);
               });
               ticketFilterService.update_tickets_with_filters()
-              $window.showCuration(0);
             };
             //close curation screen
             $scope.cancel = function() {
