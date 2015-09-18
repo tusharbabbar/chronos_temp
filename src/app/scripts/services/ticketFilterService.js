@@ -13,7 +13,8 @@ angular.module('chronos').factory('ticketFilterService',function(TicketsListApi)
     teams : [],
     types : [],
     sources : [],
-    statuses : []
+    statuses : [],
+    offset: 0
   }
 
   var self = this;
@@ -22,10 +23,10 @@ angular.module('chronos').factory('ticketFilterService',function(TicketsListApi)
     console.log(tickets);
     return tickets;
   }
-  var update_tickets_with_filters = function(offset){
+  var update_tickets_with_filters = function(){
     var self = this;
     var data = {
-      offset : offset,
+      offset : self.filters.offset,
     };
     data.limit = self.itemsPerPage;
     data.my_issues = self.filters.my_issues;

@@ -4,6 +4,7 @@ angular.module('chronos').controller('LoginCtrl',[ '$scope', '$location', 'Login
   headingService.pageHeading.value = "Login to Galaxy"
   $("#nav-top").hide()
   $("#nav-top-left").hide()
+  $("body").css("background-color", "#095675")
   $scope.signin = function(){
     console.log('here')
     if ($scope.email && $scope.password) {
@@ -17,6 +18,7 @@ angular.module('chronos').controller('LoginCtrl',[ '$scope', '$location', 'Login
         Util.set_accesstoken(data.access_token);
         $("#nav-top").show()
         $("#nav-top-left").show()
+        $("body").css("background-color", "#F7F7F7")
         $location.path('/')
       });
     }

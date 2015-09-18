@@ -11,6 +11,7 @@ angular.module('chronos').controller('curationCtrl',
     'TicketTagApi',
     'TicketCommentsListApi',
     'TicketApi',
+    'ticketFilterService',
      function ($scope,
       $window,
       ticketCurationService,
@@ -22,7 +23,8 @@ angular.module('chronos').controller('curationCtrl',
       TeamMembersListApi,
       TicketTagApi,
       TicketCommentsListApi,
-      TicketApi) {
+      TicketApi,
+      ticketFilterService) {
             //default
             console.log("Entered in ticket curationCtrl");
             console.log($scope.ticketId);
@@ -170,10 +172,6 @@ angular.module('chronos').controller('curationCtrl',
             };
             $scope.getOwnerTeamMembers = function(data, memberInfo){
               memberInfo = typeof memberInfo !== 'undefined' ? memberInfo : false;
-              console.log("getOwnerTeamMembers");
-              console.log(data);
-              console.log("memberInfo");
-              console.log(memberInfo);
               TeamMembersListApi.get({team_id : data.id}, function (data){
                 for( i in data.members) {
                   member = data.members[i];
@@ -221,6 +219,12 @@ angular.module('chronos').controller('curationCtrl',
               });
             };
 
+            $scope.clickSave = function() {
+              if ($scope.assignedTeam) {
+                $scope.show
+              }
+            }
+
             $scope.save = function() {
               var data = {};
               data.id = $scope.ticketId;
@@ -266,6 +270,7 @@ angular.module('chronos').controller('curationCtrl',
               }, function (errorData) {
                   console.log(errorData);
               });
+              ticketFilterService.update_tickets_with_filters()
               $window.showCuration(0);
             };
             //close curation screen

@@ -37,7 +37,8 @@ angular.module('chronos').controller('TicketListCtrl',
 
   $scope.pageChange = function(newPageNumber){
     console.log(newPageNumber)
-    offset = (newPageNumber - 1) * $scope.itemsPerPage
-    ticketFilterService.update_tickets_with_filters(offset);
+    offset = (newPageNumber - 1) * $scope.itemsPerPage;
+		ticketFilterService.filters['offset'] = offset;
+    ticketFilterService.update_tickets_with_filters();
   }
 }]);

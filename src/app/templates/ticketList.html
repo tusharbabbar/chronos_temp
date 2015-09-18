@@ -45,8 +45,8 @@
       </tbody>
     </table>
     <div class="row">
-      <div class="twelve columns" ng-if="tickets.pages > 0">
-        <button class="small-button" ng-repeat="page in tickets.pages" ng-click="pageChange(page + 1)">{{page}}</button>
+      <div class="twelve columns" ng-if="tickets.pages.length > 1">
+        <button class="small-button" ng-repeat="page in tickets.pages" ng-click="pageChange(page + 1)">{{page + 1}}</button>
       </div>
     </div>
   </div>

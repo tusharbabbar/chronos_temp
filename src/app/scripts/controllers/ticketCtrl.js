@@ -185,17 +185,29 @@ angular.module('chronos').controller('TicketCtrl',
     if(data.owner_details && data.owner_details.member && Util.getLoggedInUserId() == data.owner_details.member.user.id) {
        $scope.isNotOwner = false;
     }
-
   });
+
   TicketTimelineApi.query({id:$routeParams.id}, function(data){
     for(var i=0; i< data.length; i++){
       date = new Date(data[i]['timestamp'] * 1000)
-      data[i]['timestamp'] = date.toString()
+      data[i]['date'] = date.toString()
     }
-    console.log(data[0])
     $scope.timeline = data
-    console.log(data)
   })
+
+  $scope.updateTimeline = function(timestamp){
+    data = {
+      id:$routeParams.id,
+      timestamp:timestamp
+    };
+    TicketTimelineApi.query(data, function(data){
+      for(var i=0; i< data.length; i++){
+        date = new Date(data[i]['timestamp'] * 1000)
+        data[i]['date'] = date.toString()
+      }
+      $scope.timeline = $scope.timeline.concat(data)
+    })
+  }
 
   $scope.showCommenter = function(){
     $scope.data.showCommenter = true;
@@ -236,6 +248,7 @@ angular.module('chronos').controller('TicketCtrl',
       }
       TicketCommentsListApi.save(data, function(data){
         $scope.data.comment = ""
+        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
       })
     }
     else {
@@ -255,6 +268,7 @@ angular.module('chronos').controller('TicketCtrl',
         $scope.data['mail'] = "";
         $scope.data['subject'] = "";
         $scope.data['to'] = "";
+        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
       })
     }
     else {
@@ -267,7 +281,7 @@ angular.module('chronos').controller('TicketCtrl',
     data.id = $scope.ticket.id;
     data.status = 'INVALID';
     TicketApi.update(data, function (data) {
-                console.log("status changed");
+                $scope.ticket = data
               }, function (errorData) {
                   console.log(errorData);
               });
@@ -366,12 +380,15 @@ angular.module('chronos').controller('TicketCtrl',
   }
 
   $scope.saveTicketDetails = function() {
+    console.log("here")
      var data = {};
               data.id = $scope.ticket.id;
-              var items = ['owner', 'ownerTeam']
+              var items = ['owner', 'ownerTeam', 'reassignedTeam', 'reassigned']
               var mapping = {
                 owner:'set_owner_member',
                 ownerTeam:'set_owner_team',
+                reassignedTeam: 'assign_to_team',
+                reassigned: 'assign_to_member'
               }
               for(var i=0; i<items.length; i++){
                 if ($scope[items[i]].length) {
@@ -387,29 +404,38 @@ angular.module('chronos').controller('TicketCtrl',
               }
               data.tags = dataTags;
               TicketApi.update(data, function (data) {
-                console.log("ticket updated");
+                $scope.ticket = data
+                //set owner team
+                if (data.owner_details && data.owner_details.team){
+                  for( i in $scope.ownerTeams ){
+                    currentOwnerTeam = $scope.ownerTeams[i];
+                    if(currentOwnerTeam.name == data.owner_details.team.name) {
+                      currentOwnerTeam.ticked = true;
+                      $scope.ownerTeam[0] = currentOwnerTeam;
+                      $scope.getOwnerTeamMembers(currentOwnerTeam, data.owner_details.member);
+                    }
+                    else{
+                      currentOwnerTeam.ticked = false;
+                    }
+                  }
+                }
+                //set reassigned team
+                if (data.assignment_details && data.assignment_details.team) {
+                  for( i in $scope.reassignedTeams ){
+                    currentReassignedTeam = $scope.reassignedTeams[i];
+                    if(currentReassignedTeam.name == data.assignment_details.team.name) {
+                      currentReassignedTeam.ticked = true;
+                      $scope.reassignedTeam[0] = currentReassignedTeam;
+                      $scope.getReassignedTeamMembers(currentReassignedTeam, data.assignment_details.member);
+                    }
+                    else{
+                      currentReassignedTeam.ticked = false;
+                    }
+                  }
+                }
+                $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
               }, function (errorData) {
                   console.log(errorData);
-              });
-
-              //ticket reassignment
-              data = {}
-              data.ticket_id = $scope.ticket.id;
-              data.action = 'REASSIGN';
-              var items = ['reassignedTeam', 'reassigned']
-              var mapping = {
-                reassignedTeam : 'reassign_team_id',
-                reassigned : 'reassign_member_id',
-              }
-              for(var i=0; i<items.length; i++){
-                if ($scope[items[i]].length) {
-                  data[mapping[items[i]]] = $scope[items[i]][0].id;
-                }
-              }
-              AssignmentActionApi.save(data, function(data) {
-                console.log("Reassignment done");
-              }, function (errorData) {
-                console.log(errorData);
               });
   };
 
@@ -456,13 +482,4 @@ angular.module('chronos').controller('TicketCtrl',
     });
   };
 
-  $scope.comment="comment"
-  // taOptions.toolbar = [
-  //     ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
-  //     ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
-  //     ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent'],
-  //     ['comment', 'insertImage','insertLink', 'insertVideo', 'wordcount', 'charcount']
-  // ];
-
-  // $scope.temp = $sce.trustAscomment('<h2>Try me!</h2><p>textAngular is a super cool WYSIWYG Text Editor directive for AngularJS</p><p><b>Features:</b></p><ol><li>Automatic Seamless Two-Way-Binding</li><li style="color: blue;">Super Easy <b>Theming</b> Options</li><li>Simple Editor Instance Creation</li><li>Safely Parses comment for Custom Toolbar Icons</li><li>Doesn&apos;t Use an iFrame</li><li>Works with Firefox, Chrome, and IE8+</li></ol><p><b>Code at GitHub:</b> <a href="https://github.com/fraywing/textAngular">Here</a> </p>')
 }]);
