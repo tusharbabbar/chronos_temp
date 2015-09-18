@@ -4,7 +4,8 @@
   <i class="ionicons ion-ios-arrow-right back-arrow" style="cursor: auto"></i>
   <span class="page-heading" style="margin: 0px"><thin>Ticket ID <span style="color: #4DC5EA">#{{ticket.id}}</span></thin></span>
   <!-- <span class="page-heading" style="margin-left: 100px"><thin>Customer <span style="color: #4DC5EA">{{fabricPracticeName}}</span></thin></span> -->
-  <span class="page-heading" style="margin-left: 100px"><thin>Status <span style="color: #4DC5EA">{{ticket.status}}</span></thin></span>
+  <span class="page-heading" style="margin-left: 100px;"><thin>Status <span style="color: #4DC5EA">{{ticket.status}}</span></thin></span>
+  <span class="page-heading" style="margin-left: 100px;"><thin>Customer <span style="color: #4DC5EA">{{ticket.kyc_info.fabric_practice_name}}</span></thin></span>
   <span class="" style="right:0px; position:absolute; margin-right:40px">
     <i class="ionicons ion-ios-timer" ng-if="dueTime > 0" style="color:#FEC76F;font-size:1.5em; margin-top:5px"></i>
     <i class="ionicons ion-ios-timer" ng-if="dueTime <= 0" style="color: #F91943;font-size:1.5em; margin-top:5px"></i>

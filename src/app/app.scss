@@ -21,6 +21,17 @@ font-family: 'Open Sans Light';
 src: url("/assets/OpenSans-Light.ttf");
 }
 
+@font-face {
+font-family: 'Existence-uni';
+src: url("/assets/Existence-UnicaseLight.otf");
+}
+
+@font-face {
+font-family: 'Existence-light';
+src: url("/assets/Existence-Light.otf");
+}
+
+
 body {
   padding: 0px;
   background-color: #F7F7F7;
@@ -474,4 +485,8 @@ mentio-menu .active {
 
 .logout:hover {
   color: red
+}
+
+.ta-hidden-input {
+  display: none
 }
