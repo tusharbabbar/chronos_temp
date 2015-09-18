@@ -1,0 +1,43 @@
+<div class="container" style="margin-top: 20px">
+  <div class="row" style="padding-bottom:20px;">
+    <small class="two columns">Send Default Mail</small>
+    <span class="one columns">
+      <input type="checkbox" placeholder="Enter Subject" id="exampleEmailInput" ng-model="mail.send_default_mail" value="true">
+    </span>
+    <small class="two columns">Do Not Send Mail</small>
+    <span class="one columns">
+      <input type="checkbox" placeholder="Enter Subject" id="exampleEmailInput" ng-model="mail.do_not_sendmail" value="true">
+    </span>
+  </div>
+  <div class="row" style="">
+    <small class="one column">SUBJECT:</small>
+    <span class="eleven columns">
+      <input class="u-full-width" type="text" placeholder="Enter Subject" id="exampleEmailInput" ng-model="mail.subject">
+    </span>
+  </div>
+  <div class="row" style="">
+    <small class="one column">TO:</small>
+    <span class="eleven columns">
+      <script type="text/ng-template" id="/people-mentions-new.tpl">
+            <ul class="list-group user-search">
+              <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
+                <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
+                </span>
+              </li>
+            </ul>
+      </script>
+      <input type="text" placeholder="Enter Send To" class="form-control panel-body"
+        mentio = "" mentio-template-url='/people-mentions-new.tpl'
+        mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
+        mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="mail.to" id="reply-textarea">
+      </input>
+    </span>
+  </div>
+  <text-angular ta-toolbar="[['p', 'pre', 'quote'],['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],['justifyLeft', 'justifyCenter', 'justifyRight']]" ng-model="mail.body" placeholder="Enter mail body"></text-angular>
+  <div class="row" style="padding: 5px;">
+    <small>
+      <button style="float:right" ng-click="removeModal()">Cancel</button>
+      <button class="button-primary" style="float:right; margin-right:5px" ng-click="save()"> Save</button>
+    </small>
+  </div>
+</div>
