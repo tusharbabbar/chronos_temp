@@ -68,7 +68,7 @@ angular.module('chronos').controller('curationCtrl',
                 $scope[items[i]] = [];
               }
               $scope.ticketId = ticketCurationService.getTicketId();
-              console.log("here", $scope.ticketId);
+             
               TicketApi.get( {id : $scope.ticketId} , function(data){
                 $scope.ticketDescription = data.description;
                 $scope.ticketId = data.id;
@@ -221,8 +221,52 @@ angular.module('chronos').controller('curationCtrl',
               });
             };
 
+            $scope.mail = {
+              'send_default_mail' : true,
+              'subject' : '',
+              'body' : '',
+              'to' : '',
+              'do_not_sendmail' : false,
+            };
+            $scope.checkSave = function(){
+
+                if($scope['assignedTeam'].length ){
+                  $scope.showCustomMail = true;
+                }
+                else{
+                  $scope.save();
+                }
+            };
+
+            $scope.removeModal = function(){
+              $scope.showCustomMail = false;
+            };
+
             $scope.save = function() {
               var data = {};
+              if($scope.showCustomMail){
+                  if( $scope.mail.do_not_sendmail == true){
+                    console.log("do not send mail");
+                    $scope.showCustomMail = false;
+                  }
+                  else if ($scope.mail.send_default_mail === true){
+                    console.log("default mail sent");
+                    data.send_custom_mail = 1;
+                  }
+                  else {
+                    if  (($scope.mail.subject != "") && ($scope.mail.to != "") && ($scope.mail.body !="")){
+                      console.log("custom mail send");
+                      data.send_custom_mail = 0;
+                      data.subject = $scope.mail.subject;
+                      data.body = $scope.mail.body;
+                      data.mail = $scope.mail.to;
+                    }
+                    else {
+                      alert("Must specify Subject, Body and To.")
+                      return;
+                    }
+                  }
+              }
               data.id = $scope.ticketId;
               data.description = $scope.ticketDescription;
               var items = ['product', 'type', 'source', 'owner', 'assigned', 'assignedTeam', 'ownerTeam']
@@ -262,16 +306,22 @@ angular.module('chronos').controller('curationCtrl',
               console.log("data sent is ");
               console.log(data);
               TicketApi.update(data, function (data) {
-                console.log("ticket updated");
+                console.log(data)
+                $scope.mail.body = "";
+                $scope.mail.subject = "";
+                $scope.mail.to = "";
+                $scope.showCustomMail = false;
+                $window.showCuration(0);
               }, function (errorData) {
                   console.log(errorData);
               });
-              $window.showCuration(0);
+              
             };
             //close curation screen
             $scope.cancel = function() {
               $window.showCuration(0);
             };
+
             //search user from users api for mention
             $scope.searchPeople = function(term) {
               console.log(term)
@@ -285,10 +335,17 @@ angular.module('chronos').controller('curationCtrl',
               }
             };
             //select user for mention
-            $scope.getSelectedEmail = function(item) {
+            $scope.getSelectedUser = function(item) {
               console.log(item);
               return "<span style='color: #4DC5EA;'>"+"@"+item.name+"</span>";
             };
+
+            //select user email
+            $scope.getSelectedEmail = function(item) {
+              console.log(item);
+              return item.email + ","
+            };
+
             //add comment on ticket
             $scope.addComment = function(){
               if (($scope.comment != "") && ($scope.comment.length > 10)){

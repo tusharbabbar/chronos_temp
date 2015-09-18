@@ -33,7 +33,7 @@
               type="text" placeholder="Type a new comment" class="form-control panel-body"
               mentio = "" mentio-template-url='/people-mentions.tpl'
               mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
-              mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="comment" id="comment-textarea"
+              mentio-select="getSelectedUser(item)" mentio-search="searchPeople(term)" ng-model="comment" id="comment-textarea"
               ng-hide="true">
             </textarea>
             <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="addComment()"><small><small>Comment</small></small></button>
@@ -243,8 +243,15 @@
       <button ng-click="cancel()"> <small> Cancel </small></button>
     </div>
     <div class="bottom-buttons">
-      <button class="button-primary" ng-click="save()"><small>Save</small ></button>
+      <button class="button-primary" ng-click="checkSave()"><small>Save</small ></button>
     </div>
+  </div>
+
+  <div style=" background-color:rgba(0, 0, 0, 0.5); width:100%; height:100%;position: fixed; z-index:20; top:0px; left:0px" 
+  ng-if="showCustomMail" ng-click = "removeModal()"></div>
+  <div style="background-color:white;width:50%; height:50%;position: fixed; z-index:21; margin: 0 auto; top:25%; left:25%" 
+    ng-if="showCustomMail">
+      <div ng-include="'/templates/curationCustomSendMail.html'"></div>
   </div>
 </div>
 
