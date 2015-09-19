@@ -300,7 +300,7 @@ angular.module('chronos').factory('LoginApi', [
   '$resource',
   function($resource) {
     return $resource(baseUrl + '/levelmembers', {
-      update: {
+      save: {
         method: 'POST'
       }
     });
@@ -308,15 +308,15 @@ angular.module('chronos').factory('LoginApi', [
 ]).factory('LevelMembersApi',[
   '$resource',
   function($resource) {
-    return $resource(baseUrl + '/levelmembers/:member_id', {
-      id: '@member_id'
+    return $resource(baseUrl + '/levelmembers/:id', {
+      id: '@id'
     }, {
       query: {
         isArray:false,
         method: 'GET'
       },
       update: {
-        method: 'POST'
+        method: 'PATCH'
       }
     });
   }
