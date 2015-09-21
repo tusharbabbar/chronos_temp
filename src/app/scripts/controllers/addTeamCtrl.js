@@ -33,6 +33,8 @@ angular.module('chronos').controller('addTeamCtrl',
               console.log("each team data is ", data);
               data.showLevels = false;
               $scope.team_details.push(data);
+            }, function(errorData){
+              console.log(errorData);
             });
           }
       }, function(errordata){
@@ -71,14 +73,15 @@ angular.module('chronos').controller('addTeamCtrl',
       }
     }
 
-    $scope.removeMember = function(member, index){
-      console.log("member and index", member,index);
+    $scope.removeMember = function(member, memberIndex, levelIndex, teamIndex){
+      console.log("member and index", member, memberIndex, levelIndex, teamIndex);
       data = {};
       data.id = member.member_id;
       data.active = 0;
       LevelMembersApi.update(data, function(data){
-        console.log("level removed successfully");
-        console.log(data);
+        $scope.team_details[teamIndex].levels[levelIndex].members.splice(memberIndex, 1);
+         console.log($scope.team_details[teamIndex].levels[levelIndex].members);
+         console.log("update performed successfully");
       },function(errorData){
         console.log(errorData);
       });
@@ -126,16 +129,17 @@ angular.module('chronos').controller('addTeamCtrl',
     });
     return "";
   };
-  $scope.add_level_member = function (level_id, user_id) {
-    console.log(level_id, user_id);
-    LevelMember.save({
-      team_id: $scope.team.id,
-      level_id: level_id,
-      user_id: user_id
-    }, function (data) {
-      console.log(data);
-      Flash.create('success', 'Member added successfully!!!', 'alertIn', 'ng-animate');
-      $scope.team_details = data;
-    });
-  };
+  // $scope.add_level_member = function (level_id, user_id) {
+  //   console.log(level_id, user_id);
+  //   LevelMember.save({
+  //     team_id: $scope.team.id,
+  //     level_id: level_id,
+  //     user_id: user_id
+  //   }, function (data) {
+  //     console.log(data);
+  //     Flash.create('success', 'Member added successfully!!!', 'alertIn', 'ng-animate');
+  //     $scope.team_details = data;
+  //   });
+  // };
+  
 }]);

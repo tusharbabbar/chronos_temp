@@ -293,7 +293,7 @@ angular.module('chronos').controller('TicketCtrl',
   };
   $scope.getSelectedMention = function(item) {
     console.log(item);
-    return "<span style='color: #4DC5EA;'>"+"@"+item.name+"</span>";
+    return "<span style='color: #4DC5EA;' id='"+item.id+"'>"+"@"+item.name+"</span>";
   };
   $scope.searchPeople = function(term) {
     if (term.length > 3){

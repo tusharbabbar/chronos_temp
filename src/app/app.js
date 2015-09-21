@@ -22,6 +22,9 @@ angular.module('chronos')
   }).when('/configure/meta', {
     templateUrl: '/static/add.html',
     controller: 'addCtrl'
+  }).when('/configure/teams', {
+    templateUrl: '/static/addTeam.html',
+    controller: 'addTeamCtrl'
   });
 }]).factory('authHttpResponseInterceptor', [
   '$q',

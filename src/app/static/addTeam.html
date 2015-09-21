@@ -59,7 +59,7 @@
                     mentio = "" mentio-template-url='/people-mentions.tpl'
                     mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
                     mentio-select="$parent.addUser(item, level, team, $parent.$index)" mentio-search="$parent.searchPeople(term)"
-                    ng-model="level.addUser">
+                    ng-model="level.addUser"></input>
                 </div>
               </div>
               <div ng-repeat="member in level.members" style="border:1px solid #D7D7D7; padding:20px; margin:20px;
@@ -67,7 +67,7 @@
                 {{member.user.name}} <br/>
                 {{member.user.email}} <br/>
                 {{member.user.phone}} <br/><br/>
-                <button ng-click="$parent.$parent.removeMember(member, $parent.$parent.$index)" style="height:25px !important"> Remove Member
+                <button ng-click="$parent.$parent.removeMember(member, $index, $parent.$index, $parent.$parent.$index)" style="height:25px !important"> Remove Member
                 </button>
               </div>
             </div>
@@ -89,4 +89,5 @@
         <button class="button-primary" style="margin-left:20px" ng-click="addTeam()"><small>Add Team</small></button>
       </div>
   </div>
+</div>
 </div>

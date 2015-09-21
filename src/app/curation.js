@@ -335,7 +335,7 @@ angular.module('chronos').controller('curationCtrl',
             //select user for mention
             $scope.getSelectedUser = function(item) {
               console.log(item);
-              return "<span style='color: #4DC5EA;'>"+"@"+item.name+"</span>";
+              return "<span style='color: #4DC5EA;' id='"+item.id+"'>"+"@"+item.name+"</span>";
             };
 
             //select user email
