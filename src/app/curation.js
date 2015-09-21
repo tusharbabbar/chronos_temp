@@ -30,6 +30,7 @@ angular.module('chronos').controller('curationCtrl',
             console.log($scope.ticketId);
             $scope.singleSelectSetting = {selectionLimit: 1};
             console.log($scope.statuses);
+            $scope.statustesLength = 2;
             $scope.sentiments = [
               {name : 'Happy'},
               {name : 'Neutral'},
@@ -80,7 +81,12 @@ angular.module('chronos').controller('curationCtrl',
                 console.log(data);
                 //set status
                 if( ! (data.status == "RESOLVED" || data.status == "INVALID") ) {
-                    $scope.statuses.push({name : data.status});
+                    if($scope.statuses.length == $scope.statustesLength){
+                      $scope.statuses.push({name : data.status});
+                    }
+                    else{
+                      $scope.statuses[$scope.statustesLength] = {name : data.status};
+                    }
                 }
                 for( i in $scope.statuses ){
                   currentStatus = $scope.statuses[i];
