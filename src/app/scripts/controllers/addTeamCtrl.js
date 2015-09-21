@@ -74,13 +74,11 @@ angular.module('chronos').controller('addTeamCtrl',
     }
 
     $scope.removeMember = function(member, memberIndex, levelIndex, teamIndex){
-      console.log("member and index", member, memberIndex, levelIndex, teamIndex);
       data = {};
       data.id = member.member_id;
       data.active = 0;
       LevelMembersApi.update(data, function(data){
         $scope.team_details[teamIndex].levels[levelIndex].members.splice(memberIndex, 1);
-         console.log($scope.team_details[teamIndex].levels[levelIndex].members);
          console.log("update performed successfully");
       },function(errorData){
         console.log(errorData);
@@ -124,6 +122,7 @@ angular.module('chronos').controller('addTeamCtrl',
     LevelMembersListApi.save(data, function(data){
       data.showLevels = true;
       $scope.team_details[index] = data;
+      $scope.items ="";
     }, function(errordata){
       console.log(errordata);
     });

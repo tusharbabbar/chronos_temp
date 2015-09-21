@@ -2,7 +2,7 @@
   <div class="row" style="padding:20px">
     <div style="height:50px; padding:10px;">
         <h4> Add Team </h4>
-      </div>
+    </div>
     <!-- Add Team -->
     <div style="border:1px solid #D7D7D7;">
       <div class="row" style="padding:10px; margin-left:20px; text-weight:bold;">
@@ -42,8 +42,11 @@
             <div class="row" ng-repeat="level in team.levels" style="text-align:left; margin-bottom:20px; border:1px
                 solid #D7D7D7; min-height:20px;">
               <div class="row" style="padding-top:10px; padding-left:10px; padding-right:10px;">
-                <div class="six columns">
+                <div class="three columns">
                   Default&nbsp;Level&nbsp;: {{level.is_default}}
+                </div>
+                <div class="three columns">
+                  SLA&nbsp;: {{level.sla}}
                 </div>
                 <div class="six columns" style="text-align:right;">
                   <script type="text/ng-template" id="/people-mentions.tpl">
@@ -58,8 +61,9 @@
                   <input type="text" placeholder="Add Member" class="form-control panel-body"
                     mentio = "" mentio-template-url='/people-mentions.tpl'
                     mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
-                    mentio-select="$parent.addUser(item, level, team, $parent.$index)" mentio-search="$parent.searchPeople(term)"
-                    ng-model="level.addUser"></input>
+                    mentio-select="$parent.$parent.addUser(item, level, team, $parent.$index)" 
+                    mentio-search="$parent.$parent.searchPeople(term)"
+                    ng-model="level.addUser" > </input>
                 </div>
               </div>
               <div ng-repeat="member in level.members" style="border:1px solid #D7D7D7; padding:20px; margin:20px;
@@ -67,7 +71,7 @@
                 {{member.user.name}} <br/>
                 {{member.user.email}} <br/>
                 {{member.user.phone}} <br/><br/>
-                <button ng-click="$parent.$parent.removeMember(member, $index, $parent.$index, $parent.$parent.$index)" style="height:25px !important"> Remove Member
+                <button ng-click="$parent.$parent.$parent.removeMember(member, $index, $parent.$index, $parent.$parent.$index)" style="height:25px !important"> Remove Member
                 </button>
               </div>
             </div>
@@ -80,7 +84,7 @@
         </div>
       </div>
       <div style="padding:10px">
-        <input type="text" ng-model="team" placeholder="team">
+        <input type="text" ng-model="team" placeholder="team"> </input>
         <select style="margin-left:20px;" ng-model="type">
           <option value=""></option>
           <option value="0">Assigned Team</option>
