@@ -1,0 +1,9 @@
+<div class='timeline-header row'>
+  <span class="timeline-icon" ng-if="t.changed.status == 'RESOLVED'"><i class="ionicons ion-ios-checkmark-outline"></i></span>
+  <span class="timeline-icon" ng-if="t.changed.status == 'INVALID'"><i class="ionicons ion-ios-trash-outline"></i></span>
+  <span class="timeline-icon" ng-if="t.changed.status != 'INVALID' && t.changed.status != 'RESOLVED'"><i class="ionicons ion-ios-bell-outline"></i></i></span>
+  <span class="action-text" ng-if="t.changed.status == 'RESOLVED'">RESOLVED by {{t.modified_by.name}}</span>
+  <span class="action-text" ng-if="t.changed.status == 'INVALID'">INVALID by {{t.modified_by.name}}</span>
+  <span class="action-text" ng-if="t.changed.status != 'INVALID' && t.changed.status != 'RESOLVED'">CHANGES by {{t.modified_by.name}}</span>
+  <span style="float:right;color:#666; padding: 10px 0px">{{t.date}}</span>
+</div>

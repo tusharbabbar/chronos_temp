@@ -206,6 +206,9 @@ angular.module('chronos').controller('TicketCtrl',
         data[i]['date'] = date.toString()
       }
       $scope.timeline = $scope.timeline.concat(data)
+      $("body").animate({
+        scrollTop: $("#timeline")[0].scrollHeight
+      }, 750);
     })
   }
 
@@ -249,6 +252,7 @@ angular.module('chronos').controller('TicketCtrl',
       TicketCommentsListApi.save(data, function(data){
         $scope.data.comment = ""
         $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        $scope.hideAll()
       })
     }
     else {
@@ -269,6 +273,7 @@ angular.module('chronos').controller('TicketCtrl',
         $scope.data['subject'] = "";
         $scope.data['to'] = "";
         $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        $scope.hideAll()
       })
     }
     else {
@@ -282,6 +287,7 @@ angular.module('chronos').controller('TicketCtrl',
     data.status = 'INVALID';
     TicketApi.update(data, function (data) {
                 $scope.ticket = data
+                $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
               }, function (errorData) {
                   console.log(errorData);
               });
@@ -320,6 +326,7 @@ angular.module('chronos').controller('TicketCtrl',
       TicketApi.update(data, function(data){
         $scope.ticket = data
         $scope.data.showResolveMailer = false;
+        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
       })
     }
     else {
@@ -335,6 +342,7 @@ angular.module('chronos').controller('TicketCtrl',
           $scope.data['to'] = "";
           $scope.ticket = data
           $scope.data.showResolveMailer = false;
+          $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
         })
       }
       else {
@@ -351,6 +359,7 @@ angular.module('chronos').controller('TicketCtrl',
     console.log($scope.ticket, data);
     AssignmentActionApi.save(data, function(data) {
       $scope.ticket = data
+      $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
     }, function (errorData) {
       console.log(errorData);
     });
@@ -362,7 +371,6 @@ angular.module('chronos').controller('TicketCtrl',
       action: "DENY",
       assignment_id: $scope.ticket.assignment_details.assignment_id
     }
-    console.log($scope.data.comment, $scope.data.denial_reason)
     if (($scope.data.comment != "") && ($scope.data.denial_reason.length === 1)){
       data.deny_comment = $scope.data.comment;
       data.deny_reason = $scope.data.denial_reason[0]['name']
@@ -371,6 +379,7 @@ angular.module('chronos').controller('TicketCtrl',
         $scope.data.denial_reason = []
         $scope.ticket = data
         $scope.data.showDenyCommenter = false
+        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
       })
     }
   }
