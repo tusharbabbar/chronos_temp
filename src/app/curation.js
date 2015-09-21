@@ -376,14 +376,18 @@ angular.module('chronos').controller('curationCtrl',
             };
 
             //add comment on ticket
+            $scope.data = {}
+            $scope.data.comment = ""
             $scope.addComment = function(){
-              if (($scope.comment != "") && ($scope.comment.length > 10)){
+              console.log($scope.data.comment)
+              if (($scope.data.comment != "") && ($scope.data.comment.length > 10)){
                 data = {
                   ticket_id : $scope.ticketId,
-                  body: $scope.comment
+                  body: $scope.data.comment
                 }
                 TicketCommentsListApi.save(data, function(data){
-                  $scope.comment = "";
+                  $scope.data.comment = "";
+                  $scope.toggleComment()
                   console.log("comment added");
                   console.log(data);
                   $scope.updateComments()
