@@ -32,6 +32,7 @@ angular.module('chronos').controller('addCtrl',
 
             ProductsListApi.save( {name : $scope.product} , function(data){
               $scope.product=""
+              $scope.products.push(data.product);
               console.log("Product added successfully");
             }, function(errorData){
               console.log(errorData);
@@ -46,6 +47,7 @@ angular.module('chronos').controller('addCtrl',
 
             SourcesListApi.save( {name : $scope.source} , function(data){
               $scope.source="";
+              $scope.sources.push(data.source);
               console.log("Source added successfully");
             }, function(errorData){
               console.log(errorData);
@@ -57,12 +59,14 @@ angular.module('chronos').controller('addCtrl',
               alert('Type Field can not be empty');
               return;
             }
-            if(!scope.sla <= 0){
+            if($scope.sla <= 0){
               alert("SLA should be greater than 0");
+              return;
             }
             TypesListApi.save( {name : $scope.type, sla : $scope.sla} , function(data){
               $scope.type="";
               $scope.sla="";
+              $scope.types.push(data.type);
               console.log("type added successfully");
             }, function(errorData){
               console.log(errorData);

@@ -39,8 +39,9 @@
         <h4> Add Type </h4>
       </div>
       <div class="main" style="height:250px; border-bottom:1px solid grey; overflow-y:scroll;">
-        <div ng-repeat="type in types" style="padding:20px;">
-          {{type.name}}
+        <div class="row" ng-repeat="type in types" style="padding:20px;">
+          <div class="three columns">{{type.name}}</div>
+          <div class="offset-by-six three columns">{{type.sla}}</div>
         </div>
       </div>
       <div style="padding:10px">
