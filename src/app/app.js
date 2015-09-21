@@ -24,6 +24,9 @@ angular.module('chronos')
   }).when('/configure/meta', {
     templateUrl: 'templates/add.html',
     controller: 'addCtrl'
+  }).when('/configure/addTeam', {
+    templateUrl: 'templates/addTeam.html',
+    controller: 'addTeamCtrl'
   });
   // .when('/configure/teams', {
   //   templateUrl: 'templates/addTeam.html',
