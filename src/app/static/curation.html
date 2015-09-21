@@ -10,33 +10,57 @@
       <!-- Curation main Left screen -->
         <div id="ticket-curation-left">
           <div id="ticket-curation-left-top">
-              <div id="description-heading">
-                  DESCRIPTION
-              </div>
               <div id="ticket-description">
-                   {{ticketDescription}}
+                <div class="timeline-row" style="box-shadow:0px 0px 0px 0px">
+                  <div class="timeline-header row">
+                    <span class="one column timeline-icon" style="font-size: 2em; float:left; height:100%"><i class="ionicons ion-ios-paper-outline"></i></span>
+                    <div class="eleven columns" style="margin-top:10px">Ticket Description</div>
+                  </div>
+                  <div class="timeline-body">
+                    {{ticketDescription}}
+                  </div>
+                </div>
+                <div ng-repeat="comment in comments">
+                  <div class="timeline-row" style="box-shadow:0px 0px 0px 0px">
+                    <div class="timeline-header row">
+                        <span class="one column timeline-icon" style="font-size: 2em; float:left; margin-right: 10px; height:100%"><i class="ionicons ion-ios-chatbubble-outline"></i></span>
+
+                      <div class="eleven columns" style="margin-top: 10px" ta-bind ng-model="comment.body">
+                      </div>
+                    </div>
+                    <div class="timeline-footer">
+                      <small><div style="">{{comment.created_by.name}}</div></small>
+                      <small><small><div style="">{{comment.date}}</div></small></small>
+                    </div>
+                </div>
               </div>
-          </div>
-          <div id="ticket-curration-left-bottom" class="row">
-            <script type="text/ng-template" id="/people-mentions.tpl">
-                  <ul class="list-group user-search">
-                    <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
-                      <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
-                      </span>
-                    </li>
-                  </ul>
-            </script>
-            <div text-angular ta-name="comment-text" ng-model="comment" ta-toolbar="[['p', 'pre', 'quote','bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo','justifyLeft', 'justifyCenter', 'justifyRight']]" placeholder="Enter new comment"
-            style="padding-bottom:10px">
             </div>
-            <textarea
-              type="text" placeholder="Type a new comment" class="form-control panel-body"
-              mentio = "" mentio-template-url='/people-mentions.tpl'
-              mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
-              mentio-select="getSelectedUser(item)" mentio-search="searchPeople(term)" ng-model="comment" id="comment-textarea"
-              ng-hide="true">
-            </textarea>
-            <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="addComment()"><small><small>Comment</small></small></button>
+
+          </div>
+          <div id="ticket-curration-left-bottom" ng-if="showComment" class="row">
+              <script type="text/ng-template" id="/people-mentions.tpl">
+                    <ul class="list-group user-search">
+                      <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
+                        <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
+                        </span>
+                      </li>
+                    </ul>
+              </script>
+              <div text-angular ta-name="comment-text" ng-model="comment" ta-toolbar="[['p', 'pre', 'quote','bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo','justifyLeft', 'justifyCenter', 'justifyRight']]" placeholder="Enter new comment"
+              style="padding-bottom:10px">
+              </div>
+              <textarea
+                type="text" placeholder="Type a new comment" class="form-control panel-body"
+                mentio = "" mentio-template-url='/people-mentions.tpl'
+                mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
+                mentio-select="getSelectedUser(item)" mentio-search="searchPeople(term)" ng-model="comment" id="comment-textarea"
+                ng-hide="true">
+              </textarea>
+               <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="addComment()"><small><small>Comment</small></small></button>
+              <button style="float:right; margin-right:5px" ng-click="toggleComment()"><small><small>hide</small></small></button>
+          </div>
+          <div id="ticket-curration-left-bottom-buttons" ng-if="!showComment" class="row">
+            <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="toggleComment()"><small><small>Comment</small></small></button>
           </div>
         </div>
 

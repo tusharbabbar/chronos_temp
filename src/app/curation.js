@@ -31,6 +31,8 @@ angular.module('chronos').controller('curationCtrl',
             $scope.singleSelectSetting = {selectionLimit: 1};
             console.log($scope.statuses);
             $scope.statustesLength = 2;
+            $scope.comments = [];
+            $scope.showComment = false;
             $scope.sentiments = [
               {name : 'Happy'},
               {name : 'Neutral'},
@@ -59,6 +61,9 @@ angular.module('chronos').controller('curationCtrl',
             $scope.capitalizeFirstLetter = function toTitleCase(string){
                 return string[0].toUpperCase() + string.slice(1);
             };
+
+
+
             //get ticket detail
             $scope.showTicket = function() {
               $scope.statuses = [
@@ -174,8 +179,28 @@ angular.module('chronos').controller('curationCtrl',
                   }, function(data){
                   console.log("TicketTag Error");
                 });
+
+                //get ticket comments
+                TicketCommentsListApi.query({ticket_id:$scope.ticketId}, function(data){
+                  for(var i=0; i< data.comments.length; i++){
+                    var date = new Date(data.comments[i]['created_on'] * 1000)
+                    data.comments[i]['date'] = date.toString()
+                  }
+                  $scope.comments = data.comments;
+                });
+
               });
             };
+            $scope.updateComments = function(){
+              $scope.comments = []
+              TicketCommentsListApi.query({ticket_id:$scope.ticketId}, function(data){
+                for(var i=0; i< data.comments.length; i++){
+                  var date = new Date(data.comments[i]['created_on'] * 1000)
+                  data.comments[i]['date'] = date.toString()
+                }
+                $scope.comments = data.comments;
+              });
+            }
             $scope.getOwnerTeamMembers = function(data, memberInfo){
               memberInfo = typeof memberInfo !== 'undefined' ? memberInfo : false;
               TeamMembersListApi.get({team_id : data.id}, function (data){
@@ -360,6 +385,8 @@ angular.module('chronos').controller('curationCtrl',
                 TicketCommentsListApi.save(data, function(data){
                   $scope.comment = "";
                   console.log("comment added");
+                  console.log(data);
+                  $scope.updateComments()
                 }, function(errorData){
                   console.log(errorData);
                 });
@@ -368,4 +395,9 @@ angular.module('chronos').controller('curationCtrl',
                 alert('htmlVariable must be greater than 10 chars;')
               }
             };
+
+            //hide comment box
+            $scope.toggleComment = function(){
+              $scope.showComment = !$scope.showComment;
+            }
 }]);
