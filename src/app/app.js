@@ -23,10 +23,6 @@ angular.module('chronos')
     templateUrl: '/static/add.html',
     controller: 'addCtrl'
   });
-  // .when('/configure/teams', {
-  //   templateUrl: 'static/addTeam.html',
-  //   controller: 'addTeamCtrl'
-  // });
 }]).factory('authHttpResponseInterceptor', [
   '$q',
   '$location',
