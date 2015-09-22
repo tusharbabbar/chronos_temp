@@ -51,11 +51,11 @@ angular.module('chronos').controller('curationCtrl',
               $scope.types = data.types;
             });
             //get list of owner teams
-            TeamsListApi.get( {if_owner : 1}, function (data) {
+            TeamsListApi.get( {if_owner : 1, with_members : 1}, function (data) {
               $scope.ownerTeams = data.teams;
             });
             //get list of assigned teams
-            TeamsListApi.get( {if_assigned : 1}, function (data) {
+            TeamsListApi.get( {if_assigned : 1, with_members : 1}, function (data) {
               $scope.assignedTeams = data.teams;
             });
             $scope.capitalizeFirstLetter = function toTitleCase(string){
