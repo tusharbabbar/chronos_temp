@@ -31,7 +31,6 @@ font-family: 'Existence-light';
 src: url("/assets/Existence-Light.otf");
 }
 
-
 body {
   padding: 0px;
   background-color: #F7F7F7;
@@ -178,6 +177,7 @@ body {
   max-width: 99%;
   width: 100%;
   word-wrap: normal;
+  table-layout: fixed;
 }
 
 .listing-row {
@@ -233,16 +233,17 @@ body {
 }
 
 .listing-table td:first-child {
-  padding: 15px 12px;
+  padding: 15px 15px;
 }
 
 .listing-table th:first-child {
-  padding: 15px 12px;
+  padding: 15px 15px;
 }
 
 .listing-row td, th{
   text-align: center;
   border: 0px;
+  vertical-align:top;
 }
 
 .row-filter {

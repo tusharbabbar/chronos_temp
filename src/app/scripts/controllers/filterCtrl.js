@@ -39,10 +39,10 @@ angular.module('chronos').controller('TicketListFilterCtrl',
   });
   console.log($scope.counts)
   $scope.statuses = [
-    {name : 'UNRESOLVED'},
-    {name : 'CURATION'},
-    {name : 'RESOLVED'},
-    {name : 'INPORGRESS'}]
+    {name : 'ORPHAN', icon : '<img src="/assets/fonts/Orphan.svg"></img>'},
+    {name : 'CURATION', icon : '<img src="/assets/fonts/Curation.svg"></img>'},
+    {name : 'RESOLVED', icon : '<img src="/assets/fonts/Resolved.svg"></img>'},
+    {name : 'INPORGRESS', icon : '<img src="/assets/fonts/inProgress.svg"></img>'}]
 
   $scope.selected = ticketFilterService.filters
   console.log($scope.selected === ticketFilterService.filters)

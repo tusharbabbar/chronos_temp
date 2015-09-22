@@ -7,7 +7,6 @@
   <div style="padding: 10px 0px; float:left; width:74%;border-right:1px solid #D7D7D7;">
     <div class="row" style="padding-right: 10px">
       {{t.ticket.description}}
-      It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
     </div>
   </div>
   <div style="padding: 10px 5px; margin-left: 0%; float:right; width:25%">
@@ -26,14 +25,14 @@
   </div>
 </div>
 <div class='timeline-footer row' ng-if="t.type == 'Created'" style="padding-top: 10px">
-  <span  style="font-size: 1em; float:left; margin-right: 10px; height:100%">
+  <span  style="font-size: 1em; float:left; margin-right: 20px; height:100%">
     <i class="listing-font fa fa-envelope" style="font-size:1.3em" ng-if="t.ticket.source.name === 'email'"></i>
     <i class="listing-font fa fa-chat" style="font-size:1.3em" ng-if="t.ticket.source.name === 'chat'"></i>
     <i class="listing-font fa fa-phone" style="font-size:1.3em" ng-if="t.ticket.source.name === 'call'"></i>
     <span ng-if="t.ticket.source.name != 'email' && t.ticket.source.name != 'chat' && t.ticket.source.name != 'call'">{{t.ticket.source.name}}</span>
   </span>
-  <span class="offset-by-one two columns" style="font-size: 1em; float:left; margin-right: 10px; height:100%">Product: {{t.ticket.product.name}}</span>
-  <span class="offset-by-one two columns" style="font-size: 1em; float:left; margin-right: 10px; height:100%">Type: {{t.ticket.type.name}}</span>
-  <span class="offset-by-one two columns" style="font-size: 1em; float:left; margin-right: 10px; height:100%">Sentiment: {{t.ticket.sentiment}}</span>
-  <span class="offset-by-one two columns" style="font-size: 1em; float:left; margin-right: 10px; height:100%">Status: {{t.ticket.status}}</span>
+  <span class="offset-by-one two columns" style="font-size: 1em; float:left; height:100%">Product: {{t.ticket.product.name}}</span>
+  <span class="offset-by-one two columns" style="font-size: 1em; float:left; height:100%">Type: {{t.ticket.type.name}}</span>
+  <span class="offset-by-one two columns" style="font-size: 1em; float:left; height:100%">Sentiment: {{t.ticket.sentiment}}</span>
+  <span class="offset-by-one two columns" style="font-size: 1em; float:left; height:100%">Status: {{t.ticket.status}}</span>
 </div>
