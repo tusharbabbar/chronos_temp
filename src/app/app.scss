@@ -261,7 +261,7 @@ body {
 .small-button {
   @extend .boxed;
   @extend .button;
-  width : 30px !important;
+  width : 24px !important;
   padding: 1px;
   display: inline;
   margin : 0px 7px 0px 7px;
@@ -339,6 +339,10 @@ body {
   min-height: 600px;
   padding-bottom: $top-browser + 70px;
   float: left;
+}
+
+.btn-group > .btn {
+  font-size: 50% !important;
 }
 
 .ticket-details {
