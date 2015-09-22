@@ -60,8 +60,8 @@
 
                   <input type="text" placeholder="Add Member" class="form-control panel-body"
                     mentio = "" mentio-template-url='/people-mentions.tpl'
-                    mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
-                    mentio-select="$parent.$parent.addUser(item, level, team, $parent.$index)" 
+                    mentio-typed-text="typedTerm" mentio-items="data.items | filter:name:typedTerm"
+                    mentio-select="$parent.$parent.addUser(item, level, team, $parent.$index)"
                     mentio-search="$parent.$parent.searchPeople(term)"
                     ng-model="level.addUser" > </input>
                 </div>

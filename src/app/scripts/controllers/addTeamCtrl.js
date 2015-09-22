@@ -101,13 +101,13 @@ angular.module('chronos').controller('addTeamCtrl',
         console.log(errorData);
       });
     };
-
+    $scope.data = {}
     $scope.searchPeople = function(term) {
     console.log(term);
     if (term.length > 3){
       UserApi.get({ query: term}, function (data) {
         console.log(data)
-        $scope.items = data.users;
+        $scope.data.items = data.users;
       }, function (data) {
         console.log(data);
       });
@@ -140,5 +140,5 @@ angular.module('chronos').controller('addTeamCtrl',
   //     $scope.team_details = data;
   //   });
   // };
-  
+
 }]);
