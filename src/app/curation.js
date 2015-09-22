@@ -199,6 +199,7 @@ angular.module('chronos').controller('curationCtrl',
                   data.comments[i]['date'] = date.toString()
                 }
                 $scope.comments = data.comments;
+                $("#ticket-description").animate({scrollTop: $("#ticket-description")[0].scrollHeight + 10000}, 750)
               });
             }
             $scope.getOwnerTeamMembers = function(data, memberInfo){
