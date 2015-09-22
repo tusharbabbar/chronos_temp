@@ -344,6 +344,7 @@ angular.module('chronos').controller('curationCtrl',
                 $scope.mail.to = "";
                 $scope.showCustomMail = false;
                 $window.showCuration(0);
+                Flash.create('success', "Ticket Saved Successfully!!!");
               }, function (errorData) {
                   console.log(errorData);
               });
@@ -391,9 +392,8 @@ angular.module('chronos').controller('curationCtrl',
                 TicketCommentsListApi.save(data, function(data){
                   $scope.data.comment = "";
                   $scope.toggleComment()
-                  console.log("comment added");
-                  console.log(data);
                   $scope.updateComments()
+                  Flash.create('success', "Comment Added Successfully!!!");
                 }, function(errorData){
                   console.log(errorData);
                 });
