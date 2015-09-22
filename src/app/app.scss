@@ -505,3 +505,10 @@ mentio-menu .active {
   bottom: 50px;
   left: 30%;
 }
+
+.flash{
+  position : fixed;
+  bottom : 10px;
+  right: 10px;
+  z-index: 20
+}

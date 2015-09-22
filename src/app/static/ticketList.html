@@ -10,7 +10,7 @@
       <table class="listing-table">
       <thead class="row listing-head-row">
         <th style="width:8%"><big>Issue</big></th>
-        <th style="width:5%"><big>Source</big></th>
+        <th style="width:10%"><big>Source</big></th>
         <th style="width:35%; max-width:35%"><big>Description</big></th>
         <th style="width:8%"><big>Product</big></th>
         <th style="width:8%"><big>Type</big></th>
@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         <tr class="listing-row boxed row" ng-repeat="ticket in tickets.list" ng-click = "$parent.openTicket(ticket.id)">
-          <td style="width:5%">
+          <td >
             <img src="/assets/fonts/Curation.svg" ng-if="ticket.status=='CURATION'" style="margin:-5px 1px"></img>
             <img src="/assets/fonts/Resolved.svg" ng-if="ticket.status=='RESOLVED'" style="margin:-5px 1px"></img>
             <img src="/assets/fonts/inProgress.svg" ng-if="ticket.status=='INPROGRESS'" style="margin:-5px 1px"></img>
@@ -29,24 +29,24 @@
             <img src="/assets/fonts/INVALID.svg" ng-if="ticket.status=='INVALID'" style="margin:-5px 1px"></img>
             #{{ticket.id}}
           </td>
-          <td style="width:5%">
+          <td >
             <i class="listing-font fa fa-envelope" style="font-size:1.3em" ng-if="ticket.source === 'email'"></i>
             <i class="listing-font fa fa-chat" style="font-size:1.3em" ng-if="ticket.source === 'chat'"></i>
             <i class="listing-font fa fa-phone" style="font-size:1.3em" ng-if="ticket.source === 'call'"></i>
             <span ng-if="ticket.source != 'email' && ticket.source != 'chat' && ticket.source != 'call'">{{ticket.Source}}</span>
           </td>
-          <td style="width:5%">{{ticket.description}}</td>
+          <td >{{ticket.description}}</td>
           <td style="width:5%;text-transform:uppercase">{{ticket.product}}</td>
           <td style="width:5%;text-transform:uppercase">{{ticket.type}}</td>
-          <td style="width:5%">
+          <td >
             <div class="row">{{ticket.owner_details.member.user.name}}</div>
             <div class="row">{{ticket.owner_details.team.name}}</div>
           </td>
-          <td style="width:5%">
+          <td >
             <div class="row">{{ticket.assignment_details.member.user.name}}</div>
             <div class="row">{{ticket.assignment_details.team.name}}</div>
           </td>
-          <td style="width:5%">{{ticket.sla}}</td>
+          <td >{{ticket.sla}}</td>
         </tr>
       </tbody>
     </table>

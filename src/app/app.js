@@ -5,7 +5,8 @@ angular.module('chronos', [
   'ngTagsInput',
   'isteven-multi-select',
   'textAngular',
-  'mentio'
+  'mentio',
+  'flash'
 ]);
 
 angular.module('chronos')
@@ -30,7 +31,8 @@ angular.module('chronos')
   '$q',
   '$location',
   'Util',
-  function ($q, $location, Util) {
+  'Flash',
+  function ($q, $location, Util, Flash) {
     return {
       request: function (request) {
         request.headers['X-Token'] = Util.get_accesstoken();
@@ -50,6 +52,7 @@ angular.module('chronos')
           $location.path('/login').search('returnTo', $location.path());
         } else {
           console.log('Api Error');
+          Flash.create('danger', rejection.data.message);
         }
         return $q.reject(rejection);
       }

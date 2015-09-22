@@ -12,6 +12,7 @@ angular.module('chronos').controller('curationCtrl',
     'TicketCommentsListApi',
     'TicketApi',
     'ticketFilterService',
+    'Flash',
      function ($scope,
       $window,
       ticketCurationService,
@@ -24,7 +25,8 @@ angular.module('chronos').controller('curationCtrl',
       TicketTagApi,
       TicketCommentsListApi,
       TicketApi,
-      ticketFilterService) {
+      ticketFilterService,
+      Flash) {
             //default
             console.log("Entered in ticket curationCtrl");
             console.log($scope.ticketId);

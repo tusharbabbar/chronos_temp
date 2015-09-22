@@ -19,6 +19,7 @@ angular.module('chronos').controller('TicketCtrl',
   'TeamMembersListApi',
   'TicketTagApi',
   'AssignmentActionApi',
+  'Flash',
   function($scope,
     $location,
     Util,
@@ -38,7 +39,8 @@ angular.module('chronos').controller('TicketCtrl',
     TeamsListApi,
     TeamMembersListApi,
     TicketTagApi,
-    AssignmentActionApi){
+    AssignmentActionApi,
+    Flash){
   headingService.pageHeading.value = 'Issue Details'
   var pages = ['all_issues', 'my_issues', 'my_team_issues'];
   $scope.sentiments = [
@@ -198,7 +200,7 @@ angular.module('chronos').controller('TicketCtrl',
   $scope.updateTimeline = function(timestamp){
     var data = {
       id:$routeParams.id,
-      timestamp:timestamp
+      timestamp:timestamp + 1
     };
     TicketTimelineApi.query(data, function(data){
       for(var i=0; i< data.length; i++){
@@ -251,8 +253,12 @@ angular.module('chronos').controller('TicketCtrl',
       }
       TicketCommentsListApi.save(data, function(data){
         $scope.data.comment = ""
-        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
         $scope.hideAll()
+        Flash.create('success', "Comment Added Successfully!!!");
+        if ($scope.timeline.length > 0)
+        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        else
+        $scope.updateTimeline(0)
       })
     }
     else {
@@ -272,8 +278,12 @@ angular.module('chronos').controller('TicketCtrl',
         $scope.data['mail'] = "";
         $scope.data['subject'] = "";
         $scope.data['to'] = "";
-        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        Flash.create('success', "Mail Sent Successfully!!!");
         $scope.hideAll()
+        if ($scope.timeline.length > 0)
+        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        else
+        $scope.updateTimeline(0)
       })
     }
     else {
@@ -287,7 +297,11 @@ angular.module('chronos').controller('TicketCtrl',
     data.status = 'INVALID';
     TicketApi.update(data, function (data) {
                 $scope.ticket = data
+                Flash.create('success', "Status Changed to Invalid");
+                if ($scope.timeline.length > 0)
                 $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+                else
+                $scope.updateTimeline(0)
               }, function (errorData) {
                   console.log(errorData);
               });
@@ -326,7 +340,11 @@ angular.module('chronos').controller('TicketCtrl',
       TicketApi.update(data, function(data){
         $scope.ticket = data
         $scope.data.showResolveMailer = false;
+        Flash.create('success', "Status Changed to Resolve");
+        if ($scope.timeline.length > 0)
         $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        else
+        $scope.updateTimeline(0)
       })
     }
     else {
@@ -342,7 +360,11 @@ angular.module('chronos').controller('TicketCtrl',
           $scope.data['to'] = "";
           $scope.ticket = data
           $scope.data.showResolveMailer = false;
+          Flash.create('success', "Status Changed to Resolve");
+          if ($scope.timeline.length > 0)
           $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+          else
+          $scope.updateTimeline(0)
         })
       }
       else {
@@ -359,7 +381,11 @@ angular.module('chronos').controller('TicketCtrl',
     console.log($scope.ticket, data);
     AssignmentActionApi.save(data, function(data) {
       $scope.ticket = data
+      Flash.create('success', "Assignment Acknowledged");
+      if ($scope.timeline.length > 0)
       $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+      else
+      $scope.updateTimeline(0)
     }, function (errorData) {
       console.log(errorData);
     });
@@ -378,8 +404,12 @@ angular.module('chronos').controller('TicketCtrl',
         $scope.data.comment = ""
         $scope.data.denial_reason = []
         $scope.ticket = data
+        Flash.create('success', "Assignment Denied!!!");
         $scope.data.showDenyCommenter = false
+        if ($scope.timeline.length > 0)
         $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        else
+        $scope.updateTimeline(0)
       })
     }
   }
@@ -442,7 +472,11 @@ angular.module('chronos').controller('TicketCtrl',
                     }
                   }
                 }
+                Flash.create('success', "Ticket Details Saved!!!")
+                if ($scope.timeline.length > 0)
                 $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+                else
+                $scope.updateTimeline(0)
               }, function (errorData) {
                   console.log(errorData);
               });

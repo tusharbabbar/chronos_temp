@@ -21,6 +21,7 @@
   "dependencies": {
     "Ionicons": "ionicons#~2.0.1",
     "angular": "~1.4.0",
+    "angular-flash-alert": "~1.1.1",
     "angular-resource": "~1.4.5",
     "angular-route": "~1.4.0",
     "angular-sanitize": "~1.4.5",
@@ -29,6 +30,7 @@
     "jquery": "~2.1.4",
     "ment.io": "~0.9.23",
     "ng-tags-input": "~2.3.0",
+    "ngAnimate": "*",
     "skeleton": "~2.0.4",
     "textAngular": "~1.4.3",
     "underscore": "~1.8.3"
