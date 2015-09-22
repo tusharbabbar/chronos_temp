@@ -345,10 +345,10 @@ angular.module('chronos').controller('curationCtrl',
                 $scope.showCustomMail = false;
                 $window.showCuration(0);
                 Flash.create('success', "Ticket Saved Successfully!!!");
+                ticketFilterService.update_tickets_with_filters()
               }, function (errorData) {
                   console.log(errorData);
               });
-              ticketFilterService.update_tickets_with_filters()
             };
             //close curation screen
             $scope.cancel = function() {

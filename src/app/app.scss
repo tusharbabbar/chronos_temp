@@ -244,6 +244,7 @@ body {
   text-align: center;
   border: 0px;
   vertical-align:top;
+  word-wrap: break-all;
 }
 
 .row-filter {
@@ -497,7 +498,12 @@ mentio-menu .active {
 }
 
 .timeline-icon {
-  font-size: 2em; float:left; margin-right: 10px; height:100%; color: $font-color
+  font-size: 2em;
+  float:left;
+  margin: 0px;
+  margin-right: 10px;
+  height:100%;
+  color: $font-color
 }
 
 .mentio-messageBar {

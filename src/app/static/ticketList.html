@@ -3,7 +3,7 @@
   <h1>chronos</h1>
   <h2>Your new AngularJS app is now ready...</h2> -->
   <!-- <div class="row" style="height:100%"> -->
-    <div class="filters two columns">
+    <div class="filters two columns" style="width: 250px">
       <div ng-include src="'/static/filtersPane.html'" ng-controller='TicketListFilterCtrl'></div>
     </div>
     <div class="offset-by-two ten columns">
@@ -33,7 +33,7 @@
             <i class="listing-font fa fa-envelope" style="font-size:1.3em" ng-if="ticket.source === 'email'"></i>
             <i class="listing-font fa fa-chat" style="font-size:1.3em" ng-if="ticket.source === 'chat'"></i>
             <i class="listing-font fa fa-phone" style="font-size:1.3em" ng-if="ticket.source === 'call'"></i>
-            <span ng-if="ticket.source != 'email' && ticket.source != 'chat' && ticket.source != 'call'">{{ticket.Source}}</span>
+            <span ng-if="ticket.source != 'email' && ticket.source != 'chat' && ticket.source != 'call'">{{ticket.source}}</span>
           </td>
           <td >{{ticket.description}}</td>
           <td style="width:5%;text-transform:uppercase">{{ticket.product}}</td>
