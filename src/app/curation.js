@@ -28,13 +28,11 @@ angular.module('chronos').controller('curationCtrl',
       ticketFilterService,
       Flash) {
             //default
-            console.log("Entered in ticket curationCtrl");
-            console.log($scope.ticketId);
+            $scope.data = {}
             $scope.singleSelectSetting = {selectionLimit: 1};
-            console.log($scope.statuses);
-            $scope.statustesLength = 2;
+            $scope.data.statustesLength = 2;
             $scope.comments = [];
-            $scope.showComment = false;
+            $scope.data.showComment = false;
             $scope.sentiments = [
               {name : 'Happy'},
               {name : 'Neutral'},
@@ -57,17 +55,31 @@ angular.module('chronos').controller('curationCtrl',
               $scope.ownerTeams = data.teams;
             });
             //get list of assigned teams
-            TeamsListApi.get( {if_assigned : 1, with_members : 1}, function (data) {
+            TeamsListApi.get( {all : 1, with_members : 1}, function (data) {
               $scope.assignedTeams = data.teams;
+              console.log($scope.assignedTeams);
             });
             $scope.capitalizeFirstLetter = function toTitleCase(string){
                 return string[0].toUpperCase() + string.slice(1);
             };
 
 
+            //reset all set values
+            $scope.reset = function(){
+              //reset owner team
+              for(i in $scope.ownerTeams){
+                $scope.ownerTeams[i].ticked = false;
+              }
+
+              // reset owner
+              for(i in $scope.assignedTeams){
+                $scope.assignedTeams[i].ticked = false;
+              }
+            }
 
             //get ticket detail
             $scope.showTicket = function() {
+              $scope.reset();
               $scope.statuses = [
                 {name : 'RESOLVED'},
                 {name : 'INVALID'}
@@ -80,19 +92,24 @@ angular.module('chronos').controller('curationCtrl',
               $scope.ticketId = ticketCurationService.getTicketId();
 
               TicketApi.get( {id : $scope.ticketId} , function(data){
-                $scope.ticketDescription = data.description;
-                $scope.ticketId = data.id;
-                $scope.childOf = data.child_of;
-                $scope.val = data;
-                console.log("ticket data");
-                console.log(data);
+                console.log("ticket data is as", data);
+                //saving current ticket data
+                $scope.ticketData = data;
+                $scope.ticketData.ownerTeam = {};
+                $scope.ticketData.owner = {};
+                $scope.ticketData.assignedTeam = {};
+                $scope.ticketData.assigned = {};
+                $scope.data.ticketDescription = data.description;
+                $scope.data.ticketId = data.id;
+                $scope.data.followUpOf = data.child_of;
+
                 //set status
                 if( ! (data.status == "RESOLVED" || data.status == "INVALID") ) {
-                    if($scope.statuses.length == $scope.statustesLength){
+                    if($scope.statuses.length == $scope.data.statustesLength){
                       $scope.statuses.push({name : data.status});
                     }
                     else{
-                      $scope.statuses[$scope.statustesLength] = {name : data.status};
+                      $scope.statuses[$scope.data.statustesLength] = {name : data.status};
                     }
                 }
                 for( i in $scope.statuses ){
@@ -105,6 +122,7 @@ angular.module('chronos').controller('curationCtrl',
                     currentStatus.ticked = false;
                   }
                 }
+
                 //set type
                 for( i in $scope.types ){
                   currentType = $scope.types[i];
@@ -116,6 +134,7 @@ angular.module('chronos').controller('curationCtrl',
                     currentType.ticked = false;
                   }
                 }
+
                 //set source
                 for( i in $scope.sources ){
                   currentSource = $scope.sources[i];
@@ -127,6 +146,7 @@ angular.module('chronos').controller('curationCtrl',
                      currentSource.ticked = false;
                   }
                 }
+
                 //set product
                 for( i in $scope.products ){
                   currentProduct = $scope.products[i];
@@ -139,8 +159,22 @@ angular.module('chronos').controller('curationCtrl',
                     currentProduct.ticked = false;
                   }
                 }
+
+                //set sentiments
+                for( i in $scope.sentiments ){
+                  currentSentiment = $scope.sentiments[i];
+                  if(currentSentiment.name == data.sentiment){
+                    currentSentiment.ticked = true;
+                    $scope.sentiment[0] = currentSentiment;
+                  }
+                  else{
+                    currentSentiment.ticked = false;
+                  }
+                }
                 //set owner team
                 if (data.owner_details && data.owner_details.team){
+                  $scope.ticketData.ownerTeam = data.owner_details.team;
+                  $scope.ticketData.owner = data.owner_details.member;
                   for( i in $scope.ownerTeams ){
                     currentOwnerTeam = $scope.ownerTeams[i];
                     if(currentOwnerTeam.name == data.owner_details.team.name) {
@@ -155,6 +189,8 @@ angular.module('chronos').controller('curationCtrl',
                 }
                 //set assigned team
                 if (data.assignment_details && data.assignment_details.team) {
+                  $scope.ticketData.assignedTeam =  data.assignment_details.team;
+                  $scope.ticketData.assigned = data.assignment_details.member;
                   for( i in $scope.assignedTeams ){
                     currentAssignedTeam = $scope.assignedTeams[i];
                     if(currentAssignedTeam.name == data.assignment_details.team.name) {
@@ -170,12 +206,14 @@ angular.module('chronos').controller('curationCtrl',
 
                 TicketTagApi.get({ticket_id: $scope.ticketId}, function(data){
                     var tags = data.tags;
+                    $scope.tagsData = [];
                     console.log("tags");
                     console.log(data);
+                    $scope.tags = [];
                     if (tags != []){
-                      $scope.tags = [];
                       for (var i=0; i<tags.length; i++){
                         $scope.tags.push({text:tags[i]});
+                        $scope.tagsData.push(tags[i]);
                       }
                     }
                   }, function(data){
@@ -260,10 +298,11 @@ angular.module('chronos').controller('curationCtrl',
               'to' : '',
               'do_not_sendmail' : false,
             };
+
             $scope.checkSave = function(){
 
                 if($scope['assignedTeam'].length ){
-                  $scope.showCustomMail = true;
+                  $scope.data.showCustomMail = true;
                 }
                 else{
                   $scope.save();
@@ -271,15 +310,15 @@ angular.module('chronos').controller('curationCtrl',
             };
 
             $scope.removeModal = function(){
-              $scope.showCustomMail = false;
+              $scope.data.showCustomMail = false;
             };
 
             $scope.save = function() {
               var data = {};
-              if($scope.showCustomMail){
+              if($scope.data.showCustomMail){
                   if( $scope.mail.do_not_sendmail == true){
                     console.log("do not send mail");
-                    $scope.showCustomMail = false;
+                    $scope.data.showCustomMail = false;
                   }
                   else if ($scope.mail.send_default_mail === true){
                     console.log("default mail sent");
@@ -300,55 +339,88 @@ angular.module('chronos').controller('curationCtrl',
                   }
               }
               data.id = $scope.ticketId;
-              data.description = $scope.ticketDescription;
-              var items = ['product', 'type', 'source', 'owner', 'assigned', 'assignedTeam', 'ownerTeam']
+              var items = ['product', 'type', 'source']
               var mapping = {
                 product:'product_id',
                 type:'type_id',
-                source:'source_id',
-                owner:'set_owner_member',
-                assigned:'assign_to_member',
-                ownerTeam:'set_owner_team',
-                assignedTeam:'assign_to_team'
+                source:'source_id'
               }
               for(var i=0; i<items.length; i++){
-                if ($scope[items[i]].length) {
-                  console.log(items[i]);
-                  console.log($scope[items[i]]);
+                if ($scope[items[i]].length && $scope[items[i]][0].name != $scope.ticketData[items[i]]) {
+                  console.log("changed item is ", items[i]);
                   data[mapping[items[i]]] = $scope[items[i]][0].id;
                 }
               }
-              console.log($scope.sentiment);
-              if ($scope.sentiment.length) {
-                data.sentiment = $scope.sentiment[0].name;
+
+              //check owner team  if changed then send it in data
+              if ($scope['ownerTeam'].length){
+                if($scope['ownerTeam'][0].id != $scope.ticketData.ownerTeam.id){
+                  data['set_owner_team'] = $scope['ownerTeam'][0].id;
+                }
               }
 
-              if ($scope.status.name === 'INVALID' || $scope.status.name === 'RESOLVED') {
+              //check owner  if changed then send it in data
+              if($scope['owner'].length){
+                if($scope['owner'][0].id != $scope.ticketData.owner.id){
+                  data['set_owner_member'] = $scope['owner'][0].id;
+                }
+              }
+
+              //check assigned team changed if changed then send it in data
+              if ($scope['assignedTeam'].length){
+                if($scope['assignedTeam'][0].id != $scope.ticketData.assignedTeam.id){
+                  data['assign_to_team'] = $scope['assignedTeam'][0].id;
+                }
+              }
+
+              //check assignee changed if changed then send it in data
+              if($scope['assigned'].length){
+                if($scope['assigned'][0].id != $scope.ticketData.assigned.id){
+                  data['assign_to_member'] = $scope['assigned'][0].id;
+                }
+              }
+
+              if ($scope.sentiment.length && $scope.sentiment[0].name != $scope.ticketData['sentiment']) {
+                data.sentiment = $scope.sentiment[0].name;
+              }
+              console.log("current stats is ", $scope.status);
+              if ($scope.status[0].name === 'INVALID' || $scope.status[0].name === 'RESOLVED') {
+                console.log("status got");
                 data.status = $scope.status[0].name;
               }
 
-              if ($scope.followUpOf) {
+              if ($scope.followUpOf && $scope.followUpOf != $scope.ticketData['child_of']) {
                 data.set_followup_of = $scope.followUpOf;
               }
+
               var dataTags = [];
               for (i=0; i<$scope.tags.length; i++){
-                dataTags.push($scope.tags[i].text);
+                if($scope.tagsData.indexOf($scope.tags[i].text) == -1){
+                  dataTags.push($scope.tags[i].text);
+                }
               }
-              data.tags = dataTags;
-              console.log("data sent is ");
-              console.log(data);
-              TicketApi.update(data, function (data) {
-                console.log(data)
-                $scope.mail.body = "";
-                $scope.mail.subject = "";
-                $scope.mail.to = "";
-                $scope.showCustomMail = false;
+              if(dataTags.length > 0){
+                data.tags = dataTags;
+              }
+              if(Object.keys(data).length > 1){
+                 TicketApi.update(data, function (data) {
+                  console.log(data)
+                  $scope.mail.body = "";
+                  $scope.mail.subject = "";
+                  $scope.mail.to = "";
+                  $scope.data.showCustomMail = false;
+                  $window.showCuration(0);
+                  Flash.create('success', "Ticket Saved Successfully!!!");
+                  ticketFilterService.update_tickets_with_filters()
+                }, function (errorData) {
+                    console.log(errorData);
+                });
+              }
+              else{
+                $scope.data.showCustomMail = false;
                 $window.showCuration(0);
-                Flash.create('success', "Ticket Saved Successfully!!!");
-                ticketFilterService.update_tickets_with_filters()
-              }, function (errorData) {
-                  console.log(errorData);
-              });
+                Flash.create('danger', "No change in ticket data");
+              }
             };
             //close curation screen
             $scope.cancel = function() {
@@ -380,7 +452,6 @@ angular.module('chronos').controller('curationCtrl',
             };
 
             //add comment on ticket
-            $scope.data = {}
             $scope.data.comment = ""
             $scope.addComment = function(){
               console.log($scope.data.comment)
@@ -405,6 +476,6 @@ angular.module('chronos').controller('curationCtrl',
 
             //hide comment box
             $scope.toggleComment = function(){
-              $scope.showComment = !$scope.showComment;
+              $scope.data.showComment = !$scope.data.showComment;
             }
 }]);

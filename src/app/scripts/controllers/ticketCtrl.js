@@ -42,8 +42,9 @@ angular.module('chronos').controller('TicketCtrl',
     AssignmentActionApi,
     Flash){
   headingService.pageHeading.value = 'Issue Details'
+  $scope.data = {};
   var pages = ['all_issues', 'my_issues', 'my_team_issues'];
-  $scope.sentiments = [
+  $scope.data.sentiments = [
               {name : 'Happy'},
               {name : 'Neutral'},
               {name : 'Angry'}
@@ -53,33 +54,13 @@ angular.module('chronos').controller('TicketCtrl',
   for (i=0;i<items.length; i++){
     $scope[items[i]] = [];
   }
-  //get list of sources
-  SourcesListApi.get(function (data) {
-    $scope.sources = data.sources;
-  });
-  //get list of products
-  ProductsListApi.get(function (data) {
-    $scope.products = data.products;
-  });
-  //get list of types
-  TypesListApi.get(function (data) {
-    $scope.types = data.types;
-  });
-  //get list of owner teams
-  TeamsListApi.get( {if_owner : 1, with_members : 1}, function (data) {
-    $scope.ownerTeams = data.teams;
-  });
-  //get list of assigned teams
-  TeamsListApi.get( {if_assigned : 1, with_members : 1}, function (data) {
-    $scope.reassignedTeams = data.teams;
-  });
 
   for(var i=0; i<pages.length; i++){
-    console.log(ticketFilterService.filters[pages[i]])
+    //console.log(ticketFilterService.filters[pages[i]])
     if (ticketFilterService.filters[pages[i]] == 1)
-      $scope.previousPage = pages[i].replace('_', " ")
+      $scope.data.previousPage = pages[i].replace('_', " ")
   }
-  $scope.denyReasons = [{name:'Need_more_Info'}, {name:'False_Alarm'}, {name:'Wrong_Team'},
+  $scope.data.denyReasons = [{name:'Need_more_Info'}, {name:'False_Alarm'}, {name:'Wrong_Team'},
       {name:'Wrong_Type'}, {name:'Other_Reason'}]
 
   $scope.msToTime = function(duration) {
@@ -89,66 +70,49 @@ angular.module('chronos').controller('TicketCtrl',
   };
 
   $scope.go = function(path) {
-    console.log(path);
     $location.path(path);
   };
 
-
-  TicketApi.get({id:$routeParams.id}, function(data){
-    $scope.ticket = data
-    $scope.followUpOf = data.child_of;
-    date = new Date(data.created_on * 1000)
-    $scope.created_on = date.toString();
-    $scope.isNotOwner = true;
-    //set type
-    for( i in $scope.types ){
-      currentType = $scope.types[i];
+  //after getting updated ticket data. by calling this function it will update changes
+  $scope.updateData = function(data){
+    for( i in $scope.data.types ){
+      currentType = $scope.data.types[i];
       if(currentType.name == data.type) {
         currentType.ticked = true;
-        $scope.type[0] = currentType;
+        $scope.data.type[0] = currentType;
       }
       else{
         currentType.ticked = false;
       }
     }
-
-    diffrence = 0;
-    if( data.created_on){
-      currentTimeInMilliSeconds = Date.now();
-      if (data.sla){
-        slaTimeInMilliSeconds = data.sla * 60 * 60 * 1000;
-        diffrence = slaTimeInMilliSeconds - (currentTimeInMilliSeconds - data.created_on * 1000);
-      }
-    }
-    $scope.dueTime = $scope.msToTime(diffrence);
     //set source
-    for( i in $scope.sources ){
-      currentSource = $scope.sources[i];
+    for( i in $scope.data.sources ){
+      currentSource = $scope.data.sources[i];
       if(currentSource.name == data.source) {
         currentSource.ticked = true;
-        $scope.source[0] = currentSource;
+        $scope.data.source[0] = currentSource;
       }
       else{
          currentSource.ticked = false;
       }
     }
     //set product
-    for( i in $scope.products ){
-      currentProduct = $scope.products[i];
+    for( i in $scope.data.products ){
+      currentProduct = $scope.data.products[i];
       if(currentProduct.name == data.product) {
         currentProduct.ticked = true;
-        $scope.product[0] = currentProduct;
+        $scope.data.product[0] = currentProduct;
       }
       else{
         currentProduct.ticked = false;
       }
     }
     //set sentiments
-    for( i in $scope.sentiments ){
-      currentSentiment = $scope.sentiments[i];
+    for( i in $scope.data.sentiments ){
+      currentSentiment = $scope.data.sentiments[i];
       if(currentSentiment.name == data.sentiment){
         currentSentiment.ticked = true;
-        $scope.sentiment[0] = currentSentiment;
+        $scope.data.sentiment[0] = currentSentiment;
       }
       else{
         currentSentiment.ticked = false;
@@ -156,11 +120,11 @@ angular.module('chronos').controller('TicketCtrl',
     }
     //set owner team
     if (data.owner_details && data.owner_details.team){
-      for( i in $scope.ownerTeams ){
-        currentOwnerTeam = $scope.ownerTeams[i];
+      for( i in $scope.data.ownerTeams ){
+        currentOwnerTeam = $scope.data.ownerTeams[i];
         if(currentOwnerTeam.name == data.owner_details.team.name) {
           currentOwnerTeam.ticked = true;
-          $scope.ownerTeam[0] = currentOwnerTeam;
+          $scope.data.ownerTeam[0] = currentOwnerTeam;
           $scope.getOwnerTeamMembers(currentOwnerTeam, data.owner_details.member);
         }
         else{
@@ -170,11 +134,11 @@ angular.module('chronos').controller('TicketCtrl',
     }
     //set reassigned team
     if (data.assignment_details && data.assignment_details.team) {
-      for( i in $scope.reassignedTeams ){
-        currentReassignedTeam = $scope.reassignedTeams[i];
+      for( i in $scope.data.reassignedTeams ){
+        currentReassignedTeam = $scope.data.reassignedTeams[i];
         if(currentReassignedTeam.name == data.assignment_details.team.name) {
           currentReassignedTeam.ticked = true;
-          $scope.reassignedTeam[0] = currentReassignedTeam;
+          $scope.data.reassignedTeam[0] = currentReassignedTeam;
           $scope.getReassignedTeamMembers(currentReassignedTeam, data.assignment_details.member);
         }
         else{
@@ -182,19 +146,85 @@ angular.module('chronos').controller('TicketCtrl',
         }
       }
     }
-
     //enable owner permissions
     if(data.owner_details && data.owner_details.member && Util.getLoggedInUserId() == data.owner_details.member.user.id) {
-       $scope.isNotOwner = false;
+      $scope.data.isNotOwner = false;
     }
+    else{
+      $scope.data.isNotOwner = true;
+    }
+    //enable assignee permissions
+    if(data.assignment_details && data.assignment_details.member && Util.getLoggedInUserId() == data.assignment_details.member.user.id) {
+      $scope.data.isAssigned = true;
+    }
+    else{
+      $scope.data.isAssigned = false;
+    }
+  }
+
+  SourcesListApi.get(function (data) {
+    console.log(data);
+    $scope.data.sources = data.sources;
+    ProductsListApi.get(function (data) {
+      console.log(data);
+      $scope.data.products = data.products;
+      TypesListApi.get(function (data) {
+        console.log(data);
+        $scope.data.types = data.types;
+        TeamsListApi.get( {if_owner : 1, with_members : 1}, function (data) {
+          console.log(data);
+          $scope.data.ownerTeams = data.teams;
+          TeamsListApi.get( {all : 1, with_members : 1}, function (data) {
+            console.log(data);
+            $scope.data.reassignedTeams = data.teams;
+            TicketApi.get({id:$routeParams.id}, function(data){
+              $scope.data.ticket = data
+              $scope.data.followUpOf = data.child_of;
+              date = new Date(data.created_on * 1000)
+              $scope.data.created_on = date.toString();
+              $scope.data.isNotOwner = true;
+              $scope.data.isAssigned = false;
+              $scope.updateData(data);
+              diffrence = 0;
+              if( data.created_on){
+                currentTimeInMilliSeconds = Date.now();
+                if (data.sla){
+                  slaTimeInMilliSeconds = data.sla * 60 * 60 * 1000;
+                  diffrence = slaTimeInMilliSeconds - (currentTimeInMilliSeconds - data.created_on * 1000);
+                }
+              }
+              $scope.data.dueTime = $scope.msToTime(diffrence);
+            });
+          })
+        })
+      })
+    })
+  })
+
+  TicketTagApi.get({ticket_id: $routeParams.id},
+    function(data){
+      var tags = data.tags;
+      $scope.data.tagsData = [];
+      //console.log("tags");
+      //console.log(data);
+      $scope.data.tags = [];
+      if (tags != []){
+        for (var i=0; i<tags.length; i++){
+          $scope.data.tags.push({text:tags[i]});
+          $scope.data.tagsData.push(tags[i]);
+        }
+      }
+    }, function(data){
+    //console.log("TicketTag Error");
   });
 
   TicketTimelineApi.query({id:$routeParams.id}, function(data){
+    console.log("time line data is ",data);
     for(var i=0; i< data.length; i++){
       var date = new Date(data[i]['timestamp'] * 1000)
       data[i]['date'] = date.toString()
     }
-    $scope.timeline = data
+    $scope.data.timeline = data
   })
 
   $scope.updateTimeline = function(timestamp){
@@ -207,7 +237,7 @@ angular.module('chronos').controller('TicketCtrl',
         date = new Date(data[i]['timestamp'] * 1000)
         data[i]['date'] = date.toString()
       }
-      $scope.timeline = $scope.timeline.concat(data)
+      $scope.data.timeline = $scope.data.timeline.concat(data)
       $("body").animate({
         scrollTop: $("#timeline")[0].scrollHeight
       }, 750);
@@ -232,7 +262,6 @@ angular.module('chronos').controller('TicketCtrl',
   }
 
   // Add comments
-  $scope.data = {};
   $scope.data.showCommenter = false;
   $scope.data.showMailer = false;
   $scope.data.buttonBottom = true;
@@ -245,18 +274,18 @@ angular.module('chronos').controller('TicketCtrl',
   $scope.data['to'] = "";
   $scope.data.denial_reason = []
   $scope.addComment = function(){
-    console.log($scope.data.comment)
+    //console.log($scope.data.comment)
     if (($scope.data.comment != "") && ($scope.data.comment.length > 10)){
       data = {
-        ticket_id : $scope.ticket.id,
+        ticket_id : $scope.data.ticket.id,
         body: $scope.data.comment
       }
       TicketCommentsListApi.save(data, function(data){
         $scope.data.comment = ""
         $scope.hideAll()
         Flash.create('success', "Comment Added Successfully!!!");
-        if ($scope.timeline.length > 0)
-        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        if ($scope.data.timeline.length > 0)
+        $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
         else
         $scope.updateTimeline(0)
       })
@@ -266,10 +295,10 @@ angular.module('chronos').controller('TicketCtrl',
     }
   }
   $scope.addMail = function(){
-    console.log($scope.data)
+    //console.log($scope.data)
     if (($scope.data.subject != "") && ($scope.data.to != "") && ($scope.data.mail !="")){
       data = {
-        id : $scope.ticket.id,
+        id : $scope.data.ticket.id,
         body: $scope.data.mail,
         recipient: $scope.data.to,
         subject: $scope.data.subject
@@ -280,8 +309,8 @@ angular.module('chronos').controller('TicketCtrl',
         $scope.data['to'] = "";
         Flash.create('success', "Mail Sent Successfully!!!");
         $scope.hideAll()
-        if ($scope.timeline.length > 0)
-        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        if ($scope.data.timeline.length > 0)
+        $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
         else
         $scope.updateTimeline(0)
       })
@@ -293,26 +322,26 @@ angular.module('chronos').controller('TicketCtrl',
 
   $scope.invalidStatus = function () {
     data = {};
-    data.id = $scope.ticket.id;
+    data.id = $scope.data.ticket.id;
     data.status = 'INVALID';
     TicketApi.update(data, function (data) {
-                $scope.ticket = data
+                $scope.data.ticket = data
                 Flash.create('success', "Status Changed to Invalid");
-                if ($scope.timeline.length > 0)
-                $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+                if ($scope.data.timeline.length > 0)
+                $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
                 else
                 $scope.updateTimeline(0)
               }, function (errorData) {
-                  console.log(errorData);
+                  //console.log(errorData);
               });
   };
 
   $scope.getSelectedEmail = function(item) {
-    console.log(item);
+    //console.log(item);
     return item.email + ","
   };
   $scope.getSelectedMention = function(item) {
-    console.log(item);
+    //console.log(item);
     return "<span style='color: #4DC5EA;' id='"+item.id+"'>"+"@"+item.name+"</span>";
   };
   $scope.searchPeople = function(term) {
@@ -320,29 +349,29 @@ angular.module('chronos').controller('TicketCtrl',
       UserApi.get({ query: term}, function (data) {
         $scope.data.items = data.users;
       }, function (data) {
-        console.log(data);
+        //console.log(data);
       });
     }
   };
   $scope.pressResolve = function(){
     $scope.data.showResolveMailer = true;
     $scope.data.send_custom_mail = true;
-    console.log("resolve")
+    //console.log("resolve")
   }
   $scope.pressDeny = function(){
     $scope.data.showDenyCommenter = true;
-    console.log("deny")
+    //console.log("deny")
   }
   $scope.resolveTicket = function(){
-    data = {id: $scope.ticket.id, status : "RESOLVED"}
+    data = {id: $scope.data.ticket.id, status : "RESOLVED"}
     if ($scope.data.send_custom_mail === true){
       data.send_custom_mail = 1;
       TicketApi.update(data, function(data){
-        $scope.ticket = data
+        $scope.data.ticket = data
         $scope.data.showResolveMailer = false;
         Flash.create('success', "Status Changed to Resolve");
-        if ($scope.timeline.length > 0)
-        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        if ($scope.data.timeline.length > 0)
+        $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
         else
         $scope.updateTimeline(0)
       })
@@ -354,15 +383,15 @@ angular.module('chronos').controller('TicketCtrl',
         data.body = $scope.data.mail
         data.recipient = $scope.data.to
         TicketApi.update(data, function(data){
-          console.log(data)
+          //console.log(data)
           $scope.data['mail'] = "";
           $scope.data['subject'] = "";
           $scope.data['to'] = "";
-          $scope.ticket = data
+          $scope.data.ticket = data
           $scope.data.showResolveMailer = false;
           Flash.create('success', "Status Changed to Resolve");
-          if ($scope.timeline.length > 0)
-          $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+          if ($scope.data.timeline.length > 0)
+          $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
           else
           $scope.updateTimeline(0)
         })
@@ -375,27 +404,28 @@ angular.module('chronos').controller('TicketCtrl',
 
   $scope.acknowledgeTicket = function(){
     data = {};
-    data.ticket_id = $scope.ticket.id;
-    data.assignment_id = $scope.ticket.assignment_details.assignment_id
+    data.ticket_id = $scope.data.ticket.id;
+    data.assignment_id = $scope.data.ticket.assignment_details.assignment_id
     data.action = 'ACKNOWLEDGE';
-    console.log($scope.ticket, data);
+    //console.log($scope.data.ticket, data);
     AssignmentActionApi.save(data, function(data) {
-      $scope.ticket = data
+      $scope.data.ticket = data
+      $scope.updateData(data);
       Flash.create('success', "Assignment Acknowledged");
-      if ($scope.timeline.length > 0)
-      $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+      if ($scope.data.timeline.length > 0)
+      $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
       else
       $scope.updateTimeline(0)
     }, function (errorData) {
-      console.log(errorData);
+      //console.log(errorData);
     });
   };
 
   $scope.denyAssignment = function(){
     data = {
-      ticket_id: $scope.ticket.id,
+      ticket_id: $scope.data.ticket.id,
       action: "DENY",
-      assignment_id: $scope.ticket.assignment_details.assignment_id
+      assignment_id: $scope.data.ticket.assignment_details.assignment_id
     }
     if (($scope.data.comment != "") && ($scope.data.denial_reason.length === 1)){
       data.deny_comment = $scope.data.comment;
@@ -403,11 +433,13 @@ angular.module('chronos').controller('TicketCtrl',
       AssignmentActionApi.save(data, function(data){
         $scope.data.comment = ""
         $scope.data.denial_reason = []
-        $scope.ticket = data
+        $scope.data.ticket = data
+        $scope.updateData(data);
         Flash.create('success', "Assignment Denied!!!");
         $scope.data.showDenyCommenter = false
-        if ($scope.timeline.length > 0)
-        $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
+        console.log("time line got is", $scope.data.timeline);
+        if ($scope.data.timeline.length > 0)
+        $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
         else
         $scope.updateTimeline(0)
       })
@@ -419,68 +451,68 @@ angular.module('chronos').controller('TicketCtrl',
   }
 
   $scope.saveTicketDetails = function() {
-    console.log("here")
-     var data = {};
-              data.id = $scope.ticket.id;
-              var items = ['owner', 'ownerTeam', 'reassignedTeam', 'reassigned']
-              var mapping = {
-                owner:'set_owner_member',
-                ownerTeam:'set_owner_team',
-                reassignedTeam: 'assign_to_team',
-                reassigned: 'assign_to_member'
-              }
-              for(var i=0; i<items.length; i++){
-                if ($scope[items[i]].length) {
-                  data[mapping[items[i]]] = $scope[items[i]][0].id;
-                }
-              }
-              if ($scope.followUpOf) {
-                data.set_followup_of = $scope.followUpOf;
-              }
-              var dataTags = [];
-              for (i=0; i<$scope.tags.length; i++){
-                dataTags.push($scope.tags[i].text);
-              }
-              data.tags = dataTags;
-              TicketApi.update(data, function (data) {
-                $scope.ticket = data
-                //set owner team
-                if (data.owner_details && data.owner_details.team){
-                  for( i in $scope.ownerTeams ){
-                    currentOwnerTeam = $scope.ownerTeams[i];
-                    if(currentOwnerTeam.name == data.owner_details.team.name) {
-                      currentOwnerTeam.ticked = true;
-                      $scope.ownerTeam[0] = currentOwnerTeam;
-                      $scope.getOwnerTeamMembers(currentOwnerTeam, data.owner_details.member);
-                    }
-                    else{
-                      currentOwnerTeam.ticked = false;
-                    }
-                  }
-                }
-                //set reassigned team
-                if (data.assignment_details && data.assignment_details.team) {
-                  for( i in $scope.reassignedTeams ){
-                    currentReassignedTeam = $scope.reassignedTeams[i];
-                    if(currentReassignedTeam.name == data.assignment_details.team.name) {
-                      currentReassignedTeam.ticked = true;
-                      $scope.reassignedTeam[0] = currentReassignedTeam;
-                      $scope.getReassignedTeamMembers(currentReassignedTeam, data.assignment_details.member);
-                    }
-                    else{
-                      currentReassignedTeam.ticked = false;
-                    }
-                  }
-                }
-                Flash.create('success', "Ticket Details Saved!!!")
-                if ($scope.timeline.length > 0)
-                $scope.updateTimeline($scope.timeline[$scope.timeline.length - 1]['timestamp'])
-                else
-                $scope.updateTimeline(0)
-              }, function (errorData) {
-                  console.log(errorData);
-              });
-  };
+    //console.log("here")
+    var data = {};
+    data.id = $scope.data.ticket.id;
+    //check owner team  if changed then send it in data
+    if($scope.data['ownerTeam'].length){
+      if($scope.data['ownerTeam'][0].id != $scope.data.ticket.owner_details.team.id){
+        data['set_owner_team'] = $scope.data['ownerTeam'][0].id;
+      }
+    }
+
+    //check owner  if changed then send it in data
+    if($scope.data['owner'].length){
+      if($scope.data['owner'][0].id != $scope.data.ticket.owner_details.member.id){
+        data['set_owner_member'] = $scope.data['owner'][0].id;
+      }
+    }
+
+    //check assigned team changed if changed then send it in data
+    if ($scope.data['reassignedTeam'].length){
+      if($scope.data['reassignedTeam'][0].id != $scope.data.ticket.assignment_details.team.id){
+        data['assign_to_team'] = $scope.data['reassignedTeam'][0].id;
+      }
+    }
+
+    //check assignee changed if changed then send it in data
+    if($scope.data['reassigned'].length){
+      if($scope.data['reassigned'][0].id != $scope.data.ticket.assignment_details.member.id){
+        data['assign_to_member'] = $scope.data['reassigned'][0].id;
+      }
+    }
+
+    if ($scope.data.followUpOf && $scope.data.followUpOf != $scope.data.ticket['child_of']) {
+      data.set_followup_of = $scope.data.followUpOf;
+    }
+
+    var dataTags = [];
+    for (i=0; i<$scope.data.tags.length; i++){
+      if($scope.data.tagsData.indexOf($scope.data.tags[i].text) == -1){
+        dataTags.push($scope.data.tags[i].text);
+      }
+    }
+    if(dataTags.length > 0){
+      data.tags = dataTags;
+    }
+    //console.log("save query data is ", data);
+    if(Object.keys(data).length > 1){
+      TicketApi.update(data, function(data) {
+          $scope.data.ticket = data
+          $scope.updateData(data);
+          Flash.create('success', "Ticket Details Saved!!!")
+          if ($scope.data.timeline.length > 0)
+              $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
+          else
+              $scope.updateTimeline(0)
+      }, function(errorData) {
+          //console.log(errorData);
+      });
+    }
+    else{
+      Flash.create('danger', "No change in ticket data");
+    }
+};
 
    $scope.getOwnerTeamMembers = function(data, memberInfo){
     memberInfo = typeof memberInfo !== 'undefined' ? memberInfo : false;
@@ -489,18 +521,18 @@ angular.module('chronos').controller('TicketCtrl',
         member = data.members[i];
         member.name = member.user.name;
       }
-      $scope.ownerTeamMembers = data.members;
+      $scope.data.ownerTeamMembers = data.members;
       if (memberInfo) {
-        for( i in $scope.ownerTeamMembers){
-          ownerTeamMember =  $scope.ownerTeamMembers[i];
+        for( i in $scope.data.ownerTeamMembers){
+          ownerTeamMember =  $scope.data.ownerTeamMembers[i];
           if(memberInfo.id == ownerTeamMember.id){
             ownerTeamMember.ticked = true;
-            $scope.owner = ownerTeamMember;
+            $scope.data.owner = ownerTeamMember;
           }
         }
       }
     }, function (errorData){
-      $scope.ownerTeamMembers = [];
+      $scope.data.ownerTeamMembers = [];
     });
   };
 
@@ -510,18 +542,18 @@ angular.module('chronos').controller('TicketCtrl',
         member = data.members[i];
         member.name = member.user.name;
       }
-      $scope.reassignedTeamMembers = data.members;
+      $scope.data.reassignedTeamMembers = data.members;
       if (memberInfo) {
-        for( i in $scope.reassignedTeamMembers){
-          reassignedTeamMember =  $scope.reassignedTeamMembers[i];
+        for( i in $scope.data.reassignedTeamMembers){
+          reassignedTeamMember =  $scope.data.reassignedTeamMembers[i];
           if(memberInfo.id == reassignedTeamMember.id){
             reassignedTeamMember.ticked = true;
-            $scope.reassigned = reassignedTeamMember;
+            $scope.data.reassigned = reassignedTeamMember;
           }
         }
       }
     }, function (errorData){
-      $scope.reassignedTeamMembers = [];
+      $scope.data.reassignedTeamMembers = [];
     });
   };
 

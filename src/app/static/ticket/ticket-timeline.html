@@ -14,7 +14,7 @@
     </div>
   </div> -->
   <!-- <div style="border-bottom: 1px solid #D7D7D7"> -->
-  <div ng-repeat="t in timeline">
+  <div ng-repeat="t in data.timeline">
     <div ng-if="t.type == 'Created'">
       <div ng-include="'/static/ticket/timeline/timeline-ticket-created.html'" class="timeline-row"></div>
     </div>
@@ -27,8 +27,11 @@
     <div ng-if="t.type == 'Ownership'">
       <div ng-include="'/static/ticket/timeline/timeline-ownership.html'"></div>
     </div>
-    <div ng-if="t.type == 'Assignment' || t.type == 'Assignment Update'">
+    <div ng-if="t.type == 'Assignment'">
       <div ng-include="'/static/ticket/timeline/timeline-assignment.html'"></div>
+    </div>
+    <div ng-if="t.type == 'Assignment Update'">
+      <div ng-include="'/static/ticket/timeline/timeline-assignment-update.html'"></div>
     </div>
     <div ng-if="t.type == 'Ticket'">
       <div ng-include="'/static/ticket/timeline/timeline-ticket-changed.html'"></div>
