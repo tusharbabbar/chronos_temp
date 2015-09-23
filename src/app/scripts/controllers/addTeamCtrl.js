@@ -86,19 +86,17 @@ angular.module('chronos').controller('addTeamCtrl',
       });
     }
 
-    $scope.addLevel = function(id, sla, index){
-      console.log("index get is ", index);
+    $scope.addLevel = function(id, sla, teamIndex){
       if(!sla){
         alert("SLA Required");
         return;
       }
-      console.log(id, sla, index)
       data = {};
       data.team_id = id;
       data.sla_policy = sla;
       TeamLevelsListApi.save(data, function(data){
         data.showLevels = true;
-        $scope.team_details[index] = data;
+        $scope.team_details[teamIndex] = data;
       }, function(errorData){
         console.log(errorData);
       });
@@ -115,14 +113,14 @@ angular.module('chronos').controller('addTeamCtrl',
     }
   };
 
-  $scope.addUser = function(item, level, team, index) {
+  $scope.addUser = function(item, level, team, teamIndex) {
     data = {};
     data.team_id = team.id;
     data.level_id = level.id;
     data.user_id = item.id;
     LevelMembersListApi.save(data, function(data){
       data.showLevels = true;
-      $scope.team_details[index] = data;
+      $scope.team_details[teamIndex] = data;
       $scope.data.items ="";
     }, function(errordata){
       console.log(errordata);
