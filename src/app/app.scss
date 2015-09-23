@@ -393,8 +393,8 @@ body {
 
 .button-bottom {
   @extend .commenter-timeline;
-  max-height: 70px;
-  min-height: 70px;
+  max-height: $top-browser;
+  min-height: $top-browser;
   padding: 10px
 }
 
@@ -488,7 +488,8 @@ mentio-menu .active {
 }
 
 .menu-list {
-  font-size: x-large;
+  font-family : "Open Sans Light";
+  font-size: 1.5em;
   padding : 10px;
 }
 

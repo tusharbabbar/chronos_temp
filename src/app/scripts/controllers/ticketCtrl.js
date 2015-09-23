@@ -462,21 +462,21 @@ angular.module('chronos').controller('TicketCtrl',
     }
 
     //check owner  if changed then send it in data
-    if($scope.data['owner'].length){
+    if($scope.data['owner'] && $scope.data['owner'].length){
       if($scope.data['owner'][0].id != $scope.data.ticket.owner_details.member.id){
         data['set_owner_member'] = $scope.data['owner'][0].id;
       }
     }
 
     //check assigned team changed if changed then send it in data
-    if ($scope.data['reassignedTeam'].length){
+    if ($scope.data['reassignedTeam'] && $scope.data['reassignedTeam'].length){
       if($scope.data['reassignedTeam'][0].id != $scope.data.ticket.assignment_details.team.id){
         data['assign_to_team'] = $scope.data['reassignedTeam'][0].id;
       }
     }
 
     //check assignee changed if changed then send it in data
-    if($scope.data['reassigned'].length){
+    if($scope.data['reassigned'] && $scope.data['reassigned'].length){
       if($scope.data['reassigned'][0].id != $scope.data.ticket.assignment_details.member.id){
         data['assign_to_member'] = $scope.data['reassigned'][0].id;
       }

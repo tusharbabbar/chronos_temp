@@ -61,8 +61,8 @@
                   <input type="text" placeholder="Add Member" class="form-control panel-body"
                     mentio = "" mentio-template-url='/people-mentions.tpl'
                     mentio-typed-text="typedTerm" mentio-items="data.items | filter:name:typedTerm"
-                    mentio-select="$parent.$parent.addUser(item, level, team, $parent.$index)"
-                    mentio-search="$parent.$parent.searchPeople(term)"
+                    mentio-select="addUser(item, level, team, $index)"
+                    mentio-search="searchPeople(term)"
                     ng-model="level.addUser" > </input>
                 </div>
               </div>
@@ -71,7 +71,7 @@
                 {{member.user.name}} <br/>
                 {{member.user.email}} <br/>
                 {{member.user.phone}} <br/><br/>
-                <button ng-click="$parent.$parent.$parent.removeMember(member, $index, $parent.$index, $parent.$parent.$index)" style="height:25px !important"> Remove Member
+                <button ng-click="removeMember(member, $index, $index, $index)" style="height:25px !important"> Remove Member
                 </button>
               </div>
             </div>

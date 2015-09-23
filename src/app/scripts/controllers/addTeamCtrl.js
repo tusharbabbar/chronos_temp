@@ -17,6 +17,7 @@ angular.module('chronos').controller('addTeamCtrl',
      UserApi){
 
     headingService.pageHeading.value = 'Configurations';
+    $scope.data = {}
     //get teams
     $scope.getTeams = function(){
       TeamsListApi.get( {all : 1}, function (data) {
@@ -91,6 +92,7 @@ angular.module('chronos').controller('addTeamCtrl',
         alert("SLA Required");
         return;
       }
+      console.log(id, sla, index)
       data = {};
       data.team_id = id;
       data.sla_policy = sla;
@@ -101,7 +103,6 @@ angular.module('chronos').controller('addTeamCtrl',
         console.log(errorData);
       });
     };
-    $scope.data = {}
     $scope.searchPeople = function(term) {
     console.log(term);
     if (term.length > 3){
@@ -122,7 +123,7 @@ angular.module('chronos').controller('addTeamCtrl',
     LevelMembersListApi.save(data, function(data){
       data.showLevels = true;
       $scope.team_details[index] = data;
-      $scope.items ="";
+      $scope.data.items ="";
     }, function(errordata){
       console.log(errordata);
     });
