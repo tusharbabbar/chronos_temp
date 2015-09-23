@@ -79,4 +79,7 @@ angular.module('chronos').controller('TicketListFilterCtrl',
   }
 
   $scope.preFilteredIssues("all_issues");
+  $scope.temp = function(){
+    console.log($scope)
+  }
 }])

@@ -1,5 +1,4 @@
 angular.module('chronos').factory('ticketFilterService',function(TicketsListApi){
-  'use strict';
   var tickets = {};
   tickets.list = [];
   tickets.total = 0;
@@ -49,10 +48,15 @@ angular.module('chronos').factory('ticketFilterService',function(TicketsListApi)
     });
     console.log(data)
     TicketsListApi.get(data, function(data){
-       self.tickets.list = data.tickets
-       self.tickets.total = data.total
-       self.tickets.pages = _.range(window.Math.ceil(data.total/self.itemsPerPage))
-       console.log(data.tickets)
+      now = Date.now()/1000
+      for (i in data.tickets){
+        data.tickets[i]['remaining'] = parseInt(((now - data.tickets[i]['created_on'])/60/60 - data.tickets[i]['sla']) * -1)
+        data.tickets[i]['remaining_percent'] = parseInt(((now - data.tickets[i]['created_on'])/60/60 - data.tickets[i]['sla']) * -1)/data.tickets[i]['sla']*100
+      }
+      self.tickets.list = data.tickets
+      self.tickets.total = data.total
+      self.tickets.pages = _.range(window.Math.ceil(data.total/self.itemsPerPage))
+      console.log(data.tickets)
     })
   }
 

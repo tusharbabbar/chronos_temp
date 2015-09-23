@@ -4,7 +4,6 @@
 }
 
 #curation-top{
-    font-size: 20px;
     width:97%;
     height:50px;
     position: fixed;
@@ -38,7 +37,6 @@
 }
 
 #curation-main{
-    font-size: 15px;
     border-top: 1px solid #C0C0C0;
     width : 100%;
     margin-top: 50px;
@@ -47,7 +45,7 @@
     width: 97%;
     height: 100%;
     overflow:hidden;
-    webkit-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -57,7 +55,7 @@
     width: 55%;
     height : 100%;
     position: relative;
-    webkit-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -76,7 +74,7 @@
     height: 100%;
     overflow-y:auto;
     padding-bottom: 305px;
-    webkit-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -89,7 +87,7 @@
     width:100%;
     height: 225px;
     background-color: white;
-    webkit-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
@@ -101,7 +99,7 @@
     height: 100%;
     border-left: 1px solid #C0C0C0;
     overflow-y: scroll;
-    webkit-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 
@@ -124,7 +122,7 @@
     width:100%;
     height:60px;
     background-color: white;
-    webkit-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }

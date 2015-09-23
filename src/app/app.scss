@@ -2,9 +2,12 @@
 @import "styles/_bootstrap";
 @import "styles/_curation";
 
-$top-browser :80px;
+$top-browser : calc(8.5vh);
 $border-color : #DCDCDC;
 $font-color : #4DC5EA;
+$ticket-fixed : calc(7vh);
+$padding-fixed : calc(1.5vh);
+$timeline-padding : calc(16vh);
 
 // @font-face {
 // font-family: BrandonText-Regular;
@@ -31,10 +34,28 @@ font-family: 'Existence-light';
 src: url("/assets/Existence-Light.otf");
 }
 
+@media all and (min-width: 1281px) {
+    body{
+        font-size: 14px;
+    }
+}
+
+@media all and (min-width:960px) and (max-width: 1280px) {
+    body{
+        font-size: 12px;
+    }
+}
+
+@media all and (max-width: 959px) and (min-width: 600px) {
+    body{
+        font-size: 10px;
+    }
+}
+
 body {
   padding: 0px;
   background-color: #F7F7F7;
-  font: 14px "Open Sans";
+  font-family: "Open Sans";
 }
 
 .boxed {
@@ -54,7 +75,7 @@ body {
 .nav-top {
   background-color: #FFFFFF;
   height: $top-browser;
-  padding: 20px;
+  padding: $padding-fixed;
   padding-left: 0px;
   border: 0px;
   border-bottom: solid 1px $border-color;
@@ -72,8 +93,8 @@ body {
 
 .nav-top-ticket {
   background-color: #FFFFFF;
-  height: $top-browser;
-  padding: 20px;
+  height: $ticket-fixed;
+  padding: $padding-fixed;
   padding-left: 0px;
   border: 0px;
   border-bottom: solid 1px $border-color;
@@ -90,8 +111,8 @@ body {
 
 .nav-bottom-ticket {
   background-color: #FFFFFF;
-  height: $top-browser - 10px;
-  padding: 20px;
+  height: $ticket-fixed;
+  padding: $padding-fixed;
   padding-left: 0px;
   border: 0px;
   border-bottom: solid 1px $border-color;
@@ -109,7 +130,7 @@ body {
 .nav-top-left {
   background-color: #FFFFFF;
   height: $top-browser;
-  padding: 20px;
+  padding: $padding-fixed;
   padding-left: 0px;
   padding-right: 0px;
   border: 0px;
@@ -173,7 +194,6 @@ body {
 .listing-table {
   background-color: transparent;
   border-collapse: collapse;
-  box-shadow: 1px 1px 1px $border-color;
   max-width: 99%;
   width: 100%;
   word-wrap: normal;
@@ -274,7 +294,7 @@ body {
 
 .multiSelect button {
   @extend .row;
-  font-size: 12px;
+  font-size: smaller;
   background-image: linear-gradient(#fff, #ffffff);
   word-wrap: normal;
 }
@@ -288,7 +308,7 @@ body {
 }
 .acol label {
   text-transform: uppercase;
-  font-size: 12px
+  font-size: smaller
 }
 
 .listing-font {
@@ -308,7 +328,6 @@ body {
   padding-left: 5px;
   padding-right: 5px;
   padding-top: 4px;
-  font-size: 13px;
   background-color: #4DC5EA !important;
   margin-bottom: auto;
   border-color: #4DC5EA;
@@ -322,14 +341,9 @@ body {
   overflow-y: auto;
   min-width: 100%
 }
-
-.multiSelect .buttonLabel {
-  width: 25%;
-}
-
 .ticket-main-view {
   position: relative;
-  top: $top-browser;
+  top: $ticket-fixed;
 }
 
 .timeline-tile {
@@ -337,7 +351,7 @@ body {
   width: 74%;
   height: 100%;
   min-height: 600px;
-  padding-bottom: $top-browser + 70px;
+  padding-bottom: $timeline-padding;
   float: left;
 }
 
@@ -368,7 +382,7 @@ body {
   background-color: #FFFFFF;
   border: 1px solid $border-color;
   padding: 20px;
-  bottom: $top-browser - 10px;
+  bottom: $ticket-fixed;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
@@ -465,7 +479,7 @@ mentio-menu .active {
 
 .back-button {
   height: $top-browser;
-  padding : 20px;
+  padding : $padding-fixed;
   width : inherit;
   text-align : right;
    -webkit-box-sizing: border-box;
@@ -521,4 +535,12 @@ mentio-menu .active {
   bottom : 10px;
   right: 10px;
   z-index: 20
+}
+
+.button {
+  font-size : 0.8em !important
+}
+
+th:last-child, td:last-child {
+    padding-right: 15px;
 }

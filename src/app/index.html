@@ -2,6 +2,7 @@
 <html ng-app="chronos">
   <head>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width" />
     <title>chronos</title>
     <!-- inject:vendor:css -->
     <link rel="stylesheet" href="/Ionicons/css/ionicons.css">
@@ -36,7 +37,7 @@
         <div ng-include="'/static/curation.html'"></div>
       </div>
     </div>
-    <div flash-message="5000" class="flash" ></div> 
+    <div flash-message="5000" class="flash" ></div>
     <!-- inject:vendor:js -->
     <script src="/angular/angular.js"></script>
     <script src="/angular-flash-alert/dist/angular-flash.js"></script>
@@ -60,11 +61,6 @@
     <!-- endinject -->
     <!-- inject:js -->
     <script src="/app.js"></script>
-    <script src="/scripts/services/util.js"></script>
-    <script src="/scripts/services/ticketFilterService.js"></script>
-    <script src="/scripts/services/ticketCurationService.js"></script>
-    <script src="/scripts/services/headingService.js"></script>
-    <script src="/scripts/services/api.js"></script>
     <script src="/scripts/controllers/ticketListCont.js"></script>
     <script src="/scripts/controllers/ticketCtrl.js"></script>
     <script src="/scripts/controllers/navTopCtrl.js"></script>
@@ -72,6 +68,11 @@
     <script src="/scripts/controllers/filterCtrl.js"></script>
     <script src="/scripts/controllers/addTeamCtrl.js"></script>
     <script src="/scripts/controllers/addCtrl.js"></script>
+    <script src="/scripts/services/util.js"></script>
+    <script src="/scripts/services/ticketFilterService.js"></script>
+    <script src="/scripts/services/ticketCurationService.js"></script>
+    <script src="/scripts/services/headingService.js"></script>
+    <script src="/scripts/services/api.js"></script>
     <script src="/js/transit.js"></script>
     <script src="/curation.js"></script>
     <script src="/chronos-templates.js"></script>
