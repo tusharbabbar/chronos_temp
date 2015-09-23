@@ -3,7 +3,7 @@
       <div ng-click="cancel()" style="display:inline-block;">
         <i class="fa fa-times-circle"></i>
       </div>
-      <div style="display:inline-block; text-align:center;">Ticket ID: <span class="blue-color"> {{ticketId}}</span> </div>
+      <div style="display:inline-block; text-align:center;">Ticket ID: <span class="blue-color"> {{data.ticketId}}</span> </div>
     </div>
 
     <div id="curation-main">
@@ -17,7 +17,7 @@
                     <div class="eleven columns" style="margin-top:10px">Ticket Description</div>
                   </div>
                   <div class="timeline-body">
-                    {{ticketDescription}}
+                    {{data.ticketDescription}}
                   </div>
                 </div>
                 <div ng-repeat="comment in comments">
@@ -37,7 +37,7 @@
             </div>
 
           </div>
-          <div id="ticket-curration-left-bottom" ng-if="showComment" class="row">
+          <div id="ticket-curration-left-bottom" ng-if="data.showComment" class="row">
               <script type="text/ng-template" id="/people-mentions.tpl">
                     <ul class="list-group user-search">
                       <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
@@ -59,7 +59,7 @@
                <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="addComment()"><small><small>Comment</small></small></button>
               <button style="float:right; margin-right:5px" ng-click="toggleComment()"><small><small>hide</small></small></button>
           </div>
-          <div id="ticket-curration-left-bottom-buttons" ng-if="!showComment" class="row">
+          <div id="ticket-curration-left-bottom-buttons" ng-if="!data.showComment" class="row">
             <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="toggleComment()"><small><small>Comment</small></small></button>
           </div>
         </div>
@@ -249,7 +249,7 @@
                   Followup of Issue
               </div>
               <div class="seven columns">
-               <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="followUpOf" style="width:100%"/>
+               <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="data.followUpOf" style="width:100%"/>
               </div>
           </div>
           <div class="top-medium-pad row">
@@ -272,9 +272,9 @@
   </div>
 
   <div style=" background-color:rgba(0, 0, 0, 0.5); width:100%; height:100%;position: fixed; z-index:20; top:0px; left:0px"
-  ng-if="showCustomMail" ng-click = "removeModal()"></div>
+  ng-if="data.showCustomMail" ng-click = "removeModal()"></div>
   <div style="background-color:white;width:50%; height:50%;position: fixed; z-index:21; margin: 0 auto; top:25%; left:25%"
-    ng-if="showCustomMail">
+    ng-if="data.showCustomMail">
       <div ng-include="'/static/curationCustomSendMail.html'"></div>
   </div>
 </div>

@@ -11,8 +11,8 @@
               <div class="seven columns">
                 <div
                     isteven-multi-select
-                    input-model="products"
-                    output-model="product"
+                    input-model="data.products"
+                    output-model="data.product"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
@@ -32,8 +32,8 @@
               <div class="seven columns">
                 <div
                     isteven-multi-select
-                    input-model="sources"
-                    output-model="source"
+                    input-model="data.sources"
+                    output-model="data.source"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
@@ -53,8 +53,8 @@
               <div class="seven columns">
                 <div
                     isteven-multi-select
-                    input-model="types"
-                    output-model="type"
+                    input-model="data.types"
+                    output-model="data.type"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
@@ -73,8 +73,8 @@
               <div class="seven columns">
                 <div
                     isteven-multi-select
-                    input-model="$parent.sentiments"
-                    output-model="$parent.sentiment"
+                    input-model="data.sentiments"
+                    output-model="data.sentiment"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
@@ -94,8 +94,8 @@
               <div class="seven columns">
                  <div
                     isteven-multi-select
-                    input-model="$parent.ownerTeams"
-                    output-model="$parent.ownerTeam"
+                    input-model="data.ownerTeams"
+                    output-model="data.ownerTeam"
                     button-label="name"
                     on-item-click="getOwnerTeamMembers(data)"
                     item-label="name"
@@ -107,15 +107,15 @@
           </div>
 
           <!-- Owned member -->
-          <div class="field top-medium-pad row" ng-show="ownerTeam.length">
+          <div class="field top-medium-pad row" ng-show="data.ownerTeam.length">
               <div class="five columns">
                 Owned By
               </div>
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="$parent.ownerTeamMembers"
-                  output-model="$parent.owner"
+                  input-model="data.ownerTeamMembers"
+                  output-model="data.owner"
                   button-label="name"
                   item-label="name"
                   tick-property="ticked"
@@ -127,15 +127,15 @@
           </div>
 
           <!-- Assigned to -->
-          <div class="top-medium-pad row" ng-show="ownerTeam.length">
+          <div class="top-medium-pad row" ng-show="data.ownerTeam.length">
               <div class="five columns">
                 Reassigned Team
               </div>
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="$parent.reassignedTeams"
-                  output-model="$parent.reassignedTeam"
+                  input-model="data.reassignedTeams"
+                  output-model="data.reassignedTeam"
                   on-item-click="getReassignedTeamMembers(data)"
                   button-label="name"
                   item-label="name"
@@ -147,15 +147,15 @@
           </div>
 
           <!-- Assigned member -->
-          <div class="top-medium-pad row"  ng-show="reassignedTeam.length">
+          <div class="top-medium-pad row"  ng-show="data.reassignedTeam.length">
               <div class="five columns">
                 Reassigned To
               </div>
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="$parent.reassignedTeamMembers"
-                  output-model="$parent.reassigned"
+                  input-model="data.reassignedTeamMembers"
+                  output-model="data.reassigned"
                   button-label="name"
                   item-label="name"
                   tick-property="ticked"
@@ -170,13 +170,13 @@
                   Followup of Issue
               </div>
               <div class="seven columns">
-               <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="$parent.followUpOf" style="width:100%"/>
+               <input type="text" class="issue-box" placeholder="Enter Ticket Id" ng-model="data.followUpOf" style="width:100%"/>
               </div>
           </div>
           <div class="top-medium-pad row">
               Add Tags
           </div>
           <div class="top-medium-pad row">
-              <tags-input ng-model='tags'  add-on-space="true"> </tags-input>
+              <tags-input ng-model='data.tags'  add-on-space="true"> </tags-input>
           </div>
   </div>
