@@ -4,6 +4,8 @@ angular.module('chronos').controller('LoginCtrl',[ '$scope', '$location', 'Login
   headingService.pageHeading.value = "Login to Galaxy";
   $("#nav-top").hide();
   $("#nav-top-left").hide();
+  $("#curation-hover").hide();
+  $("#nav-left").hide();
   $("body").css("background-color", "#095675");
   $scope.signin = function(){
     console.log('here');

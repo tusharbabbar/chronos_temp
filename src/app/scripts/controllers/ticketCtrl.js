@@ -43,6 +43,7 @@ angular.module('chronos').controller('TicketCtrl',
     Flash){
   headingService.pageHeading.value = 'Issue Details'
   $scope.data = {};
+  showCuration(0)
   var pages = ['all_issues', 'my_issues', 'my_team_issues'];
   $scope.data.sentiments = [
               {name : 'Happy'},

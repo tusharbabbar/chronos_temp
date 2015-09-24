@@ -19,7 +19,7 @@
 <div class="button-bottom" ng-if="data.buttonBottom">
   <div style="padding: 5px; position:absolute; bottom:0px; right:15px">
     <small>
-      <button class="button-primary" style="float:right" ng-click="showMailer()">Mail</button>
+      <button class="button-primary" style="float:right" ng-if="data.isOwner" ng-click="showMailer()">Mail</button>
       <button class="button-primary" style="float:right; margin-right:5px" ng-click="showCommenter()">Comment</button>
     </small>
   </div>
