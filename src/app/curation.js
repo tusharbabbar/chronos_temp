@@ -13,6 +13,7 @@ angular.module('chronos').controller('curationCtrl',
     'TicketApi',
     'ticketFilterService',
     'Flash',
+    'transitNew',
      function ($scope,
       $window,
       ticketCurationService,
@@ -26,7 +27,8 @@ angular.module('chronos').controller('curationCtrl',
       TicketCommentsListApi,
       TicketApi,
       ticketFilterService,
-      Flash) {
+      Flash,
+    transitNew) {
             //default
             $scope.data = {}
             $scope.singleSelectSetting = {selectionLimit: 1};
@@ -409,7 +411,7 @@ angular.module('chronos').controller('curationCtrl',
                   $scope.mail.subject = "";
                   $scope.mail.to = "";
                   $scope.data.showCustomMail = false;
-                  $window.showCuration(0);
+                  transitNew.data.showCuration(0);
                   Flash.create('success', "Ticket Saved Successfully!!!");
                   ticketFilterService.update_tickets_with_filters()
                 }, function (errorData) {
@@ -418,13 +420,13 @@ angular.module('chronos').controller('curationCtrl',
               }
               else{
                 $scope.data.showCustomMail = false;
-                $window.showCuration(0);
+                transitNew.data.showCuration(0);
                 Flash.create('danger', "No change in ticket data");
               }
             };
             //close curation screen
             $scope.cancel = function() {
-              $window.showCuration(0);
+              transitNew.data.showCuration(0);
             };
 
             //search user from users api for mention

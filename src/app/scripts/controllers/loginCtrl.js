@@ -20,6 +20,8 @@ angular.module('chronos').controller('LoginCtrl',[ '$scope', '$location', 'Login
         Util.set_accesstoken(data.access_token);
         $("#nav-top").show();
         $("#nav-top-left").show();
+        $("#curation-hover").show();
+        $("#nav-left").show();
         $("body").css("background-color", "#F7F7F7");
         $location.path('/');
       });

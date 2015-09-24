@@ -5,13 +5,15 @@ angular.module('chronos').controller('TicketListCtrl',
 	'ticketFilterService',
 	'headingService',
 	'ticketCurationService',
+	'transitNew',
 	function (
 		$scope,
     $location,
 		$window,
 		ticketFilterService,
 		headingService,
-		ticketCurationService){
+		ticketCurationService,
+		transitNew){
   $scope.itemsPerPage = ticketFilterService.itemsPerPage;
   $scope.tickets = ticketFilterService.tickets;
   headingService.set("Issues List");
@@ -24,11 +26,11 @@ angular.module('chronos').controller('TicketListCtrl',
       if(currentTicket.id == id){
         if(currentTicket.status == 'ORPHAN' || currentTicket.status == 'CURATION'){
           ticketCurationService.setTicketId(id);
-          $window.showCuration(1);
+					transitNew.data.showCuration(1);
           angular.element(document.getElementById('curation-main')).scope().showTicket();
         }
         else{
-          $window.showCuration(0);
+					transitNew.data.showCuration(0)
           $location.path("/ticket/" + id);
         }
       }
