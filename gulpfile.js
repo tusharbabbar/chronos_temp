@@ -16,9 +16,9 @@ var gulp = require('gulp'),
 var htmlminOpts = {
   removeComments: true,
   collapseWhitespace: true,
-  removeEmptyAttributes: false,
+  removeEmptyAttributes: true,
   collapseBooleanAttributes: true,
-  removeRedundantAttributes: true
+  removeRedundantAttributes: false
 };
 
 /**
