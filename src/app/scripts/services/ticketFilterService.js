@@ -50,7 +50,29 @@ angular.module('chronos').factory('ticketFilterService',function(TicketsListApi)
     TicketsListApi.get(data, function(data){
       now = Date.now()/1000
       for (i in data.tickets){
-        data.tickets[i]['remaining'] = parseInt(((now - data.tickets[i]['created_on'])/60/60 - data.tickets[i]['sla']) * -1)
+        data.tickets[i]['remaining'] = parseInt(((now - data.tickets[i]['created_on'])/60/60 - data.tickets[i]['sla']))
+        if (data.tickets[i]['remaining'] > 0){
+          var status = "passed"
+        }
+        else {
+          var status = "remains"
+        }
+        data.tickets[i]['remaining'] = Math.abs(data.tickets[i]['remaining'])
+        if (data.tickets[i]['remaining'] >= 24 ){
+          data.tickets[i]['remaining'] = parseInt(data.tickets[i]['remaining'] / 24)
+          if (data.tickets[i]['remaining'] == 1){
+            data.tickets[i]['remaining_unit'] = 'day ' + status
+          }
+          else
+            data.tickets[i]['remaining_unit'] = 'days ' + status
+        }
+        else {
+          if (data.tickets[i]['remaining'] == 1){
+            data.tickets[i]['remaining_unit'] = 'hr ' + status
+          }
+          else
+            data.tickets[i]['remaining_unit'] = 'hrs ' + status
+        }
         data.tickets[i]['remaining_percent'] = parseInt(((now - data.tickets[i]['created_on'])/60/60 - data.tickets[i]['sla']) * -1)/data.tickets[i]['sla']*100
       }
       self.tickets.list = data.tickets
