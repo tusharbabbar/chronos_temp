@@ -20,7 +20,7 @@
 
       </thead>
       <tbody>
-        <tr class="listing-row boxed row" ng-repeat="ticket in tickets.list" ng-click = "$parent.openTicket(ticket.id)">
+        <tr class="listing-row boxed row" ng-repeat="ticket in tickets.list" ng-click = "$parent.openTicket(ticket.id)" ng-attr-id="{{ticket.id}}" ng-class="selected == ticket.id ? 'selected' : ''">
           <td >
             <img src="/assets/fonts/Curation.svg" ng-if="ticket.status=='CURATION'" style="margin:-5px 1px"></img>
             <img src="/assets/fonts/Resolved.svg" ng-if="ticket.status=='RESOLVED'" style="margin:-5px 1px"></img>

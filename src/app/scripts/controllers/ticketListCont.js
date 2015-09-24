@@ -21,6 +21,7 @@ angular.module('chronos').controller('TicketListCtrl',
   console.log(headingService.pageHeading)
 
   $scope.openTicket = function(id) {
+		$scope.selected = id
     for(i in $scope.tickets.list){
       currentTicket = $scope.tickets.list[i];
       if(currentTicket.id == id){
