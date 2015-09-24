@@ -8,10 +8,10 @@
     </button>
     <span style="font-size: 1.5em;color:#E54D54" ng-if="(data.ticket.assignment_details.action == 'DENY' && data.isAssigned)"><i class="ionicons ion-android-close" ></i> Denied</span>
   </span>
-  <button ng-hide="(data.isNotOwner || data.ticket.status == 'RESOLVED' || data.ticket.status == 'INVALID')" ng-click="pressResolve()">
+  <button ng-if="(data.isOwner && data.ticket.status != 'RESOLVED' && data.ticket.status != 'INVALID')" ng-click="pressResolve()">
     <small>Mark as Resolved</small>
   </button>
-  <button ng-hide="(data.isNotOwner || data.ticket.status == 'RESOLVED' || data.ticket.status == 'INVALID')" ng-click="invalidStatus()">
+  <button ng-if="(data.isOwner && data.ticket.status && 'RESOLVED' && data.ticket.status != 'INVALID')" ng-click="invalidStatus()">
     <small>Mark as Invalid</small>
   </button>
   <button class="button-primary" style="float:right" ng-click="saveTicketDetails()"><small>Save</small></button>
