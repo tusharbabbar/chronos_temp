@@ -43,6 +43,7 @@ angular.module('chronos').controller('TicketCtrl',
     Flash){
   headingService.pageHeading.value = 'Issue Details'
   $scope.data = {};
+  showCuration(0)
   var pages = ['all_issues', 'my_issues', 'my_team_issues'];
   $scope.data.sentiments = [
               {name : 'Happy'},
@@ -148,10 +149,10 @@ angular.module('chronos').controller('TicketCtrl',
     }
     //enable owner permissions
     if(data.owner_details && data.owner_details.member && Util.getLoggedInUserId() == data.owner_details.member.user.id) {
-      $scope.data.isNotOwner = false;
+      $scope.data.isOwner = true;
     }
     else{
-      $scope.data.isNotOwner = true;
+      $scope.data.isOwner = false;
     }
     //enable assignee permissions
     if(data.assignment_details && data.assignment_details.member && Util.getLoggedInUserId() == data.assignment_details.member.user.id) {
@@ -172,17 +173,15 @@ angular.module('chronos').controller('TicketCtrl',
         console.log(data);
         $scope.data.types = data.types;
         TeamsListApi.get( {if_owner : 1, with_members : 1}, function (data) {
-          console.log(data);
           $scope.data.ownerTeams = data.teams;
           TeamsListApi.get( {all : 1, with_members : 1}, function (data) {
-            console.log(data);
             $scope.data.reassignedTeams = data.teams;
             TicketApi.get({id:$routeParams.id}, function(data){
               $scope.data.ticket = data
               $scope.data.followUpOf = data.child_of;
               date = new Date(data.created_on * 1000)
               $scope.data.created_on = date.toString();
-              $scope.data.isNotOwner = true;
+              $scope.data.isOwner = false;
               $scope.data.isAssigned = false;
               $scope.updateData(data);
               diffrence = 0;
