@@ -101,7 +101,7 @@ angular.module('chronos').controller('addTeamCtrl',
         console.log(errorData);
       });
     };
-    $scope.searchPeople = function(term) {
+    $scope.searchUser = function(term) {
     console.log(term);
     if (term.length > 3){
       UserApi.get({ query: term}, function (data) {

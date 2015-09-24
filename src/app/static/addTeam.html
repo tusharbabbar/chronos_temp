@@ -39,8 +39,8 @@
             </div>
           </div>
            <div ng-show="team.showLevels">
-            <div class="row" ng-repeat="(levelIndex, level) in team.levels" style="text-align:left; margin-bottom:20px; border:1px
-                solid #D7D7D7; min-height:20px;">
+            <div class="row" ng-repeat="(levelIndex, level) in team.levels" 
+              style="text-align:left; margin-bottom:20px; border:1px solid #D7D7D7; min-height:20px;">
               <div class="row" style="padding-top:10px; padding-left:10px; padding-right:10px;">
                 <div class="three columns">
                   Default&nbsp;Level&nbsp;: {{level.is_default}}
@@ -49,21 +49,24 @@
                   SLA&nbsp;: {{level.sla}}
                 </div>
                 <div class="six columns" style="text-align:right;">
-                  <script type="text/ng-template" id="/people-mentions.tpl">
+                  <script type="text/ng-template" id="/add-user.tpl">
                         <ul class="list-group user-search">
-                          <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
-                            <span class="text-default" ng-bind-html="person.email | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
+                          <li mentio-menu-item="user" ng-repeat="user in items" class="list-group-item">
+                            <span class="text-default" ng-bind-html="user.email | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
                             </span>
                           </li>
                         </ul>
                   </script>
-
-                  <input type="text" placeholder="Add Member" class="form-control panel-body"
-                    mentio = "" mentio-template-url='/people-mentions.tpl'
-                    mentio-typed-text="typedTerm" mentio-items="data.items | filter:name:typedTerm"
-                    mentio-select="addUser(item, level, team, teamIndex)"
-                    mentio-search="searchPeople(term)"
-                    ng-model="level.addUser" > </input>
+                  <input mentio
+                      ng-model="level.val"
+                      type="text"
+                      class="form-control"
+                      ng-trim="false"
+                      mentio-template-url='/add-user.tpl'
+                      mentio-items="data.items"
+                      mentio-select="addUser(item, level, team, teamIndex)"
+                      mentio-search="searchUser(term)"
+                      size="25"/>
                 </div>
               </div>
               <div ng-repeat="(memberIndex, member) in level.members" style="border:1px solid #D7D7D7; padding:20px; margin:20px;
