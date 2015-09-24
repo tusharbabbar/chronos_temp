@@ -63,4 +63,19 @@ angular.module('chronos')
   function ($httpProvider) {
     //Http Intercpetor to check auth failures for xhr requests
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
-  }]);
+  }]).run(
+    function($rootScope, SourcesListApi, ProductsListApi, TypesListApi, TeamsListApi){
+      $rootScope.data = $rootScope.data ? $rootScope.data : {};
+      SourcesListApi.get(function (data) {
+        $rootScope.data.sources = data.sources;
+      });
+      ProductsListApi.get(function (data) {
+        $rootScope.data.products = data.products;
+      });
+      TypesListApi.get(function (data) {
+        $rootScope.data.types = data.types;
+      });
+      TeamsListApi.get( {if_owner : 1, with_members : 1}, function (data) {
+        $rootScope.data.ownerTeams = data.teams;
+      });
+    });

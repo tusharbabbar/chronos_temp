@@ -44,7 +44,7 @@ angular.module('chronos').controller('TicketCtrl',
     Flash,
     transitNew){
   headingService.pageHeading.value = 'Issue Details'
-  $scope.data = {};
+  $scope.data = $scope.data ? $scope.data : {};
   transitNew.data.showCuration(0)
   var pages = ['all_issues', 'my_issues', 'my_team_issues'];
   $scope.data.sentiments = [
@@ -82,7 +82,7 @@ angular.module('chronos').controller('TicketCtrl',
       currentType = $scope.data.types[i];
       if(currentType.name == data.type) {
         currentType.ticked = true;
-        $scope.data.type[0] = currentType;
+        $scope.data.type = currentType;
       }
       else{
         currentType.ticked = false;
@@ -93,7 +93,7 @@ angular.module('chronos').controller('TicketCtrl',
       currentSource = $scope.data.sources[i];
       if(currentSource.name == data.source) {
         currentSource.ticked = true;
-        $scope.data.source[0] = currentSource;
+        $scope.data.source = currentSource;
       }
       else{
          currentSource.ticked = false;
@@ -104,7 +104,7 @@ angular.module('chronos').controller('TicketCtrl',
       currentProduct = $scope.data.products[i];
       if(currentProduct.name == data.product) {
         currentProduct.ticked = true;
-        $scope.data.product[0] = currentProduct;
+        $scope.data.product = currentProduct;
       }
       else{
         currentProduct.ticked = false;
@@ -115,7 +115,7 @@ angular.module('chronos').controller('TicketCtrl',
       currentSentiment = $scope.data.sentiments[i];
       if(currentSentiment.name == data.sentiment){
         currentSentiment.ticked = true;
-        $scope.data.sentiment[0] = currentSentiment;
+        $scope.data.sentiment = currentSentiment;
       }
       else{
         currentSentiment.ticked = false;
@@ -127,7 +127,7 @@ angular.module('chronos').controller('TicketCtrl',
         currentOwnerTeam = $scope.data.ownerTeams[i];
         if(currentOwnerTeam.name == data.owner_details.team.name) {
           currentOwnerTeam.ticked = true;
-          $scope.data.ownerTeam[0] = currentOwnerTeam;
+          $scope.data.ownerTeam = currentOwnerTeam;
           $scope.getOwnerTeamMembers(currentOwnerTeam, data.owner_details.member);
         }
         else{
@@ -141,7 +141,7 @@ angular.module('chronos').controller('TicketCtrl',
         currentReassignedTeam = $scope.data.reassignedTeams[i];
         if(currentReassignedTeam.name == data.assignment_details.team.name) {
           currentReassignedTeam.ticked = true;
-          $scope.data.reassignedTeam[0] = currentReassignedTeam;
+          $scope.data.reassignedTeam = currentReassignedTeam;
           $scope.getReassignedTeamMembers(currentReassignedTeam, data.assignment_details.member);
         }
         else{
@@ -165,42 +165,24 @@ angular.module('chronos').controller('TicketCtrl',
     }
   }
 
-  SourcesListApi.get(function (data) {
-    console.log(data);
-    $scope.data.sources = data.sources;
-    ProductsListApi.get(function (data) {
-      console.log(data);
-      $scope.data.products = data.products;
-      TypesListApi.get(function (data) {
-        console.log(data);
-        $scope.data.types = data.types;
-        TeamsListApi.get( {if_owner : 1, with_members : 1}, function (data) {
-          $scope.data.ownerTeams = data.teams;
-          TeamsListApi.get( {all : 1, with_members : 1}, function (data) {
-            $scope.data.reassignedTeams = data.teams;
-            TicketApi.get({id:$routeParams.id}, function(data){
-              $scope.data.ticket = data
-              $scope.data.followUpOf = data.child_of;
-              date = new Date(data.created_on * 1000)
-              $scope.data.created_on = date.toString();
-              $scope.data.isOwner = false;
-              $scope.data.isAssigned = false;
-              $scope.updateData(data);
-              diffrence = 0;
-              if( data.created_on){
-                currentTimeInMilliSeconds = Date.now();
-                if (data.sla){
-                  slaTimeInMilliSeconds = data.sla * 60 * 60 * 1000;
-                  diffrence = slaTimeInMilliSeconds - (currentTimeInMilliSeconds - data.created_on * 1000);
-                }
-              }
-              $scope.data.dueTime = $scope.msToTime(diffrence);
-            });
-          })
-        })
-      })
-    })
-  })
+  TicketApi.get({id:$routeParams.id}, function(data){
+    $scope.data.ticket = data
+    $scope.data.followUpOf = data.child_of;
+    date = new Date(data.created_on * 1000)
+    $scope.data.created_on = date.toString();
+    $scope.data.isOwner = false;
+    $scope.data.isAssigned = false;
+    $scope.updateData(data);
+    diffrence = 0;
+    if( data.created_on){
+      currentTimeInMilliSeconds = Date.now();
+      if (data.sla){
+        slaTimeInMilliSeconds = data.sla * 60 * 60 * 1000;
+        diffrence = slaTimeInMilliSeconds - (currentTimeInMilliSeconds - data.created_on * 1000);
+      }
+    }
+    $scope.data.dueTime = $scope.msToTime(diffrence);
+  });
 
   TicketTagApi.get({ticket_id: $routeParams.id},
     function(data){
