@@ -52,16 +52,16 @@ angular.module('chronos').controller('TicketListFilterCtrl',
   //   $scope[items1[i]] = {}
   // }
   $scope.preFilteredIssues = function(_type){
-    console.log('in')
-    $scope.selected.my_issues = 0,
-    $scope.selected.my_team_issues = 0,
-    $scope.selected.all_issues = 0,
-    $scope.selected.products = [],
-    $scope.selected.teams = [],
-    $scope.selected.types = [],
-    $scope.selected.sources = [],
-    $scope.selected.teams = [],
+    $scope.selected.my_issues = 0
+    $scope.selected.my_team_issues = 0
+    $scope.selected.all_issues = 0
+    $scope.selected.products = []
+    $scope.selected.teams = []
+    $scope.selected.types = []
+    $scope.selected.sources = []
+    $scope.selected.teams = []
     $scope.selected.statuses = []
+    $scope.selected.offset = 0
     if (_type == 'my_issues')
       $scope.selected.my_issues = 1
     else if (_type == 'my_team_issues')
