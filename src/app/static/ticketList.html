@@ -46,9 +46,9 @@
             <div class="row">{{ticket.assignment_details.member.user.name}}</div>
             <div class="row">{{ticket.assignment_details.team.name}}</div>
           </td>
-          <td style = "border-right: 2px solid #EC6C6C" ng-if="ticket.remaining_percent <= 20">{{ticket.remaining}} {{ticket.remaining_unit}}</td>
-          <td style = "border-right: 2px solid #EBDA70" ng-if="ticket.remaining_percent <= 50 && ticket.remaining_percent > 20">{{ticket.remaining}} {{ticket.remaining_unit}}</td>
-          <td style = "border-right: 2px solid #BFE59A" ng-if="ticket.remaining_percent > 50">{{ticket.remaining}} {{ticket.remaining_unit}}</td>
+          <td style = "border-right: 2px solid #EC6C6C" ng-if="ticket.remaining_percent <= 20">{{ticket.remaining_days}}{{ticket.remaining_days_unit}} {{ticket.remaining_hours}}{{ticket.remaining_hours_unit}}</td>
+          <td style = "border-right: 2px solid #EBDA70" ng-if="ticket.remaining_percent <= 50 && ticket.remaining_percent > 20">{{ticket.remaining_days}}{{ticket.remaining_days_unit}} {{ticket.remaining_hours}}{{ticket.remaining_hours_unit}}</td>
+          <td style = "border-right: 2px solid #BFE59A" ng-if="ticket.remaining_percent > 50">{{ticket.remaining_days}}{{ticket.remaining_days_unit}} {{ticket.remaining_hours}}{{ticket.remaining_hours_unit}}</td>
 
         </tr>
       </tbody>

@@ -59,19 +59,23 @@ angular.module('chronos').factory('ticketFilterService',function(TicketsListApi)
         }
         data.tickets[i]['remaining'] = Math.abs(data.tickets[i]['remaining'])
         if (data.tickets[i]['remaining'] >= 24 ){
-          data.tickets[i]['remaining'] = parseInt(data.tickets[i]['remaining'] / 24)
-          if (data.tickets[i]['remaining'] == 1){
-            data.tickets[i]['remaining_unit'] = 'day ' + status
-          }
-          else
-            data.tickets[i]['remaining_unit'] = 'days ' + status
+          data.tickets[i]['remaining_days'] = parseInt(data.tickets[i]['remaining'] / 24)
+          data.tickets[i]['remaining_hours'] = parseInt(data.tickets[i]['remaining'] % 24)
         }
         else {
-          if (data.tickets[i]['remaining'] == 1){
-            data.tickets[i]['remaining_unit'] = 'hr ' + status
+          data.tickets[i]['remaining_hours'] = parseInt(data.tickets[i]['remaining'] % 24)
+        }
+        if (data.tickets[i]['remaining_days'] == 1){
+          data.tickets[i]['remaining_days_unit'] = ' day &'
+        }
+        else if (data.tickets[i]['remaining_days'] > 1) {
+          data.tickets[i]['remaining_days_unit'] = ' days &'
+        }
+        if (data.tickets[i]['remaining_hours'] == 1){
+            data.tickets[i]['remaining_hours_unit'] = ' hour ' + status
           }
-          else
-            data.tickets[i]['remaining_unit'] = 'hrs ' + status
+        else if (data.tickets[i]['remaining_hours'] > 1){
+          data.tickets[i]['remaining_hours_unit'] = ' hours ' + status
         }
         data.tickets[i]['remaining_percent'] = parseInt(((now - data.tickets[i]['created_on'])/60/60 - data.tickets[i]['sla']) * -1)/data.tickets[i]['sla']*100
       }
