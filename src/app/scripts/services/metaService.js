@@ -35,7 +35,7 @@ function($rootScope, SourcesListApi, ProductsListApi, TypesListApi, TeamsListApi
 
   meta.refreshAssignedTeams = function(){
     TeamsListApi.get( {all : 1, with_members : 1}, function (data) {
-      $scope.assignedTeams = data.teams;
+      $rootScope.data.assignedTeams = data.teams;
     });
   }
 
