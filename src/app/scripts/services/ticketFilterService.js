@@ -19,7 +19,7 @@ angular.module('chronos').factory('ticketFilterService',function(TicketsListApi)
   var self = this;
 
   var get_tickets = function(){
-    console.log(tickets);
+    //console.log(tickets);
     return tickets;
   }
   var update_tickets_with_filters = function(){
@@ -46,7 +46,7 @@ angular.module('chronos').factory('ticketFilterService',function(TicketsListApi)
     data.status = self.filters.statuses.map(function(obj){
       return obj.name
     });
-    console.log(data)
+    //console.log(data)
     TicketsListApi.get(data, function(data){
       now = Date.now()/1000
       for (i in data.tickets){
@@ -82,7 +82,7 @@ angular.module('chronos').factory('ticketFilterService',function(TicketsListApi)
       self.tickets.list = data.tickets
       self.tickets.total = data.total
       self.tickets.pages = _.range(window.Math.ceil(data.total/self.itemsPerPage))
-      console.log(data.tickets)
+      //console.log(data.tickets)
     })
   }
 

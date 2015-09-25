@@ -59,7 +59,7 @@ angular.module('chronos').controller('TicketCtrl',
   }
 
   for(var i=0; i<pages.length; i++){
-    //console.log(ticketFilterService.filters[pages[i]])
+    ////console.log(ticketFilterService.filters[pages[i]])
     if (ticketFilterService.filters[pages[i]] == 1)
       $scope.data.previousPage = pages[i].replace('_', " ")
   }
@@ -188,8 +188,8 @@ angular.module('chronos').controller('TicketCtrl',
     function(data){
       var tags = data.tags;
       $scope.data.tagsData = [];
-      //console.log("tags");
-      //console.log(data);
+      ////console.log("tags");
+      ////console.log(data);
       $scope.data.tags = [];
       if (tags != []){
         for (var i=0; i<tags.length; i++){
@@ -198,11 +198,11 @@ angular.module('chronos').controller('TicketCtrl',
         }
       }
     }, function(data){
-    //console.log("TicketTag Error");
+    ////console.log("TicketTag Error");
   });
 
   TicketTimelineApi.query({id:$routeParams.id}, function(data){
-    console.log("time line data is ",data);
+    //console.log("time line data is ",data);
     for(var i=0; i< data.length; i++){
       var date = new Date(data[i]['timestamp'] * 1000)
       data[i]['date'] = date.toString()
@@ -257,7 +257,7 @@ angular.module('chronos').controller('TicketCtrl',
   $scope.data['to'] = "";
   $scope.data.denial_reason = []
   $scope.addComment = function(){
-    //console.log($scope.data.comment)
+    ////console.log($scope.data.comment)
     if (($scope.data.comment != "") && ($scope.data.comment.length > 10)){
       data = {
         ticket_id : $scope.data.ticket.id,
@@ -278,7 +278,7 @@ angular.module('chronos').controller('TicketCtrl',
     }
   }
   $scope.addMail = function(){
-    //console.log($scope.data)
+    ////console.log($scope.data)
     if (($scope.data.subject != "") && ($scope.data.to != "") && ($scope.data.mail !="")){
       data = {
         id : $scope.data.ticket.id,
@@ -315,16 +315,16 @@ angular.module('chronos').controller('TicketCtrl',
                 else
                 $scope.updateTimeline(0)
               }, function (errorData) {
-                  //console.log(errorData);
+                  ////console.log(errorData);
               });
   };
 
   $scope.getSelectedEmail = function(item) {
-    //console.log(item);
+    ////console.log(item);
     return item.email + ","
   };
   $scope.getSelectedMention = function(item) {
-    //console.log(item);
+    ////console.log(item);
     return "<span style='color: #4DC5EA;' id='"+item.id+"'>"+"@"+item.name+"</span>";
   };
   $scope.searchPeople = function(term) {
@@ -332,18 +332,18 @@ angular.module('chronos').controller('TicketCtrl',
       UserApi.get({ query: term}, function (data) {
         $scope.data.items = data.users;
       }, function (data) {
-        //console.log(data);
+        ////console.log(data);
       });
     }
   };
   $scope.pressResolve = function(){
     $scope.data.showResolveMailer = true;
     $scope.data.send_custom_mail = true;
-    //console.log("resolve")
+    ////console.log("resolve")
   }
   $scope.pressDeny = function(){
     $scope.data.showDenyCommenter = true;
-    //console.log("deny")
+    ////console.log("deny")
   }
   $scope.resolveTicket = function(){
     data = {id: $scope.data.ticket.id, status : "RESOLVED"}
@@ -366,7 +366,7 @@ angular.module('chronos').controller('TicketCtrl',
         data.body = $scope.data.mail
         data.recipient = $scope.data.to
         TicketApi.update(data, function(data){
-          //console.log(data)
+          ////console.log(data)
           $scope.data['mail'] = "";
           $scope.data['subject'] = "";
           $scope.data['to'] = "";
@@ -390,7 +390,7 @@ angular.module('chronos').controller('TicketCtrl',
     data.ticket_id = $scope.data.ticket.id;
     data.assignment_id = $scope.data.ticket.assignment_details.assignment_id
     data.action = 'ACKNOWLEDGE';
-    //console.log($scope.data.ticket, data);
+    ////console.log($scope.data.ticket, data);
     AssignmentActionApi.save(data, function(data) {
       $scope.data.ticket = data
       $scope.updateData(data);
@@ -400,7 +400,7 @@ angular.module('chronos').controller('TicketCtrl',
       else
       $scope.updateTimeline(0)
     }, function (errorData) {
-      //console.log(errorData);
+      ////console.log(errorData);
     });
   };
 
@@ -420,7 +420,7 @@ angular.module('chronos').controller('TicketCtrl',
         $scope.updateData(data);
         Flash.create('success', "Assignment Denied!!!");
         $scope.data.showDenyCommenter = false
-        console.log("time line got is", $scope.data.timeline);
+        //console.log("time line got is", $scope.data.timeline);
         if ($scope.data.timeline.length > 0)
         $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
         else
@@ -434,7 +434,7 @@ angular.module('chronos').controller('TicketCtrl',
   }
 
   $scope.saveTicketDetails = function() {
-    //console.log("here")
+    ////console.log("here")
     var data = {};
     data.id = $scope.data.ticket.id;
     //check owner team  if changed then send it in data
@@ -478,7 +478,7 @@ angular.module('chronos').controller('TicketCtrl',
     if(dataTags.length > 0){
       data.tags = dataTags;
     }
-    //console.log("save query data is ", data);
+    ////console.log("save query data is ", data);
     if(Object.keys(data).length > 1){
       TicketApi.update(data, function(data) {
           $scope.data.ticket = data
@@ -489,7 +489,7 @@ angular.module('chronos').controller('TicketCtrl',
           else
               $scope.updateTimeline(0)
       }, function(errorData) {
-          //console.log(errorData);
+          ////console.log(errorData);
       });
     }
     else{

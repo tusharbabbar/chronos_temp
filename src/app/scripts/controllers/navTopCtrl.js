@@ -9,6 +9,6 @@ angular.module('chronos').controller('navTopCtrl',['$scope', 'headingService', '
   };
   $scope.toggleShowLogout = function(){
     $scope.showLogout = !$scope.showLogout;
-    console.log($scope.showLogout);
+    //console.log($scope.showLogout);
   };
 }]);

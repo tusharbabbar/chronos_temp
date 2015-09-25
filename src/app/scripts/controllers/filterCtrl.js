@@ -21,7 +21,7 @@ angular.module('chronos').controller('TicketListFilterCtrl',
     $scope.products = data.products
   })
   TeamsListApi.get({all:1, with_members : 1, limit: 100}, function(data){
-    console.log(data.teams)
+    //console.log(data.teams)
     $scope.teams = data.teams
   })
   TypesListApi.get({}, function(data){
@@ -37,7 +37,7 @@ angular.module('chronos').controller('TicketListFilterCtrl',
   TicketsListCountApi.get({my_team_issues:1},function(data){
     $scope.counts["my_team_issues"] = data.count
   });
-  console.log($scope.counts)
+  //console.log($scope.counts)
   $scope.statuses = [
     {name : 'ORPHAN', icon : '<img src="/assets/fonts/Orphan.svg"></img>'},
     {name : 'CURATION', icon : '<img src="/assets/fonts/Curation.svg"></img>'},
@@ -46,7 +46,7 @@ angular.module('chronos').controller('TicketListFilterCtrl',
     {name : 'INVALID', icon : '<img src="/assets/fonts/Invalid.svg"></img>'}]
 
   $scope.selected = ticketFilterService.filters
-  console.log($scope.selected === ticketFilterService.filters)
+  //console.log($scope.selected === ticketFilterService.filters)
   // var items1 = ['product', 'type', 'source', 'owner', 'team', 'status']
   // for (var i=0;i<items1.length; i++){
   //   $scope[items1[i]] = {}
@@ -68,9 +68,9 @@ angular.module('chronos').controller('TicketListFilterCtrl',
       $scope.selected.my_team_issues = 1
     else if (_type == 'all_issues')
       $scope.selected.all_issues = 1
-    console.log($scope.selected === ticketFilterService.filters)
-    console.log($scope.selected)
-    console.log(ticketFilterService.filters)
+    //console.log($scope.selected === ticketFilterService.filters)
+    //console.log($scope.selected)
+    //console.log(ticketFilterService.filters)
     $scope.apply_filters()
   }
 
@@ -80,6 +80,6 @@ angular.module('chronos').controller('TicketListFilterCtrl',
 
   $scope.preFilteredIssues("all_issues");
   $scope.temp = function(){
-    console.log($scope)
+    //console.log($scope)
   }
 }])

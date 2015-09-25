@@ -40,18 +40,18 @@ angular.module('chronos')
       },
       response: function (response) {
         if (response.status === 401) {
-          console.log('Response 401');
+          //console.log('Response 401');
         }
         return response || $q.when(response);
       },
       responseError: function (rejection) {
         if (rejection.status === 401) {
-          console.log('Response Error 401', rejection);
+          //console.log('Response Error 401', rejection);
           $('#nav-top').css('display', 'none');
           $('#nav-top-left').css('left', 'none');
           $location.path('/login').search('returnTo', $location.path());
         } else {
-          console.log('Api Error');
+          //console.log('Api Error');
           Flash.create('danger', rejection.data.message);
         }
         return $q.reject(rejection);

@@ -33,9 +33,9 @@ angular.module('chronos').controller('addCtrl',
             ProductsListApi.save( {name : $scope.product} , function(data){
               $scope.product=""
               $scope.products.push(data.product);
-              console.log("Product added successfully");
+              //console.log("Product added successfully");
             }, function(errorData){
-              console.log(errorData);
+              //console.log(errorData);
             });
           };
 
@@ -48,9 +48,9 @@ angular.module('chronos').controller('addCtrl',
             SourcesListApi.save( {name : $scope.source} , function(data){
               $scope.source="";
               $scope.sources.push(data.source);
-              console.log("Source added successfully");
+              //console.log("Source added successfully");
             }, function(errorData){
-              console.log(errorData);
+              //console.log(errorData);
             });
           };
 
@@ -67,9 +67,9 @@ angular.module('chronos').controller('addCtrl',
               $scope.type="";
               $scope.sla="";
               $scope.types.push(data.type);
-              console.log("type added successfully");
+              //console.log("type added successfully");
             }, function(errorData){
-              console.log(errorData);
+              //console.log(errorData);
             });
           };
 }]);

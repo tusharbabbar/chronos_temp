@@ -2,7 +2,7 @@ angular.module('chronos').factory('ticketCurationService',function(){
   var ticketId;
   var showFlag = false;
   var setTicketId = function(id){
-  	console.log('in',id)
+  	//console.log('in',id)
     this.ticketId = id;
     this.showFlag = true;
   };

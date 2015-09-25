@@ -18,7 +18,7 @@ angular.module('chronos').controller('TicketListCtrl',
   $scope.tickets = ticketFilterService.tickets;
   headingService.set("Issues List");
 
-  console.log(headingService.pageHeading)
+  //console.log(headingService.pageHeading)
 
   $scope.openTicket = function(id) {
 		$scope.selected = id
@@ -39,7 +39,7 @@ angular.module('chronos').controller('TicketListCtrl',
   };
 
   $scope.pageChange = function(newPageNumber){
-    console.log(newPageNumber)
+    //console.log(newPageNumber)
     offset = (newPageNumber - 1) * $scope.itemsPerPage;
 		ticketFilterService.filters['offset'] = offset;
     ticketFilterService.update_tickets_with_filters();

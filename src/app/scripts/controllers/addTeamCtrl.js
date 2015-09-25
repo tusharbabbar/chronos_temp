@@ -21,9 +21,9 @@ angular.module('chronos').controller('addTeamCtrl',
     //get teams
     $scope.getTeams = function(){
       TeamsListApi.get( {all : 1}, function (data) {
-          console.log("data got is ", data);
+          //console.log("data got is ", data);
           $scope.teams = data.teams;
-          console.log("team data is ", $scope.teams);
+          //console.log("team data is ", $scope.teams);
           //get team levels details
           $scope.team_details = [];
           for(i in $scope.teams){
@@ -31,15 +31,15 @@ angular.module('chronos').controller('addTeamCtrl',
             data = {};
             data.id = currentTeam.id;
             TeamApi.get(data, function(data){
-              console.log("each team data is ", data);
+              //console.log("each team data is ", data);
               data.showLevels = false;
               $scope.team_details.push(data);
             }, function(errorData){
-              console.log(errorData);
+              //console.log(errorData);
             });
           }
       }, function(errordata){
-        console.log("Failed data is ", errordata);
+        //console.log("Failed data is ", errordata);
       });
     }
     //get teams detail
@@ -58,7 +58,7 @@ angular.module('chronos').controller('addTeamCtrl',
         $scope.type = "";
         $scope.getTeams();
       }, function(errorData){
-        console.log(errorData);
+        //console.log(errorData);
       });
     };
 
@@ -80,9 +80,9 @@ angular.module('chronos').controller('addTeamCtrl',
       data.active = 0;
       LevelMembersApi.update(data, function(data){
         $scope.team_details[teamIndex].levels[levelIndex].members.splice(memberIndex, 1);
-         console.log("update performed successfully");
+         //console.log("update performed successfully");
       },function(errorData){
-        console.log(errorData);
+        //console.log(errorData);
       });
     }
 
@@ -98,17 +98,17 @@ angular.module('chronos').controller('addTeamCtrl',
         data.showLevels = true;
         $scope.team_details[teamIndex] = data;
       }, function(errorData){
-        console.log(errorData);
+        //console.log(errorData);
       });
     };
     $scope.searchUser = function(term) {
-    console.log(term);
+    //console.log(term);
     if (term.length > 3){
       UserApi.get({ query: term}, function (data) {
-        console.log(data)
+        //console.log(data)
         $scope.data.items = data.users;
       }, function (data) {
-        console.log(data);
+        //console.log(data);
       });
     }
   };
@@ -123,18 +123,18 @@ angular.module('chronos').controller('addTeamCtrl',
       $scope.team_details[teamIndex] = data;
       $scope.data.items ="";
     }, function(errordata){
-      console.log(errordata);
+      //console.log(errordata);
     });
     return "";
   };
   // $scope.add_level_member = function (level_id, user_id) {
-  //   console.log(level_id, user_id);
+  //   //console.log(level_id, user_id);
   //   LevelMember.save({
   //     team_id: $scope.team.id,
   //     level_id: level_id,
   //     user_id: user_id
   //   }, function (data) {
-  //     console.log(data);
+  //     //console.log(data);
   //     Flash.create('success', 'Member added successfully!!!', 'alertIn', 'ng-animate');
   //     $scope.team_details = data;
   //   });

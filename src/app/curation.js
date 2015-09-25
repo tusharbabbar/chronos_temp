@@ -59,7 +59,7 @@ angular.module('chronos').controller('curationCtrl',
             //get list of assigned teams
             TeamsListApi.get( {all : 1, with_members : 1}, function (data) {
               $scope.assignedTeams = data.teams;
-              console.log($scope.assignedTeams);
+              //console.log($scope.assignedTeams);
             });
             $scope.capitalizeFirstLetter = function toTitleCase(string){
                 return string[0].toUpperCase() + string.slice(1);
@@ -94,7 +94,7 @@ angular.module('chronos').controller('curationCtrl',
               $scope.ticketId = ticketCurationService.getTicketId();
 
               TicketApi.get( {id : $scope.ticketId} , function(data){
-                console.log("ticket data is as", data);
+                //console.log("ticket data is as", data);
                 //saving current ticket data
                 $scope.ticketData = data;
                 $scope.ticketData.ownerTeam = {};
@@ -156,7 +156,7 @@ angular.module('chronos').controller('curationCtrl',
                   if(currentProduct.name == data.product) {
                     currentProduct.ticked = true;
                     $scope.product[0] = currentProduct;
-                    console.log($scope.product);
+                    //console.log($scope.product);
                   }
                   else{
                     currentProduct.ticked = false;
@@ -210,8 +210,8 @@ angular.module('chronos').controller('curationCtrl',
                 TicketTagApi.get({ticket_id: $scope.ticketId}, function(data){
                     var tags = data.tags;
                     $scope.tagsData = [];
-                    console.log("tags");
-                    console.log(data);
+                    //console.log("tags");
+                    //console.log(data);
                     $scope.tags = [];
                     if (tags != []){
                       for (var i=0; i<tags.length; i++){
@@ -220,7 +220,7 @@ angular.module('chronos').controller('curationCtrl',
                       }
                     }
                   }, function(data){
-                  console.log("TicketTag Error");
+                  //console.log("TicketTag Error");
                 });
 
                 //get ticket comments
@@ -320,16 +320,16 @@ angular.module('chronos').controller('curationCtrl',
               var data = {};
               if($scope.data.showCustomMail){
                   if( $scope.mail.do_not_sendmail == true){
-                    console.log("do not send mail");
+                    //console.log("do not send mail");
                     $scope.data.showCustomMail = false;
                   }
                   else if ($scope.mail.send_default_mail === true){
-                    console.log("default mail sent");
+                    //console.log("default mail sent");
                     data.send_custom_mail = 1;
                   }
                   else {
                     if  (($scope.mail.subject != "") && ($scope.mail.to != "") && ($scope.mail.body !="")){
-                      console.log("custom mail send");
+                      //console.log("custom mail send");
                       data.send_custom_mail = 0;
                       data.subject = $scope.mail.subject;
                       data.body = $scope.mail.body;
@@ -350,7 +350,7 @@ angular.module('chronos').controller('curationCtrl',
               }
               for(var i=0; i<items.length; i++){
                 if ($scope[items[i]].length && $scope[items[i]][0].name != $scope.ticketData[items[i]]) {
-                  console.log("changed item is ", items[i]);
+                  //console.log("changed item is ", items[i]);
                   data[mapping[items[i]]] = $scope[items[i]][0].id;
                 }
               }
@@ -386,9 +386,9 @@ angular.module('chronos').controller('curationCtrl',
               if ($scope.sentiment.length && $scope.sentiment[0].name != $scope.ticketData['sentiment']) {
                 data.sentiment = $scope.sentiment[0].name;
               }
-              console.log("current stats is ", $scope.status);
+              //console.log("current stats is ", $scope.status);
               if ($scope.status[0].name === 'INVALID' || $scope.status[0].name === 'RESOLVED') {
-                console.log("status got");
+                //console.log("status got");
                 data.status = $scope.status[0].name;
               }
 
@@ -407,7 +407,7 @@ angular.module('chronos').controller('curationCtrl',
               }
               if(Object.keys(data).length > 1){
                  TicketApi.update(data, function (data) {
-                  console.log(data)
+                  //console.log(data)
                   $scope.mail.body = "";
                   $scope.mail.subject = "";
                   $scope.mail.to = "";
@@ -416,7 +416,7 @@ angular.module('chronos').controller('curationCtrl',
                   Flash.create('success', "Ticket Saved Successfully!!!");
                   ticketFilterService.update_tickets_with_filters()
                 }, function (errorData) {
-                    console.log(errorData);
+                    //console.log(errorData);
                 });
               }
               else{
@@ -432,32 +432,32 @@ angular.module('chronos').controller('curationCtrl',
 
             //search user from users api for mention
             $scope.searchPeople = function(term) {
-              console.log(term)
+              //console.log(term)
               if (term.length > 3){
                 UserApi.get({ query: term}, function (data) {
-                  console.log(data)
+                  //console.log(data)
                   $scope.items = data.users;
                 }, function (data) {
-                  console.log(data);
+                  //console.log(data);
                 });
               }
             };
             //select user for mention
             $scope.getSelectedUser = function(item) {
-              console.log(item);
+              //console.log(item);
               return "<span style='color: #4DC5EA;' id='"+item.id+"'>"+"@"+item.name+"</span>";
             };
 
             //select user email
             $scope.getSelectedEmail = function(item) {
-              console.log(item);
+              //console.log(item);
               return item.email + ","
             };
 
             //add comment on ticket
             $scope.data.comment = ""
             $scope.addComment = function(){
-              console.log($scope.data.comment)
+              //console.log($scope.data.comment)
               if (($scope.data.comment != "") && ($scope.data.comment.length > 10)){
                 data = {
                   ticket_id : $scope.ticketId,
@@ -469,7 +469,7 @@ angular.module('chronos').controller('curationCtrl',
                   $scope.updateComments()
                   Flash.create('success', "Comment Added Successfully!!!");
                 }, function(errorData){
-                  console.log(errorData);
+                  //console.log(errorData);
                 });
               }
               else {
