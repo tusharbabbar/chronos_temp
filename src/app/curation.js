@@ -104,6 +104,7 @@ angular.module('chronos').controller('curationCtrl',
                 $scope.data.ticketDescription = data.description;
                 $scope.data.ticketId = data.id;
                 $scope.data.followUpOf = data.child_of;
+                $scope.data.ticket = data
 
                 //set status
                 if( ! (data.status == "RESOLVED" || data.status == "INVALID") ) {

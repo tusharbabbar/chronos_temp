@@ -545,3 +545,11 @@ mentio-menu .active {
 th:last-child, td:last-child {
     padding-right: 15px;
 }
+
+.selected {
+  background-color: #E9F9FF
+}
+
+tr {
+  transition: background-color 750ms linear;
+}

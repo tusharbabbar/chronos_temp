@@ -20,6 +20,17 @@
                     {{data.ticketDescription}}
                   </div>
                 </div>
+                <div class="timeline-row" style="box-shadow:0px 0px 0px 0px">
+                  <div class="timeline-header row">
+                    <span class="one column timeline-icon" style="margin-right:0px"><i class="ionicons ion-ios-paper-outline"></i></span>
+                    <div class="eleven columns" style="margin-top:10px">Requester Data</div>
+                  </div>
+                  <div class="timeline-body">
+                    <div class="row">Name: {{data.ticket.created_by.name}}</div>
+                    <div class="row">Email: {{data.ticket.created_by.email}}</div>
+                    <div class="row">Phone: {{data.ticket.created_by.phone}}</div>
+                  </div>
+                </div>
                 <div ng-repeat="comment in comments">
                   <div class="timeline-row" style="box-shadow:0px 0px 0px 0px">
                     <div class="timeline-header row">
