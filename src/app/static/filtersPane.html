@@ -5,7 +5,7 @@
         My Issues
       </div>
       <div class="one column" >
-        <div class="button-number">{{counts.my_issues}}
+        <div class="button-number">{{data.counts.my_issues}}
         </div>
       </div>
     </span>
@@ -16,7 +16,7 @@
         Team Issues
       </div>
       <div class="one column" >
-        <div class="button-number">{{counts.my_team_issues}}
+        <div class="button-number">{{data.counts.my_team_issues}}
         </div>
       </div>
     </span>
@@ -27,7 +27,7 @@
         All Issues
       </div>
       <div class="one column" >
-        <div class="button-number">{{counts.all_issues}}
+        <div class="button-number">{{data.counts.all_issues}}
         </div>
       </div>
     </span>
@@ -43,7 +43,7 @@
         <small>Product</small>
         <div
         isteven-multi-select
-        input-model="products"
+        input-model="data.products"
         output-model="$parent.selected.products"
         button-label="name"
         item-label="id name"
@@ -60,7 +60,7 @@
         <small>Team</small>
         <div
         isteven-multi-select
-        input-model="teams"
+        input-model="data.assignedTeams"
         output-model="$parent.selected.teams"
         button-label="name"
         item-label="id name"
@@ -77,7 +77,7 @@
         <small>Status</small>
         <div
         isteven-multi-select
-        input-model="statuses"
+        input-model="data.statuses"
         output-model="$parent.selected.statuses"
         button-label="icon"
         item-label="icon name"
@@ -94,7 +94,7 @@
         <small>Source</small>
         <div
         isteven-multi-select
-        input-model="sources"
+        input-model="data.sources"
         output-model="$parent.selected.sources"
         button-label="name"
         item-label="id name"
@@ -111,7 +111,7 @@
         <small>Type</small>
         <div
         isteven-multi-select
-        input-model="types"
+        input-model="data.types"
         output-model="$parent.selected.types"
         button-label="name"
         item-label="id name"
