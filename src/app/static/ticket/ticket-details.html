@@ -110,7 +110,7 @@
           </div>
 
           <!-- Owned member -->
-          <div class="field top-medium-pad row" ng-show="data.ownerTeam.length">
+          <div class="field top-medium-pad row" ng-if="data.ownerTeam.length">
               <div class="five columns">
                 Owned By
               </div>
@@ -131,16 +131,16 @@
           </div>
 
           <!-- Assigned to -->
-          <div class="top-medium-pad row" ng-show="data.ownerTeam.length">
+          <div class="top-medium-pad row" ng-if="data.ownerTeam.length">
               <div class="five columns">
                 Reassigned Team
               </div>
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="data.reassignedTeams"
-                  output-model="data.reassignedTeam"
-                  on-item-click="getReassignedTeamMembers(data)"
+                  input-model="data.assignedTeams"
+                  output-model="data.assignedTeam"
+                  on-item-click="getAssignedTeamMembers(data)"
                   button-label="name"
                   item-label="name"
                   tick-property="ticked"
@@ -153,15 +153,15 @@
           </div>
 
           <!-- Assigned member -->
-          <div class="top-medium-pad row"  ng-show="data.reassignedTeam.length">
+          <div class="top-medium-pad row"  ng-if="data.assignedTeam.length">
               <div class="five columns">
                 Reassigned To
               </div>
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="data.reassignedTeamMembers"
-                  output-model="data.reassigned"
+                  input-model="data.assignedTeamMembers"
+                  output-model="data.assigned"
                   button-label="name"
                   item-label="name"
                   tick-property="ticked"

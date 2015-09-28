@@ -28,10 +28,10 @@ angular.module('chronos').controller('curationCtrl', ['$scope',
         ticketFilterService,
         Flash,
         transitNew) {
+        var STATUS_LENGTH = 2;
         //initialization function
         $scope.onetimeInitialization = function() {
             $scope.data = $scope.data ? $scope.data : {};
-            $scope.data.statustesLength = 2;
             $scope.singleSelectSetting = {
                 selectionLimit: 1
             };
@@ -42,15 +42,15 @@ angular.module('chronos').controller('curationCtrl', ['$scope',
             }, {
                 name: 'Angry'
             }];
+        }
+        $scope.onetimeInitialization();
+
+        $scope.ticketDataReset = function() {
             $scope.data.statuses = [{
                 name: 'RESOLVED'
             }, {
                 name: 'INVALID'
             }];
-        }
-        $scope.onetimeInitialization();
-
-        $scope.ticketDataReset = function() {
             $scope.data.comment = ""
             $scope.data.comments = [];
             $scope.data.showComment = false;
@@ -84,7 +84,7 @@ angular.module('chronos').controller('curationCtrl', ['$scope',
         $scope.updateData = function(data) {
             //set status
             if (!(data.status == "RESOLVED" || data.status == "INVALID")) {
-                if ($scope.data.statuses.length == $scope.data.statustesLength) {
+                if ($scope.data.statuses.length == STATUS_LENGTH) {
                     $scope.data.statuses.push({
                         name: data.status
                     });
@@ -316,7 +316,7 @@ angular.module('chronos').controller('curationCtrl', ['$scope',
             if ($scope.data.sentiment.length && $scope.data.sentiment[0].name != $scope.ticketData['sentiment']) {
                 data.sentiment = $scope.data.sentiment[0].name;
             }
-            console.log($scope.data.status);
+
             if ($scope.data.status.length && $scope.data.status[0].name === 'INVALID' || $scope.data.status[0].name === 'RESOLVED') {
                 data.status = $scope.data.status[0].name;
             }
@@ -334,7 +334,7 @@ angular.module('chronos').controller('curationCtrl', ['$scope',
             if (dataTags.length > 0) {
                 data.tags = dataTags;
             }
-            console.log("ticket data sent is ", data);
+
             if (Object.keys(data).length > 1) {
                 TicketApi.update(data, function(data) {
                     $scope.data.mail.body = "";

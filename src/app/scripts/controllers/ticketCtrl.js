@@ -53,9 +53,9 @@ angular.module('chronos').controller('TicketCtrl',
               {name : 'Angry'}
             ];
   var items = ['product', 'sentiment', 'type', 'source', 'owner',
-                'reassigned', 'reassignedTeam', 'ownerTeam', 'tags']
+                'assigned', 'assignedTeam', 'ownerTeam', 'tags']
   for (i=0;i<items.length; i++){
-    $scope[items[i]] = [];
+    $scope.data[items[i]] = [];
   }
 
   for(var i=0; i<pages.length; i++){
@@ -72,6 +72,18 @@ angular.module('chronos').controller('TicketCtrl',
     return hours;
   };
 
+  //reset set values of ownerTeams and assignedTeams
+  $scope.reset = function() {
+      //reset owner team
+      for (i in $scope.data.ownerTeams) {
+          $scope.data.ownerTeams[i].ticked = false;
+      }
+      // reset owner
+      for (i in $scope.data.assignedTeams) {
+          $scope.data.assignedTeams[i].ticked = false;
+      }
+  }
+
   $scope.go = function(path) {
     $location.path(path);
   };
@@ -82,7 +94,7 @@ angular.module('chronos').controller('TicketCtrl',
       currentType = $scope.data.types[i];
       if(currentType.name == data.type) {
         currentType.ticked = true;
-        $scope.data.type = currentType;
+        $scope.data.type[0] = currentType;
       }
       else{
         currentType.ticked = false;
@@ -93,7 +105,7 @@ angular.module('chronos').controller('TicketCtrl',
       currentSource = $scope.data.sources[i];
       if(currentSource.name == data.source) {
         currentSource.ticked = true;
-        $scope.data.source = currentSource;
+        $scope.data.source[0] = currentSource;
       }
       else{
          currentSource.ticked = false;
@@ -104,7 +116,7 @@ angular.module('chronos').controller('TicketCtrl',
       currentProduct = $scope.data.products[i];
       if(currentProduct.name == data.product) {
         currentProduct.ticked = true;
-        $scope.data.product = currentProduct;
+        $scope.data.product[0] = currentProduct;
       }
       else{
         currentProduct.ticked = false;
@@ -115,7 +127,7 @@ angular.module('chronos').controller('TicketCtrl',
       currentSentiment = $scope.data.sentiments[i];
       if(currentSentiment.name == data.sentiment){
         currentSentiment.ticked = true;
-        $scope.data.sentiment = currentSentiment;
+        $scope.data.sentiment[0] = currentSentiment;
       }
       else{
         currentSentiment.ticked = false;
@@ -125,9 +137,9 @@ angular.module('chronos').controller('TicketCtrl',
     if (data.owner_details && data.owner_details.team){
       for( i in $scope.data.ownerTeams ){
         currentOwnerTeam = $scope.data.ownerTeams[i];
-        if(currentOwnerTeam.name == data.owner_details.team.name) {
+        if(currentOwnerTeam.id == data.owner_details.team.id) {
           currentOwnerTeam.ticked = true;
-          $scope.data.ownerTeam = currentOwnerTeam;
+          $scope.data.ownerTeam[0] = currentOwnerTeam;
           $scope.getOwnerTeamMembers(currentOwnerTeam, data.owner_details.member);
         }
         else{
@@ -135,17 +147,17 @@ angular.module('chronos').controller('TicketCtrl',
         }
       }
     }
-    //set reassigned team
+    //set assigned team
     if (data.assignment_details && data.assignment_details.team) {
-      for( i in $scope.data.reassignedTeams ){
-        currentReassignedTeam = $scope.data.reassignedTeams[i];
-        if(currentReassignedTeam.name == data.assignment_details.team.name) {
-          currentReassignedTeam.ticked = true;
-          $scope.data.reassignedTeam = currentReassignedTeam;
-          $scope.getReassignedTeamMembers(currentReassignedTeam, data.assignment_details.member);
+      for( i in $scope.data.assignedTeams ){
+        currentAssignedTeam = $scope.data.assignedTeams[i];
+        if(currentAssignedTeam.id == data.assignment_details.team.id) {
+          currentAssignedTeam.ticked = true;
+          $scope.data.assignedTeam[0] = currentAssignedTeam;
+          $scope.getAssignedTeamMembers(currentAssignedTeam, data.assignment_details.member);
         }
         else{
-          currentReassignedTeam.ticked = false;
+          currentAssignedTeam.ticked = false;
         }
       }
     }
@@ -166,6 +178,7 @@ angular.module('chronos').controller('TicketCtrl',
   }
 
   TicketApi.get({id:$routeParams.id}, function(data){
+    $scope.reset();
     $scope.data.ticket = data
     $scope.data.followUpOf = data.child_of;
     date = new Date(data.created_on * 1000)
@@ -444,6 +457,9 @@ angular.module('chronos').controller('TicketCtrl',
           data['set_owner_team'] = $scope.data['ownerTeam'][0].id;
         }
       }
+      else{
+        data['set_owner_team'] = $scope.data['ownerTeam'][0].id;
+      }
     }
 
     //check owner  if changed then send it in data
@@ -453,23 +469,32 @@ angular.module('chronos').controller('TicketCtrl',
           data['set_owner_member'] = $scope.data['owner'][0].id;
         }
       }
+      else{
+        data['set_owner_member'] = $scope.data['owner'][0].id;
+      }
     }
 
     //check assigned team changed if changed then send it in data
-    if ($scope.data['reassignedTeam'] && $scope.data['reassignedTeam'].length){
+    if ($scope.data['assignedTeam'] && $scope.data['assignedTeam'].length){
       if ($scope.data.ticket.assignment_details){
-        if($scope.data['reassignedTeam'][0].id != $scope.data.ticket.assignment_details.team.id){
-          data['assign_to_team'] = $scope.data['reassignedTeam'][0].id;
+        if($scope.data['assignedTeam'][0].id != $scope.data.ticket.assignment_details.team.id){
+          data['assign_to_team'] = $scope.data['assignedTeam'][0].id;
         }
+      }
+      else {
+        data['assign_to_team'] = $scope.data['assignedTeam'][0].id;
       }
     }
 
     //check assignee changed if changed then send it in data
-    if($scope.data['reassigned'] && $scope.data['reassigned'].length){
+    if($scope.data['assigned'] && $scope.data['assigned'].length){
       if ($scope.data.ticket.assignment_details){
-        if($scope.data['reassigned'][0].id != $scope.data.ticket.assignment_details.member.id){
-          data['assign_to_member'] = $scope.data['reassigned'][0].id;
+        if($scope.data['assigned'][0].id != $scope.data.ticket.assignment_details.member.id){
+          data['assign_to_member'] = $scope.data['assigned'][0].id;
         }
+      }
+      else{
+        data['assign_to_member'] = $scope.data['assigned'][0].id;
       }
     }
 
@@ -518,7 +543,7 @@ angular.module('chronos').controller('TicketCtrl',
           ownerTeamMember =  $scope.data.ownerTeamMembers[i];
           if(memberInfo.id == ownerTeamMember.id){
             ownerTeamMember.ticked = true;
-            $scope.data.owner = ownerTeamMember;
+            $scope.data.owner[0] = ownerTeamMember;
           }
         }
       }
@@ -527,24 +552,24 @@ angular.module('chronos').controller('TicketCtrl',
     });
   };
 
-  $scope.getReassignedTeamMembers = function(data, memberInfo ){
+  $scope.getAssignedTeamMembers = function(data, memberInfo ){
     TeamMembersListApi.get({team_id : data.id}, function (data){
       for( i in data.members) {
         member = data.members[i];
         member.name = member.user.name;
       }
-      $scope.data.reassignedTeamMembers = data.members;
+      $scope.data.assignedTeamMembers = data.members;
       if (memberInfo) {
-        for( i in $scope.data.reassignedTeamMembers){
-          reassignedTeamMember =  $scope.data.reassignedTeamMembers[i];
-          if(memberInfo.id == reassignedTeamMember.id){
-            reassignedTeamMember.ticked = true;
-            $scope.data.reassigned = reassignedTeamMember;
+        for( i in $scope.data.assignedTeamMembers){
+          assignedTeamMember =  $scope.data.assignedTeamMembers[i];
+          if(memberInfo.id ==  assignedTeamMember.id){
+            assignedTeamMember.ticked = true;
+            $scope.data.assigned[0] = assignedTeamMember;
           }
         }
       }
     }, function (errorData){
-      $scope.data.reassignedTeamMembers = [];
+      $scope.data.assignedTeamMembers = [];
     });
   };
 

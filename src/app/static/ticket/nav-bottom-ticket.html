@@ -11,7 +11,7 @@
   <button ng-if="(data.isOwner && data.ticket.status != 'RESOLVED' && data.ticket.status != 'INVALID')" ng-click="pressResolve()">
     <small>Mark as Resolved</small>
   </button>
-  <button ng-if="(data.isOwner && data.ticket.status && 'RESOLVED' && data.ticket.status != 'INVALID')" ng-click="invalidStatus()">
+  <button ng-if="(data.isOwner && data.ticket.status != 'RESOLVED' && data.ticket.status != 'INVALID')" ng-click="invalidStatus()">
     <small>Mark as Invalid</small>
   </button>
   <button class="button-primary" style="float:right" ng-click="saveTicketDetails()"><small>Save</small></button>
