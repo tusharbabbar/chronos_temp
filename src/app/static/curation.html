@@ -1,23 +1,23 @@
-<div ng-controller="curationCtrl" id="ticket-curration">
-    <div id="curation-top">
+<div ng-controller="curationCtrl" class="ticket-curration">
+    <div class="curation-top">
       <div ng-click="cancel()" style="display:inline-block;">
         <i class="fa fa-times-circle"></i>
       </div>
-      <div style="display:inline-block; text-align:center;">Ticket ID: <span class="blue-color"> {{data.ticketId}}</span> </div>
+      <div style="display:inline-block; text-align:center;">Ticket ID: <span class="blue-color"> {{ticket.id}}</span> </div>
     </div>
 
-    <div id="curation-main">
+    <div class="curation-main" id="curation-main">
       <!-- Curation main Left screen -->
-        <div id="ticket-curation-left">
-          <div id="ticket-curation-left-top">
-              <div id="ticket-description">
+        <div class="ticket-curation-left">
+          <div class="ticket-curation-left-top">
+              <div class="ticket-description">
                 <div class="timeline-row" style="box-shadow:0px 0px 0px 0px">
                   <div class="timeline-header row">
                     <span class="one column timeline-icon" style="margin-right:0px"><i class="ionicons ion-ios-paper-outline"></i></span>
                     <div class="eleven columns" style="margin-top:10px">Ticket Description</div>
                   </div>
                   <div class="timeline-body">
-                    {{data.ticketDescription}}
+                    {{ticket.description}}
                   </div>
                 </div>
                 <div class="timeline-row" style="box-shadow:0px 0px 0px 0px">
@@ -26,9 +26,9 @@
                     <div class="eleven columns" style="margin-top:10px">Requester Data</div>
                   </div>
                   <div class="timeline-body">
-                    <div class="row">Name: {{data.ticket.created_by.name}}</div>
-                    <div class="row">Email: {{data.ticket.created_by.email}}</div>
-                    <div class="row">Phone: {{data.ticket.created_by.phone}}</div>
+                    <div class="row">Name: {{ticket.created_by.name}}</div>
+                    <div class="row">Email: {{ticket.created_by.email}}</div>
+                    <div class="row">Phone: {{ticket.created_by.phone}}</div>
                   </div>
                 </div>
                 <div ng-repeat="comment in comments">
@@ -48,7 +48,7 @@
             </div>
 
           </div>
-          <div id="ticket-curration-left-bottom" ng-if="data.showComment" class="row">
+          <div ng-if="data.showComment" class="row ticket-curration-left-bottom">
               <script type="text/ng-template" id="/people-mentions.tpl">
                     <ul class="list-group user-search">
                       <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
@@ -70,13 +70,13 @@
                <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="addComment()"><small><small>Comment</small></small></button>
               <button style="float:right; margin-right:5px" ng-click="toggleComment()"><small><small>hide</small></small></button>
           </div>
-          <div id="ticket-curration-left-bottom-buttons" ng-if="!data.showComment" class="row">
+          <div class="ticket-curration-left-bottom-buttons" ng-if="!data.showComment" class="row">
             <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="toggleComment()"><small><small>Comment</small></small></button>
           </div>
         </div>
 
-       <div id="ticket-curration-right">
-          <div id="issue-heading" class="row">
+       <div class="ticket-curration-right">
+          <div class="issue-heading" class="row">
               ISSUE DETAILS
           </div>
           <!-- Status -->
@@ -87,8 +87,8 @@
               <div class="seven columns">
                 <div
                     isteven-multi-select
-                    input-model="statuses"
-                    output-model="status"
+                    input-model="data.statuses"
+                    output-model="data.status"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
@@ -107,8 +107,8 @@
               <div class="seven columns">
                 <div
                     isteven-multi-select
-                    input-model="products"
-                    output-model="product"
+                    input-model="data.products"
+                    output-model="data.product"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
@@ -116,10 +116,9 @@
                     helper-elements=""
                     max-height = "100px"
                     >
-                </div>
               </div>
+            </div>
           </div>
-
           <!-- Source -->
           <div class="field top-medium-pad row">
               <div class="five columns">
@@ -128,8 +127,8 @@
               <div class="seven columns">
                 <div
                     isteven-multi-select
-                    input-model="sources"
-                    output-model="source"
+                    input-model="data.sources"
+                    output-model="data.source"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
@@ -140,7 +139,6 @@
                 </div>
               </div>
           </div>
-
           <!-- Type -->
          <div class="top-medium-pad row">
               <div class="five columns">
@@ -149,8 +147,8 @@
               <div class="seven columns">
                 <div
                     isteven-multi-select
-                    input-model="types"
-                    output-model="type"
+                    input-model="data.types"
+                    output-model="data.type"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
@@ -160,7 +158,6 @@
                 </div>
               </div>
           </div>
-
           <!-- Sentiment -->
          <div class="top-medium-pad row">
               <div class="five columns">
@@ -169,8 +166,8 @@
               <div class="seven columns">
                 <div
                     isteven-multi-select
-                    input-model="sentiments"
-                    output-model="sentiment"
+                    input-model="data.sentiments"
+                    output-model="data.sentiment"
                     button-label="name"
                     item-label="name"
                     tick-property="ticked"
@@ -180,7 +177,6 @@
                 </div>
               </div>
           </div>
-
           <!-- Owned by -->
           <div class="top-medium-pad row">
               <div class="five columns">
@@ -189,8 +185,8 @@
               <div class="seven columns">
                  <div
                     isteven-multi-select
-                    input-model="ownerTeams"
-                    output-model="ownerTeam"
+                    input-model="data.ownerTeams"
+                    output-model="data.ownerTeam"
                     button-label="name"
                     on-item-click="getOwnerTeamMembers(data)"
                     item-label="name"
@@ -201,17 +197,16 @@
                 </div>
               </div>
           </div>
-
           <!-- Owned member -->
-          <div class="field top-medium-pad row" ng-show="ownerTeam.length">
+          <div class="field top-medium-pad row" ng-if="data.ownerTeam.length">
               <div class="five columns">
                 Owned By
               </div>
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="ownerTeamMembers"
-                  output-model="owner"
+                  input-model="data.ownerTeamMembers"
+                  output-model="data.owner"
                   button-label="name"
                   item-label="name"
                   tick-property="ticked"
@@ -221,17 +216,16 @@
                 </div>
               </div>
           </div>
-
           <!-- Assigned to -->
-          <div class="top-medium-pad row" ng-show="ownerTeam.length">
+          <div class="top-medium-pad row" ng-if="data.ownerTeam.length">
               <div class="five columns">
                 Assigned Team
               </div>
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="assignedTeams"
-                  output-model="assignedTeam"
+                  input-model="data.assignedTeams"
+                  output-model="data.assignedTeam"
                   on-item-click="getAssignedTeamMembers(data)"
                   button-label="name"
                   item-label="name"
@@ -241,17 +235,16 @@
                 </div>
               </div>
           </div>
-
           <!-- Assigned member -->
-          <div class="top-medium-pad row"  ng-show="assignedTeam.length">
+          <div class="top-medium-pad row"  ng-if="data.assignedTeam.length">
               <div class="five columns">
                 Assigned To
               </div>
               <div class="seven columns">
                 <div
                   isteven-multi-select
-                  input-model="assignedTeamMembers"
-                  output-model="assigned"
+                  input-model="data.assignedTeamMembers"
+                  output-model="data.assigned"
                   button-label="name"
                   item-label="name"
                   tick-property="ticked"
@@ -274,13 +267,13 @@
               Add Tags
           </div>
           <div class="top-medium-pad row">
-              <tags-input ng-model='tags'  add-on-space="true"> </tags-input>
+              <tags-input ng-model='data.tags'  add-on-space="true"> </tags-input>
           </div>
       </div>
   </div>
 
   <!-- curration bottom screen -->
-  <div id="curation-bottom">
+  <div class="curation-bottom">
     <div class="bottom-buttons">
       <button ng-click="cancel()"> <small> Cancel </small></button>
     </div>
@@ -296,14 +289,3 @@
       <div ng-include="'/static/curationCustomSendMail.html'"></div>
   </div>
 </div>
-
-<!-- Bottom code
-  <div class="offset-by-seven two columns">
-             <button class="button-primary" ng-click="save()">Save</button>
-          </div>
-          <div class="two columns">
-             <button ng-click="cancel()">Cancel</button>
-          </div>
-          <div class="offset-by-one">
-          </div>
--->

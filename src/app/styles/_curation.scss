@@ -1,9 +1,9 @@
-#ticket-curration{
+.ticket-curration{
     width: 97%;
     height: 100%;
 }
 
-#curation-top{
+.curation-top{
     width:97%;
     height:50px;
     position: fixed;
@@ -14,7 +14,7 @@
         box-sizing: border-box;
 }
 
-#curation-bottom{
+.curation-bottom{
     border-top: 1px solid #C0C0C0;
     position: fixed;
     bottom:0px;
@@ -31,12 +31,12 @@
     color:#33CCFF;
 }
 
-#description-heading,#issue-heading{
+.description-heading,#issue-heading{
     font-weight: bold;
     padding-bottom: 10px;
 }
 
-#curation-main{
+.curation-main{
     border-top: 1px solid #C0C0C0;
     width : 100%;
     margin-top: 50px;
@@ -50,7 +50,7 @@
           box-sizing: border-box;
 }
 
-#ticket-curation-left{
+.ticket-curation-left{
     float: left;
     width: 55%;
     height : 100%;
@@ -60,7 +60,7 @@
           box-sizing: border-box;
 }
 
-#ticket-curation-left-top{
+.ticket-curation-left-top{
     height: 100%;
     padding: 10px;
 }
@@ -69,7 +69,7 @@
     width: 100%;
 }
 
-#ticket-description{
+.ticket-description{
     word-wrap: break-word;
     height: 100%;
     overflow-y:auto;
@@ -79,7 +79,7 @@
           box-sizing: border-box;
 }
 
-#ticket-curration-left-bottom{
+.ticket-curration-left-bottom{
     border-top: 1px solid #C0C0C0;
     padding:10px;
     position:absolute;
@@ -92,7 +92,7 @@
           box-sizing: border-box;
 }
 
-#ticket-curration-right{
+.ticket-curration-right{
     float: right;
     padding: 10px 10px 250px 10px;
     width: 45%;
@@ -114,7 +114,7 @@
     display: none;
 }
 
-#ticket-curration-left-bottom-buttons {
+.ticket-curration-left-bottom-buttons {
     border-top: 1px solid #C0C0C0;
     padding:10px;
     position:absolute;
