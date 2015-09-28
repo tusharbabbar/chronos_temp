@@ -279,13 +279,12 @@ body {
 .row-filter {
   border-bottom: solid 1px #DCDCDC;
   height: 40px;
-  padding-top:12px
-}
-
-.row-filter :hover {
+  padding-top:12px;
   cursor: hand;
   cursor: pointer;
+
 }
+
 
 .small-button {
   @extend .boxed;

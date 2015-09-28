@@ -72,8 +72,17 @@ angular.module('chronos').controller('TicketCtrl',
     return hours;
   };
 
-  $scope.go = function(path) {
-    $location.path(path);
+  $scope.go = function() {
+    if (ticketFilterService.filters.my_issues === 1) {
+      path = 'my_issues'
+    }
+    if (ticketFilterService.filters.all_issues === 1) {
+      path = 'all_issues'
+    }
+    if (ticketFilterService.filters.my_team_issues === 1) {
+      path = 'my_team_issues'
+    }
+    $location.path('/' + path);
   };
 
   //after getting updated ticket data. by calling this function it will update changes

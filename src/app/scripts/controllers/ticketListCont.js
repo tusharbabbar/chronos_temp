@@ -6,6 +6,7 @@ angular.module('chronos').controller('TicketListCtrl',
 	'headingService',
 	'ticketCurationService',
 	'transitNew',
+	'$routeParams',
 	function (
 		$scope,
     $location,
@@ -13,13 +14,13 @@ angular.module('chronos').controller('TicketListCtrl',
 		ticketFilterService,
 		headingService,
 		ticketCurationService,
-		transitNew){
+		transitNew,
+		$routeParams){
   $scope.itemsPerPage = ticketFilterService.itemsPerPage;
   $scope.tickets = ticketFilterService.tickets;
   headingService.set("Issues List");
 
   //console.log(headingService.pageHeading)
-
   $scope.openTicket = function(id) {
 		$scope.selected = id
     for(i in $scope.tickets.list){

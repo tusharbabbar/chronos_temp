@@ -1,5 +1,5 @@
 <div id="ticket-filters">
-  <div class="row row-filter" ng-click='preFilteredIssues("my_issues")'>
+  <div class="row row-filter" ng-click='goto("my_issues")'>
     <span>
       <div class="offset-by-two five columns">
         My Issues
@@ -10,7 +10,7 @@
       </div>
     </span>
   </div>
-  <div class="row row-filter" ng-click='preFilteredIssues("my_team_issues")'>
+  <div class="row row-filter" ng-click='goto("my_team_issues")'>
     <span>
       <div class="offset-by-two five columns">
         Team Issues
@@ -21,7 +21,7 @@
       </div>
     </span>
   </div>
-  <div class="row row-filter" ng-click='preFilteredIssues("all_issues")'>
+  <div class="row row-filter" ng-click='goto("all_issues")'>
     <span>
       <div class="offset-by-two five columns">
         All Issues
@@ -47,7 +47,7 @@
         output-model="$parent.selected.products"
         button-label="name"
         item-label="id name"
-        tick-property="ticked"
+        tick-property="selected"
         helper-elements="reset"
         max-labels="1"
         max-height="100px"
@@ -64,7 +64,7 @@
         output-model="$parent.selected.teams"
         button-label="name"
         item-label="id name"
-        tick-property="ticked"
+        tick-property="selected"
         helper-elements="reset"
         max-labels="1"
         max-height="100px"
@@ -81,7 +81,7 @@
         output-model="$parent.selected.statuses"
         button-label="icon"
         item-label="icon name"
-        tick-property="ticked"
+        tick-property="selected"
         helper-elements="reset"
         max-labels="1"
         max-height="100px"
@@ -98,7 +98,7 @@
         output-model="$parent.selected.sources"
         button-label="name"
         item-label="id name"
-        tick-property="ticked"
+        tick-property="selected"
         helper-elements="reset"
         max-labels="1"
         max-height="100px"
@@ -115,7 +115,7 @@
         output-model="$parent.selected.types"
         button-label="name"
         item-label="id name"
-        tick-property="ticked"
+        tick-property="selected"
         helper-elements="reset"
         max-labels="1"
         max-height="100px"
