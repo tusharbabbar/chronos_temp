@@ -203,6 +203,8 @@ body {
 .listing-row {
   background-color: #FFFFFF;
   border: solid 1px $border-color;
+  cursor: hand;
+  cursor: pointer;
 }
 
 .listing-table tr {line-height: 18px}

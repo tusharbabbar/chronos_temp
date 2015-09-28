@@ -1,6 +1,6 @@
 <div style="font-size:1.5em">
   <i class="ionicons ion-android-arrow-back back-arrow" style="font-size:1.6em" ng-click="go('/')"></i>
-  <span class="page-heading" style="margin-left: 10px" ><thin>{{previousPage}}</thin></span>
+  <span class="page-heading" style="margin-left: 10px" ><thin>{{data.previousPage}}</thin></span>
   <i class="ionicons ion-ios-arrow-right back-arrow" style="cursor: auto"></i>
   <span class="page-heading" style="margin: 0px"><thin>Ticket ID <span style="color: #4DC5EA">#{{data.ticket.id}}</span></thin></span>
   <!-- <span class="page-heading" style="margin-left: 100px"><thin>Customer <span style="color: #4DC5EA">{{fabricPracticeName}}</span></thin></span> -->
@@ -13,7 +13,7 @@
     <img src="/assets/fonts/Resolved.svg" ng-if="data.ticket.status=='RESOLVED'" style="width: 30px; height:30px; margin:-7px"></img>
     <img src="/assets/fonts/inProgress.svg" ng-if="data.ticket.status=='INPROGRESS'" style="width: 30px; height:30px; margin:-7px"></img>
     <img src="/assets/fonts/Orphan.svg" ng-if="data.ticket.status=='ORPHAN'" style="width: 30px; height:30px; margin:-7px"></img>
-    <img src="/assets/fonts/INVALID.svg" ng-if="data.ticket.status=='INVALID'" style="width: 30px; height:30px; margin:-7px"></img>
+    <img src="/assets/fonts/Invalid.svg" ng-if="data.ticket.status=='INVALID'" style="width: 30px; height:30px; margin:-7px"></img>
   <span class="page-heading" style="margin-left: 100px;"><thin>Customer <a style="color: #4DC5EA; text-decoration: none;" ng-href="https://epicenter.practo.com/fabric#/practice/{{ticket.kyc_info.fabric_practice_id}}/edit">{{data.ticket.kyc_info.fabric_practice_name}}</a></thin></span>
   <span class="" style="right:0px; position:absolute; margin-right:40px">
     <i class="ionicons ion-ios-timer" ng-if="data.dueTime > 0" style="color:#FEC76F;font-size:1.5em; margin-top:5px"></i>
