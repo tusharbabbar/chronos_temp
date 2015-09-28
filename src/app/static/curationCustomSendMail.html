@@ -10,12 +10,6 @@
     </span>
   </div>
   <div class="row" style="">
-    <small class="one column">SUBJECT:</small>
-    <span class="eleven columns">
-      <input class="u-full-width" type="text" placeholder="Enter Subject" id="exampleEmailInput" ng-model="mail.subject">
-    </span>
-  </div>
-  <div class="row" style="">
     <small class="one column">TO:</small>
     <span class="eleven columns">
       <script type="text/ng-template" id="/people-mentions-new.tpl">
@@ -31,6 +25,12 @@
         mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
         mentio-select="getSelectedEmail(item)" mentio-search="searchPeople(term)" ng-model="mail.to" id="reply-textarea">
       </input>
+    </span>
+  </div>
+  <div class="row" style="">
+    <small class="one column">SUBJECT:</small>
+    <span class="eleven columns">
+      <input class="u-full-width" type="text" placeholder="Enter Subject" id="exampleEmailInput" ng-model="mail.subject">
     </span>
   </div>
   <text-angular ta-toolbar="[['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo']]" ng-model="mail.body" placeholder="Enter mail body"></text-angular>

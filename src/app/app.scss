@@ -402,9 +402,8 @@ body {
 
 .button-bottom {
   @extend .commenter-timeline;
-  max-height: $top-browser;
-  min-height: $top-browser;
-  padding: 10px
+  max-height: $ticket-fixed;
+  min-height: $ticket-fixed;
 }
 
 .mailer-timeline {
