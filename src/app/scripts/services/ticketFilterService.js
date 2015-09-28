@@ -16,8 +16,6 @@ angular.module('chronos').factory('ticketFilterService',function(TicketsListApi)
     offset: 0
   }
 
-  var self = this;
-
   var get_tickets = function(){
     //console.log(tickets);
     return tickets;
@@ -46,7 +44,6 @@ angular.module('chronos').factory('ticketFilterService',function(TicketsListApi)
     data.status = self.filters.statuses.map(function(obj){
       return obj.name
     });
-    //console.log(data)
     TicketsListApi.get(data, function(data){
       now = Date.now()/1000
       for (i in data.tickets){
