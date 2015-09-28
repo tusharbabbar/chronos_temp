@@ -6,7 +6,8 @@ angular.module('chronos', [
   'isteven-multi-select',
   'textAngular',
   'mentio',
-  'flash'
+  'flash',
+  'angular-loading-bar'
 ]);
 
 angular.module('chronos')

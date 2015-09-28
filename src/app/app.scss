@@ -34,7 +34,13 @@ font-family: 'Existence-light';
 src: url("/assets/Existence-Light.otf");
 }
 
-@media all and (min-width: 1281px) {
+@media all and (max-height: 700px) {
+    body{
+        font-size: 12px;
+    }
+}
+
+@media all and (min-width: 1281px) and (min-height : 700px){
     body{
         font-size: 14px;
     }
@@ -51,6 +57,7 @@ src: url("/assets/Existence-Light.otf");
         font-size: 10px;
     }
 }
+
 
 body {
   padding: 0px;
