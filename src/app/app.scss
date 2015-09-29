@@ -2,7 +2,7 @@
 @import "styles/_bootstrap";
 @import "styles/_curation";
 
-$top-browser : calc(8.5vh);
+$top-browser : calc(8vh);
 $border-color : #DCDCDC;
 $font-color : #4DC5EA;
 $ticket-fixed : calc(7vh);
@@ -47,15 +47,21 @@ src: url("/assets/Existence-Light.otf");
     }
 }
 
-@media all and (min-width:960px) and (max-width: 1280px) {
+@media all and (min-width:1025px) and (max-width: 1280px) {
     body{
         font-size: 12px;
     }
 }
 
-@media all and (max-width: 959px) and (min-width: 600px) {
+@media all and (min-width:960px) and (max-width: 1024px) {
     body{
         font-size: 10px;
+    }
+}
+
+@media all and (max-width: 959px) and (min-width: 600px) {
+    body{
+        font-size: 8px;
     }
 }
 

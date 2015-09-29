@@ -65,7 +65,11 @@ angular.module('chronos')
     //Http Intercpetor to check auth failures for xhr requests
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }]).run(
-    function(Meta){
-      Meta.refresh();
+    function(Meta, $rootScope, $location, Util){
+      if ( !Util.get_accesstoken() || !Util.getLoggedInUserId()) {
+        $location.path( "/login" );
+      }else{
+        Meta.refresh();
+      }
     }
   );

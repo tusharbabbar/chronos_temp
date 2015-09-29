@@ -1,4 +1,18 @@
-angular.module('chronos').controller('LoginCtrl',[ '$scope', '$location', 'LoginApi', 'Util', 'headingService', function($scope, $location, LoginApi, Util, headingService){
+angular.module('chronos').controller('LoginCtrl',[
+  '$scope',
+  '$location',
+  'LoginApi',
+  'Util',
+  'headingService',
+  'Meta',
+  function(
+    $scope,
+    $location,
+    LoginApi,
+    Util,
+    headingService,
+    Meta
+  ){
   $scope.email = '';
   $scope.password = '';
   headingService.pageHeading.value = "Login to Galaxy";
@@ -23,6 +37,7 @@ angular.module('chronos').controller('LoginCtrl',[ '$scope', '$location', 'Login
         $("#curation-hover").show();
         $("#nav-left").show();
         $("body").css("background-color", "#F7F7F7");
+        Meta.refresh();
         $location.path('/');
       });
     }

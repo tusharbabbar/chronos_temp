@@ -22,11 +22,12 @@
       <tbody>
         <tr class="listing-row boxed row" ng-repeat="ticket in tickets.list" ng-click = "$parent.openTicket(ticket.id)" ng-attr-id="{{ticket.id}}" ng-class="selected == ticket.id ? 'selected' : ''">
           <td >
-            <img src="/assets/fonts/Curation.svg" ng-if="ticket.status=='CURATION'" style="margin:-5px 1px"></img>
-            <img src="/assets/fonts/Resolved.svg" ng-if="ticket.status=='RESOLVED'" style="margin:-5px 1px"></img>
-            <img src="/assets/fonts/inProgress.svg" ng-if="ticket.status=='INPROGRESS'" style="margin:-5px 1px"></img>
-            <img src="/assets/fonts/Orphan.svg" ng-if="ticket.status=='ORPHAN'" style="margin:-5px 1px"></img>
-            <img src="/assets/fonts/Invalid.svg" ng-if="ticket.status=='INVALID'" style="margin:-5px 1px"></img>
+            <img src="/assets/fonts/Curation.svg" ng-if="ticket.status=='CURATION'" style="margin:-3px 1px; float: left"></img>
+            <img src="/assets/fonts/Resolved.svg" ng-if="ticket.status=='RESOLVED'" style="margin:-3px 1px; float: left"></img>
+            <img src="/assets/fonts/inProgress.svg" ng-if="ticket.status=='INPROGRESS'" style="margin:-3px 1px; float: left"></img>
+            <img src="/assets/fonts/Orphan.svg" ng-if="ticket.status=='ORPHAN'" style="margin:-3px 1px; float: left"></img>
+            <img src="/assets/fonts/Invalid.svg" ng-if="ticket.status=='INVALID'" style="margin:-3px 1px; float: left"></img>
+            <img src="/assets/fonts/white.svg" ng-if="ticket.status=='CLOSED'" style="margin:-3px 1px; float: left"></img>
             #{{ticket.id}}
           </td>
           <td >{{ticket.description.substring(0,35)}}<span ng-if="ticket.description && ticket.description.length > 35">...</span></td>
@@ -49,7 +50,7 @@
           <td style = "border-right: 2px solid #EC6C6C" ng-if="ticket.remaining_percent <= 20">{{ticket.remaining_days}}{{ticket.remaining_days_unit}} {{ticket.remaining_hours}}{{ticket.remaining_hours_unit}}</td>
           <td style = "border-right: 2px solid #EBDA70" ng-if="ticket.remaining_percent <= 50 && ticket.remaining_percent > 20">{{ticket.remaining_days}}{{ticket.remaining_days_unit}} {{ticket.remaining_hours}}{{ticket.remaining_hours_unit}}</td>
           <td style = "border-right: 2px solid #BFE59A" ng-if="ticket.remaining_percent > 50">{{ticket.remaining_days}}{{ticket.remaining_days_unit}} {{ticket.remaining_hours}}{{ticket.remaining_hours_unit}}</td>
-
+          <td style = "border-right: 2px solid #EC6C6C" ng-if="!ticket.remaining_percent">Completed</td>
         </tr>
       </tbody>
     </table>
