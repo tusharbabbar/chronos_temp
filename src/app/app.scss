@@ -560,3 +560,7 @@ th:last-child, td:last-child {
 tr {
   transition: background-color 750ms linear;
 }
+
+.active {
+  background : linear-gradient(#fff, #DCDCDC);
+}

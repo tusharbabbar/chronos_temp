@@ -11,7 +11,20 @@ var gulp = require('gulp'),
     lazypipe = require('lazypipe'),
     stylish = require('jshint-stylish'),
     bower = require('./bower'),
+    cachebust = require('gulp-cachebust'),
     isWatching = false;
+
+var cachebust = require('gulp-cachebust');
+
+gulp.task("bust", function(){
+  console.log(gulp.src('./dist/*/*.html'))
+  return gulp.src('./dist/*/*.html')
+      .pipe(cachebust({
+          type: 'timestamp'
+      }))
+      .pipe(gulp.dest('./dist'));
+});
+
 
 var htmlminOpts = {
   removeComments: true,
