@@ -82,6 +82,9 @@ angular.module('chronos').controller('TicketCtrl',
     if (ticketFilterService.filters.my_team_issues === 1) {
       path = 'my_team_issues'
     }
+    else{
+      path = 'all_issues'
+    }
     $location.path('/tickets/' + path);
   };
 
