@@ -12,7 +12,7 @@ angular.module('chronos', [
 
 angular.module('chronos')
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/:type', {
+  $routeProvider.when('/tickets/:type', {
     templateUrl: '/static/ticketList.html',
     controller: 'TicketListCtrl'
   }).when('/login', {
@@ -28,7 +28,7 @@ angular.module('chronos')
     templateUrl: '/static/addTeam.html',
     controller: 'addTeamCtrl'
   }).otherwise({
-    redirectTo: '/all_issues'
+    redirectTo: '/tickets/all_issues'
   });
 }]).factory('authHttpResponseInterceptor', [
   '$q',

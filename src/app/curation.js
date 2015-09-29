@@ -54,6 +54,11 @@ angular.module('chronos').controller('curationCtrl', ['$scope',
             $scope.data.comment = ""
             $scope.data.comments = [];
             $scope.data.showComment = false;
+            $scope.data.statuses = [{
+                name: 'RESOLVED'
+            }, {
+                name: 'INVALID'
+            }];
             $scope.data.mail = {
                 'send_default_mail': true,
                 'subject': '',
