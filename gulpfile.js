@@ -11,6 +11,7 @@ var gulp = require('gulp'),
     lazypipe = require('lazypipe'),
     stylish = require('jshint-stylish'),
     bower = require('./bower'),
+    cachebust = require('gulp-cache-bust'),
     isWatching = false;
 
 var htmlminOpts = {
@@ -20,6 +21,17 @@ var htmlminOpts = {
   collapseBooleanAttributes: true,
   removeRedundantAttributes: false
 };
+
+/**
+ * Cache bust
+ */
+gulp.task('bust',function () {
+  return gulp.src(['./dist/index.html'])
+    .pipe(cachebust({
+      type : 'md5'
+    }))
+    .pipe(gulp.dest('./dist'))
+});
 
 /**
  * JS Hint
