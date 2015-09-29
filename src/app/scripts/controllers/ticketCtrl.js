@@ -45,6 +45,7 @@ angular.module('chronos').controller('TicketCtrl',
     transitNew){
   headingService.pageHeading.value = 'Issue Details'
   $scope.data = $scope.data ? $scope.data : {};
+  $scope.data.timeline = []
   transitNew.data.showCuration(0)
   var pages = ['all_issues', 'my_issues', 'my_team_issues'];
   $scope.data.sentiments = [
@@ -213,30 +214,24 @@ angular.module('chronos').controller('TicketCtrl',
     ////console.log("TicketTag Error");
   });
 
-  TicketTimelineApi.query({id:$routeParams.id}, function(data){
-    //console.log("time line data is ",data);
-    for(var i=0; i< data.length; i++){
-      var date = new Date(data[i]['timestamp'] * 1000)
-      data[i]['date'] = date.toString()
-    }
-    $scope.data.timeline = data
-  })
-
-  $scope.updateTimeline = function(timestamp){
-    var data = {
-      id:$routeParams.id,
-      timestamp:timestamp + 1
-    };
-    TicketTimelineApi.query(data, function(data){
-      for(var i=0; i< data.length; i++){
-        date = new Date(data[i]['timestamp'] * 1000)
-        data[i]['date'] = date.toString()
+  $scope.getTimeline = function(timestamp, scroll){
+    TicketTimelineApi.get({id:$routeParams.id, timestamp:timestamp}, function(data){
+      for(var i=0; i< data.timeline.length; i++){
+        var date = new Date(data.timeline[i]['timestamp'] * 1000);
+        data.timeline[i]['date'] = date.toString();
       }
-      $scope.data.timeline = $scope.data.timeline.concat(data)
+      $scope.data.timeline = $scope.data.timeline.concat(data.timeline);
+      $scope.nextOffset = data.next_offset;
+      if($scope.nextOffset){
+        console.log($scope.nextOffset)
+        $scope.getTimeline($scope.nextOffset);
+      }
+    })
+    if (scroll){
       $("body").animate({
         scrollTop: $("#timeline")[0].scrollHeight
       }, 750);
-    })
+    }
   }
 
   $scope.showCommenter = function(){
@@ -280,9 +275,9 @@ angular.module('chronos').controller('TicketCtrl',
         $scope.hideAll()
         Flash.create('success', "Comment Added Successfully!!!");
         if ($scope.data.timeline.length > 0)
-        $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
+        $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
         else
-        $scope.updateTimeline(0)
+        $scope.getTimeline(0)
       })
     }
     else {
@@ -305,9 +300,9 @@ angular.module('chronos').controller('TicketCtrl',
         Flash.create('success', "Mail Sent Successfully!!!");
         $scope.hideAll()
         if ($scope.data.timeline.length > 0)
-        $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
+        $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
         else
-        $scope.updateTimeline(0)
+        $scope.getTimeline(0)
       })
     }
     else {
@@ -323,9 +318,9 @@ angular.module('chronos').controller('TicketCtrl',
                 $scope.data.ticket = data
                 Flash.create('success', "Status Changed to Invalid");
                 if ($scope.data.timeline.length > 0)
-                $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
+                $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
                 else
-                $scope.updateTimeline(0)
+                $scope.getTimeline(0)
               }, function (errorData) {
                   ////console.log(errorData);
               });
@@ -366,9 +361,9 @@ angular.module('chronos').controller('TicketCtrl',
         $scope.data.showResolveMailer = false;
         Flash.create('success', "Status Changed to Resolve");
         if ($scope.data.timeline.length > 0)
-        $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
+        $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
         else
-        $scope.updateTimeline(0)
+        $scope.getTimeline(0)
       })
     }
     else {
@@ -386,9 +381,9 @@ angular.module('chronos').controller('TicketCtrl',
           $scope.data.showResolveMailer = false;
           Flash.create('success', "Status Changed to Resolve");
           if ($scope.data.timeline.length > 0)
-          $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
+          $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
           else
-          $scope.updateTimeline(0)
+          $scope.getTimeline(0)
         })
       }
       else {
@@ -408,9 +403,9 @@ angular.module('chronos').controller('TicketCtrl',
       $scope.updateData(data);
       Flash.create('success', "Assignment Acknowledged");
       if ($scope.data.timeline.length > 0)
-      $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
+      $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
       else
-      $scope.updateTimeline(0)
+      $scope.getTimeline(0)
     }, function (errorData) {
       ////console.log(errorData);
     });
@@ -434,9 +429,9 @@ angular.module('chronos').controller('TicketCtrl',
         $scope.data.showDenyCommenter = false
         //console.log("time line got is", $scope.data.timeline);
         if ($scope.data.timeline.length > 0)
-        $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
+        $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
         else
-        $scope.updateTimeline(0)
+        $scope.getTimeline(0)
       })
     }
   }
@@ -505,9 +500,9 @@ angular.module('chronos').controller('TicketCtrl',
           $scope.updateData(data);
           Flash.create('success', "Ticket Details Saved!!!")
           if ($scope.data.timeline.length > 0)
-              $scope.updateTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'])
+              $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
           else
-              $scope.updateTimeline(0)
+              $scope.getTimeline(0)
       }, function(errorData) {
           ////console.log(errorData);
       });
@@ -559,5 +554,5 @@ angular.module('chronos').controller('TicketCtrl',
       $scope.data.reassignedTeamMembers = [];
     });
   };
-
+  $scope.getTimeline(0)
 }]);

@@ -5,8 +5,9 @@
 $top-browser : calc(8.5vh);
 $border-color : #DCDCDC;
 $font-color : #4DC5EA;
-$ticket-fixed : calc(7.5vh);
-$padding-fixed : calc(1.5vh);
+$ticket-fixed : calc(7vh);
+$padding-fixed-bottom : calc(1.5vh);
+$padding-fixed-top : calc(1vh);
 $timeline-padding : calc(16vh);
 
 // @font-face {
@@ -82,7 +83,8 @@ body {
 .nav-top {
   background-color: #FFFFFF;
   height: $top-browser;
-  padding: $padding-fixed;
+  padding-top: $padding-fixed-top;
+  padding-bottom: $padding-fixed-bottom;
   padding-left: 0px;
   border: 0px;
   border-bottom: solid 1px $border-color;
@@ -101,7 +103,8 @@ body {
 .nav-top-ticket {
   background-color: #FFFFFF;
   height: $ticket-fixed;
-  padding: $padding-fixed;
+  padding-top: $padding-fixed-top;
+padding-bottom: $padding-fixed-bottom;
   padding-left: 0px;
   border: 0px;
   border-bottom: solid 1px $border-color;
@@ -119,7 +122,8 @@ body {
 .nav-bottom-ticket {
   background-color: #FFFFFF;
   height: $ticket-fixed;
-  padding: $padding-fixed;
+  padding-top: $padding-fixed-top;
+padding-bottom: $padding-fixed-bottom;
   padding-left: 0px;
   border: 0px;
   border-bottom: solid 1px $border-color;
@@ -137,7 +141,8 @@ body {
 .nav-top-left {
   background-color: #FFFFFF;
   height: $top-browser;
-  padding: $padding-fixed;
+  padding-top: $padding-fixed-top;
+padding-bottom: $padding-fixed-bottom;
   padding-left: 0px;
   padding-right: 0px;
   border: 0px;
@@ -486,7 +491,7 @@ mentio-menu .active {
 
 .back-button {
   height: $top-browser;
-  padding : $padding-fixed;
+  padding : $padding-fixed-bottom;
   width : inherit;
   text-align : right;
    -webkit-box-sizing: border-box;
