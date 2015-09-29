@@ -1,8 +1,8 @@
 angular.module('chronos').factory('transitNew', function($rootScope){
+  var leftNavActive = false;
   var showCuration = function(val){
     var element = document.getElementById('curation-hover');
     var selected = document.getElementsByClassName('selected');
-    var leftNavActive = false;
     if (val === 0){
       angular.element(element).css('right', '-55%')
       angular.element(selected).removeClass('selected')
@@ -24,7 +24,7 @@ angular.module('chronos').factory('transitNew', function($rootScope){
   }
 
   var hideTransitions = function(){
-      if(leftNavActive) toggleLeftNav();
+    if(leftNavActive) toggleLeftNav();
   }
   $rootScope.hideTransitions = hideTransitions;
   var data = {
