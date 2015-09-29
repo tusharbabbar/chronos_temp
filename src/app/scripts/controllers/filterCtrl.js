@@ -55,6 +55,6 @@ function ($scope,
     $scope.preFilteredIssues($routeParams.type);
 
     $scope.goto = function(_type){
-      $location.path('/' + _type)
+      $location.path('/tickets/' + _type)
     }
   }])

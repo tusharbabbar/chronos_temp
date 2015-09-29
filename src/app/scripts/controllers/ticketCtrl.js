@@ -82,7 +82,7 @@ angular.module('chronos').controller('TicketCtrl',
     if (ticketFilterService.filters.my_team_issues === 1) {
       path = 'my_team_issues'
     }
-    $location.path('/' + path);
+    $location.path('/tickets/' + path);
   };
 
   //after getting updated ticket data. by calling this function it will update changes
