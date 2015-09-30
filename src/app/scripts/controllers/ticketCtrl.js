@@ -257,6 +257,7 @@ angular.module('chronos').controller('TicketCtrl',
   $scope.data.buttonBottom = true;
   $scope.data.showDenyCommenter = false;
   $scope.data.showResolveMailer = false;
+  $scope.data.showMailBody = false;
 
   $scope.data['comment'] = "";
   $scope.data['mail'] = "";
@@ -284,9 +285,16 @@ angular.module('chronos').controller('TicketCtrl',
       alert('htmlVariable must be greater than 10 chars;')
     }
   }
+
+  $scope.showBody = function(){
+    if (($scope.data.subject == "") || ($scope.data.to == "") || ($scope.data.mail =="")){
+      Flash.create("danger", "Must specify Subject, Body and To.");
+      return;
+    }
+    $scope.data.showMailBody = true;
+  };
+
   $scope.addMail = function(){
-    ////console.log($scope.data)
-    if (($scope.data.subject != "") && ($scope.data.to != "") && ($scope.data.mail !="")){
       data = {
         id : $scope.data.ticket.id,
         body: $scope.data.mail,
@@ -300,14 +308,11 @@ angular.module('chronos').controller('TicketCtrl',
         Flash.create('success', "Mail Sent Successfully!!!");
         $scope.hideAll()
         if ($scope.data.timeline.length > 0)
-        $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
+          $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
         else
-        $scope.getTimeline(0)
-      })
-    }
-    else {
-      alert("Must specify Subject, Body and To.")
-    }
+          $scope.getTimeline(0)
+        $scope.data.showMailBody = false;
+      });
   }
 
   $scope.invalidStatus = function () {
@@ -438,6 +443,7 @@ angular.module('chronos').controller('TicketCtrl',
   $scope.removeModal = function(){
     $scope.data.showResolveMailer = false
     $scope.data.showDenyCommenter = false
+    $scope.data.showMailBody = false;
   }
 
   $scope.saveTicketDetails = function() {
