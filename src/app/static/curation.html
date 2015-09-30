@@ -1,4 +1,4 @@
-<div ng-controller="curationCtrl" class="ticket-curration">
+<div ng-controller="curationCtrl">
     <div class="curation-top">
       <div ng-click="cancel()" style="display:inline-block;">
         <i class="fa fa-times-circle"></i>
@@ -48,34 +48,9 @@
             </div>
 
           </div>
-          <div ng-if="data.showComment" class="row ticket-curration-left-bottom">
-              <script type="text/ng-template" id="/people-mentions.tpl">
-                    <ul class="list-group user-search">
-                      <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
-                        <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
-                        </span>
-                      </li>
-                    </ul>
-              </script>
-              <div text-angular ta-name="comment-text" ng-model="data.comment" ta-toolbar="[['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo']]" placeholder="Enter new comment"
-              style="padding-bottom:10px">
-              </div>
-              <textarea
-                type="text" placeholder="Type a new comment" class="form-control panel-body"
-                mentio = "" mentio-template-url='/people-mentions.tpl'
-                mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
-                mentio-select="getSelectedUser(item)" mentio-search="searchPeople(term)" ng-model="data.comment" id="comment-textarea"
-                ng-hide="true">
-              </textarea>
-               <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="addComment()"><small><small>Comment</small></small></button>
-              <button style="float:right; margin-right:5px" ng-click="toggleComment()"><small><small>hide</small></small></button>
-          </div>
-          <div class="ticket-curration-left-bottom-buttons" ng-if="!data.showComment" class="row">
-            <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="toggleComment()"><small><small>Comment</small></small></button>
-          </div>
         </div>
 
-       <div class="ticket-curration-right">
+       <div class="ticket-curation-right">
           <div class="issue-heading" class="row">
               ISSUE DETAILS
           </div>
@@ -272,7 +247,7 @@
       </div>
   </div>
 
-  <!-- curration bottom screen -->
+  <!-- curation bottom screen -->
   <div class="curation-bottom">
     <div class="bottom-buttons">
       <button ng-click="cancel()"> <small> Cancel </small></button>
@@ -281,7 +256,33 @@
       <button class="button-primary" ng-click="checkSave()"><small>Save</small ></button>
     </div>
   </div>
+  <div ng-if="data.showComment" class="row ticket-curation-left-bottom">
+      <script type="text/ng-template" id="/people-mentions.tpl">
+            <ul class="list-group user-search">
+              <li mentio-menu-item="person" ng-repeat="person in items" class="list-group-item">
+                <span class="text-default" ng-bind-html="person.name | mentioHighlight:typedTerm:'menu-highlighted' | unsafe">
+                </span>
+              </li>
+            </ul>
+      </script>
+      <div text-angular ta-name="comment-text" ng-model="data.comment" ta-toolbar="[['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo']]" placeholder="Enter new comment"
+      style="padding-bottom:10px">
+      </div>
+      <textarea
+        type="text" placeholder="Type a new comment" class="form-control panel-body"
+        mentio = "" mentio-template-url='/people-mentions.tpl'
+        mentio-typed-text="typedTerm" mentio-items="items | filter:name:typedTerm"
+        mentio-select="getSelectedUser(item)" mentio-search="searchPeople(term)" ng-model="data.comment" id="comment-textarea"
+        ng-hide="true">
+      </textarea>
+       <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="addComment()"><small><small>Comment</small></small></button>
+      <button style="float:right; margin-right:5px" ng-click="toggleComment()"><small><small>hide</small></small></button>
+  </div>
+  <div class="ticket-curation-left-bottom-buttons" ng-if="!data.showComment" class="row">
+    <button class="button-primary" style="float:right; margin-right:5px padding-top:10px" ng-click="toggleComment()"><small><small>Comment</small></small></button>
+  </div>
 
+  
   <div style=" background-color:rgba(0, 0, 0, 0.5); width:100%; height:100%;position: fixed; z-index:20; top:0px; left:0px"
   ng-if="data.showCustomMail" ng-click = "removeModal()"></div>
   <div style="background-color:white;width:50%; height:50%;position: fixed; z-index:21; margin: 0 auto; top:25%; left:25%"
