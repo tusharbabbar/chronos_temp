@@ -17,12 +17,10 @@
   <span class="page-heading" style="margin-left: 100px;">
     <thin>
       Customer
-      <span ng-hide="isEditingCustomer">
-        <a style="color: #4DC5EA; text-decoration: none;"
+        <a  ng-hide="isEditingCustomer" target="_blank" style="color: #4DC5EA; text-decoration: none;"
         ng-href="https://epicenter.practo.com/fabric#/practice/{{data.ticket.kyc_info.fabric_practice_id}}/edit">
         {{data.ticket.kyc_info.fabric_practice_name}}</a>
-        <img src="/assets/fonts/editCustomer.png" ng-click="editCustomer(true)">
-      </span>
+        <i ng-hide="isEditingCustomer" class="ionicons ion-edit" style="width: 30px; height:30px; margin-bottom:-3px; margin-left:3px; color:#A9A9A9" ng-click="editCustomer(true)"></i>
       <input id="fab-id" ng-show="isEditingCustomer" type="text" ng-blur="editCustomer(false)" class="issue-box edit-customer" placeholder="Enter customer fabric Id" ng-model="data.fabric_practice_id" />
     </thin>
   </span>
