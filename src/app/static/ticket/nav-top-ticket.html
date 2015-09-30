@@ -9,12 +9,23 @@
       {{data.ticket.status}}
     </span></thin>
   </span>
-    <img src="/assets/fonts/Curation.svg" ng-if="data.ticket.status=='CURATION'" style="width: 30px; height:30px; margin:-7px"></img>
-    <img src="/assets/fonts/Resolved.svg" ng-if="data.ticket.status=='RESOLVED'" style="width: 30px; height:30px; margin:-7px"></img>
-    <img src="/assets/fonts/inProgress.svg" ng-if="data.ticket.status=='INPROGRESS'" style="width: 30px; height:30px; margin:-7px"></img>
-    <img src="/assets/fonts/Orphan.svg" ng-if="data.ticket.status=='ORPHAN'" style="width: 30px; height:30px; margin:-7px"></img>
-    <img src="/assets/fonts/INVALID.svg" ng-if="data.ticket.status=='INVALID'" style="width: 30px; height:30px; margin:-7px"></img>
-  <span class="page-heading" style="margin-left: 100px;"><thin>Customer <a style="color: #4DC5EA; text-decoration: none;" ng-href="https://epicenter.practo.com/fabric#/practice/{{data.ticket.kyc_info.fabric_practice_id}}/edit">{{data.ticket.kyc_info.fabric_practice_name}}</a></thin></span>
+  <img src="/assets/fonts/Curation.svg" ng-if="data.ticket.status=='CURATION'" style="width: 30px; height:30px; margin:-7px"></img>
+  <img src="/assets/fonts/Resolved.svg" ng-if="data.ticket.status=='RESOLVED'" style="width: 30px; height:30px; margin:-7px"></img>
+  <img src="/assets/fonts/inProgress.svg" ng-if="data.ticket.status=='INPROGRESS'" style="width: 30px; height:30px; margin:-7px"></img>
+  <img src="/assets/fonts/Orphan.svg" ng-if="data.ticket.status=='ORPHAN'" style="width: 30px; height:30px; margin:-7px"></img>
+  <img src="/assets/fonts/INVALID.svg" ng-if="data.ticket.status=='INVALID'" style="width: 30px; height:30px; margin:-7px"></img>
+  <span class="page-heading" style="margin-left: 100px;">
+    <thin>
+      Customer
+      <span ng-hide="isEditingCustomer">
+        <a style="color: #4DC5EA; text-decoration: none;"
+        ng-href="https://epicenter.practo.com/fabric#/practice/{{data.ticket.kyc_info.fabric_practice_id}}/edit">
+        {{data.ticket.kyc_info.fabric_practice_name}}</a>
+        <img src="/assets/fonts/editCustomer.png" ng-click="editCustomer(true)">
+      </span>
+      <input id="fab-id" ng-show="isEditingCustomer" type="text" ng-blur="editCustomer(false)" class="issue-box edit-customer" placeholder="Enter customer fabric Id" ng-model="data.fabric_practice_id" />
+    </thin>
+  </span>
   <span class="" style="right:0px; position:absolute; margin-right:40px">
     <i class="ionicons ion-ios-timer" ng-if="data.dueTime > 0" style="color:#FEC76F;font-size:1.5em; margin-top:5px"></i>
     <i class="ionicons ion-ios-timer" ng-if="data.dueTime <= 0" style="color: #F91943;font-size:1.5em; margin-top:5px"></i>
