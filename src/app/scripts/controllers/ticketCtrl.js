@@ -176,6 +176,9 @@ angular.module('chronos').controller('TicketCtrl',
     else{
       $scope.data.isAssigned = false;
     }
+    $scope.data.fabric_practice_id =  data.kyc_info ? data.kyc_info.fabric_practice_id : undefined;
+    $scope.data.cutomerName = data.kyc_info ? data.kyc_info.fabric_practice_name?
+                              data.kyc_info.fabric_practice_name : data.kyc_info.fabric_practice_id: undefined;
   }
 
   TicketApi.get({id:$routeParams.id}, function(data){
@@ -499,7 +502,10 @@ angular.module('chronos').controller('TicketCtrl',
     if(dataTags.length > 0){
       data.tags = dataTags;
     }
-    ////console.log("save query data is ", data);
+    data.fabric_practice_id = $scope.data.fabric_practice_id ?  $scope.data.ticket.kyc_info ?
+        $scope.data.fabric_practice_id != $scope.data.ticket.kyc_info.fabric_practice_id ?
+        $scope.data.fabric_practice_id : undefined : $scope.data.fabric_practice_id : undefined;
+        
     if(Object.keys(data).length > 1){
       TicketApi.update(data, function(data) {
           $scope.data.ticket = data
@@ -560,5 +566,9 @@ angular.module('chronos').controller('TicketCtrl',
       $scope.data.reassignedTeamMembers = [];
     });
   };
-  $scope.getTimeline(0)
+  $scope.getTimeline(0);
+  $scope.editCustomer = function(isEditingCustomer){
+        $scope.isEditingCustomer = isEditingCustomer;
+        $("#fab-id").focus();
+  }
 }]);
