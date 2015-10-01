@@ -495,7 +495,9 @@ function($scope,
         if(dataTags.length > 0){
           data.tags = dataTags;
         }
-        data.fabric_practice_id = $scope.data.fabric_practice_id ?  $scope.data.fabric_practice_id != $scope.data.ticket.kyc_info.fabric_practice_id ? $scope.data.fabric_practice_id : undefined : undefined;
+        data.fabric_practice_id = $scope.data.fabric_practice_id ?  $scope.data.ticket.kyc_info ?
+                                  $scope.data.fabric_practice_id != $scope.data.ticket.kyc_info.fabric_practice_id ?
+                                  $scope.data.fabric_practice_id : undefined : $scope.data.fabric_practice_id : undefined;
         ////console.log("save query data is ", data);
         if(Object.keys(data).length > 1){
           TicketApi.update(data, function(data) {
