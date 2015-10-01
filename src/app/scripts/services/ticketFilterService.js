@@ -25,7 +25,7 @@ angular.module('chronos').factory('ticketFilterService',function($rootScope, Tic
   }
   var update_tickets_with_filters = function(){
     var self = this;
-    var filtersAttr = ['product', 'type', 'source', 'team', 'statuse'];
+    var filtersAttr = ['product', 'type', 'source', 'team'];
 
     var data = {
       offset : self.filters.offset,
@@ -76,7 +76,6 @@ angular.module('chronos').factory('ticketFilterService',function($rootScope, Tic
     total : 0,
     itemsPerPage: itemsPerPage,
     filters : filters,
-    update_tickets_with_filters : update_tickets_with_filters,
-    // get_more_tickets: get_more_tickets
+    update_tickets_with_filters : update_tickets_with_filters
   }
 })

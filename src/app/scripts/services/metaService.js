@@ -58,6 +58,15 @@ function($rootScope, SourcesListApi, ProductsListApi, TypesListApi, TeamsListApi
     });
   }
 
+  meta.refreshDashboradCounts = function(){
+    $rootScope.data.ticketCount = {};
+    TicketsListCountApi.get({my_issues:1, status:["ORPHAN","CURATION"]},function(data){
+      $rootScope.data.ticketCount["new"] = data.count ? data.count  : 0;
+    });
+    TicketsListCountApi.get({my_issues:1, status:"INPROGRESS"},function(data){
+      $rootScope.data.ticketCount["inProgress"] = data.count ? data.count  : 0;
+    });
+  }
   meta.refresh = function(){
     var metaParams = [
       'Sources',
@@ -67,7 +76,8 @@ function($rootScope, SourcesListApi, ProductsListApi, TypesListApi, TeamsListApi
       'AssignedTeams',
       'MyIssuesCount',
       'AllIssuesCount',
-      'MyTeamIssueCount'
+      'MyTeamIssueCount',
+      'DashboradCounts'
     ];
     metaParams.forEach(function(metaParam){
       meta['refresh'+metaParam]();

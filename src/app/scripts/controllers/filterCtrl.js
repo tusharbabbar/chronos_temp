@@ -54,7 +54,11 @@ function ($scope,
     }
     $scope.preFilteredIssues($routeParams.type);
 
-    $scope.goto = function(_type){
+    $scope.goto = function(_type, isMyIssue){
+      if(isMyIssue){
+        ticketFilterService.filters.statuses = [];
+        $scope.apply_filters();
+      }
       $location.path('/tickets/' + _type)
     }
   }])

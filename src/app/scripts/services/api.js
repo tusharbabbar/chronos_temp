@@ -36,7 +36,8 @@ angular.module('chronos').factory('LoginApi', [
 ]).factory('TicketsListCountApi', [
   '$resource',
   function($resource) {
-    return $resource(baseUrl + '/tickets/count', {
+    return $resource(baseUrl + '/tickets', {
+      count:1
     }, {
       query: {
         isArray: false,

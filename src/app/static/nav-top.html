@@ -1,10 +1,18 @@
-<div class="eight columns">
-<div class="row">
-  <div class="one columns burger-menu"><i class="ionicons ion-navicon " style="margin-left:15px; font-size:3em; padding-top: 3px" ng-click="toggleLeftNav()"></i></div>
-  <div class="page-heading four columns" style="font-size:2em; margin-left:0px">
-    {{pageHeading.value}}
+<div class="ten columns">
+  <div class="row">
+    <div class="one column burger-menu"><i class="ionicons ion-navicon " style="margin-left:15px; font-size:3em; padding-top: 3px" ng-click="toggleLeftNav()"></i></div>
+    <div class="page-heading six columns" style="font-size:2em; margin-left:0px">
+        <div class="page-heading four columns" style="float:left">{{pageHeading.value}}</div>
+      <div class="page-heading three columns" style="margin-left:5%; float:left">
+        <img src="/assets/fonts/new.svg"/>
+        <a style="font-size:.52em; margin-left:0px" ng-click= "showMyTicketList('new')">New({{data.ticketCount.new}})</a>
+      </div>
+      <div class="page-heading four columns"  >
+        <img src="/assets/fonts/inProgress.svg"/>
+        <a style="font-size:.52em; margin-left:0px" ng-click="showMyTicketList('inProgress')">In Progress({{data.ticketCount.inProgress}})</a>
+      </div>
+    </div>
   </div>
-</div>
 </div>
 <div class="row">
   <i class="ionicons ion-ios-contact-outline burger-menu" style="float:right; font-size:3em"  ng-click="toggleShowLogout()"></i>
