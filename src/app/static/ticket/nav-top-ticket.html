@@ -19,9 +19,9 @@
       Customer
         <a  ng-hide="isEditingCustomer" target="_blank" style="color: #4DC5EA; text-decoration: none;"
         ng-href="https://epicenter.practo.com/fabric#/practice/{{data.ticket.kyc_info.fabric_practice_id}}/edit">
-        {{data.ticket.kyc_info.fabric_practice_name}}</a>
+        {{data.cutomerName}}</a>
         <i ng-hide="isEditingCustomer" class="ionicons ion-edit" style="width: 30px; height:30px; margin-bottom:-3px; margin-left:3px; color:#A9A9A9" ng-click="editCustomer(true)"></i>
-      <input id="fab-id" ng-show="isEditingCustomer" type="text" ng-blur="editCustomer(false)" class="issue-box edit-customer" placeholder="Enter customer fabric Id" ng-model="data.fabric_practice_id" />
+      <input id="fab-id" style="margin-bottom: -10px" ng-show="isEditingCustomer" type="text" ng-blur="editCustomer(false)" class="issue-box edit-customer" placeholder="Enter customer fabric Id" ng-model="data.fabric_practice_id"></input>
     </thin>
   </span>
   <span class="" style="right:0px; position:absolute; margin-right:40px">

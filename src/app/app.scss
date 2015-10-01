@@ -102,7 +102,7 @@ body {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   transition: left 0.5s, width 0.5s;
-  box-shadow: 2px 1px 2px 2px $border-color;
+  box-shadow: 2px 0px 5px 1px $border-color;
   z-index: -1000;
 }
 
@@ -140,7 +140,7 @@ padding-bottom: $padding-fixed-bottom;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   transition: left 0.5s, width 0.5s;
-  box-shadow: 2px 1px 2px 2px $border-color;
+  box-shadow: 2px 0px 5px 1px $border-color;
   z-index: 12;
 }
 
@@ -267,7 +267,7 @@ padding-bottom: $padding-fixed-bottom;
 .filters {
   background-color: #FFFFFF;
   height: 100%;
-  box-shadow: 4px 3px 2px 1px $border-color;
+  box-shadow: 2px 0px 5px 1px $border-color;
   margin-right: 20px;
   position: fixed;
   top: $top-browser;

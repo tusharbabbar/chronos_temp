@@ -91,7 +91,6 @@ function($scope,
 
     //after getting updated ticket data. by calling this function it will update changes
     $scope.updateData = function(data){
-      $scope.data.fabric_practice_id = data.kyc_info ? data.kyc_info.fabric_practice_id : undefined;
       $scope.isEditingCustomer = false;
       for( i in $scope.data.types ){
         currentType = $scope.data.types[i];
@@ -178,6 +177,9 @@ function($scope,
       else{
         $scope.data.isAssigned = false;
       }
+      $scope.data.fabric_practice_id =  data.kyc_info ? data.kyc_info.fabric_practice_id : undefined;
+      $scope.data.cutomerName = data.kyc_info ? data.kyc_info.fabric_practice_name?
+                                data.kyc_info.fabric_practice_name : data.kyc_info.fabric_practice_id: undefined;
     }
 
     TicketApi.get({id:$routeParams.id}, function(data){
@@ -259,6 +261,7 @@ function($scope,
       $scope.data.buttonBottom = true;
       $scope.data.showDenyCommenter = false;
       $scope.data.showResolveMailer = false;
+      $scope.data.showMailBody = false;
 
       $scope.data['comment'] = "";
       $scope.data['mail'] = "";
@@ -286,30 +289,34 @@ function($scope,
           alert('htmlVariable must be greater than 10 chars;')
         }
       }
+
+      $scope.showBody = function(){
+        if (($scope.data.subject == "") || ($scope.data.to == "") || ($scope.data.mail =="")){
+          Flash.create("danger", "Must specify Subject, Body and To.");
+          return;
+        }
+        $scope.data.showMailBody = true;
+      };
+
       $scope.addMail = function(){
-        ////console.log($scope.data)
-        if (($scope.data.subject != "") && ($scope.data.to != "") && ($scope.data.mail !="")){
-          data = {
-            id : $scope.data.ticket.id,
-            body: $scope.data.mail,
-            recipient: $scope.data.to,
-            subject: $scope.data.subject
-          }
-          TicketMailsApi.save(data, function(data){
-            $scope.data['mail'] = "";
-            $scope.data['subject'] = "";
-            $scope.data['to'] = "";
-            Flash.create('success', "Mail Sent Successfully!!!");
-            $scope.hideAll()
-            if ($scope.data.timeline.length > 0)
-            $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
-            else
-            $scope.getTimeline(0)
-          })
+        data = {
+          id : $scope.data.ticket.id,
+          body: $scope.data.mail,
+          recipient: $scope.data.to,
+          subject: $scope.data.subject
         }
-        else {
-          alert("Must specify Subject, Body and To.")
-        }
+        TicketMailsApi.save(data, function(data){
+          $scope.data['mail'] = "";
+          $scope.data['subject'] = "";
+          $scope.data['to'] = "";
+          Flash.create('success', "Mail Sent Successfully!!!");
+          $scope.hideAll()
+          if ($scope.data.timeline.length > 0)
+          $scope.getTimeline($scope.data.timeline[$scope.data.timeline.length - 1]['timestamp'] + 1, true)
+          else
+          $scope.getTimeline(0)
+          $scope.data.showMailBody = false;
+        });
       }
 
       $scope.invalidStatus = function () {
@@ -440,6 +447,7 @@ function($scope,
       $scope.removeModal = function(){
         $scope.data.showResolveMailer = false
         $scope.data.showDenyCommenter = false
+        $scope.data.showMailBody = false;
       }
 
       $scope.saveTicketDetails = function() {
@@ -495,10 +503,10 @@ function($scope,
         if(dataTags.length > 0){
           data.tags = dataTags;
         }
+
         data.fabric_practice_id = $scope.data.fabric_practice_id ?  $scope.data.ticket.kyc_info ?
-                                  $scope.data.fabric_practice_id != $scope.data.ticket.kyc_info.fabric_practice_id ?
-                                  $scope.data.fabric_practice_id : undefined : $scope.data.fabric_practice_id : undefined;
-        ////console.log("save query data is ", data);
+        $scope.data.fabric_practice_id != $scope.data.ticket.kyc_info.fabric_practice_id ?
+        $scope.data.fabric_practice_id : undefined : $scope.data.fabric_practice_id : undefined;
         if(Object.keys(data).length > 1){
           TicketApi.update(data, function(data) {
             $scope.data.ticket = data
@@ -559,8 +567,7 @@ function($scope,
           $scope.data.reassignedTeamMembers = [];
         });
       };
-      $scope.getTimeline(0)
-
+      $scope.getTimeline(0);
       $scope.editCustomer = function(isEditingCustomer){
         $scope.isEditingCustomer = isEditingCustomer;
         $("#fab-id").focus();
